@@ -1,9 +1,12 @@
 #ifndef PARTICLEEMISSION_H
 #define PARTICLEEMISSION_H
 
-
+struct GLFWwindow;
 
 class ParticleEmission {
+private:
+    GLFWwindow* window;
+
 public:
     ParticleEmission();
 
