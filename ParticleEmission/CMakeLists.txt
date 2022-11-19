@@ -1,9 +1,26 @@
-﻿# CMakeList.txt : CMake project for ParticleEmission, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
-# Add source to this project's executable.
-add_executable (ParticleEmission "ParticleEmission.cpp" "ParticleEmission.h")
+include_directories("${CMAKE_SOURCE_DIR}/dependencies")
+include_directories("${CMAKE_SOURCE_DIR}/dependencies/glad/include")
+include_directories("${CMAKE_SOURCE_DIR}/dependencies/glfw/include")
 
-# TODO: Add tests and install targets if needed.
+file(GLOB_RECURSE SRCS_HEADERS_IMGUI "${CMAKE_SOURCE_DIR}/dependencies/imgui/*.cpp" "${CMAKE_SOURCE_DIR}/dependencies/imgui/*.h")
+file(GLOB_RECURSE SRCS_HEADERS_GLAD "${CMAKE_SOURCE_DIR}/dependencies/glad/*.c" "${CMAKE_SOURCE_DIR}/dependencies/glad/*.h")
+
+file(GLOB_RECURSE SRCS "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/*.cpp")
+file(GLOB_RECURSE HEADERS "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/*.h")
+
+add_executable(${PROJECT_NAME} ${SRCS} ${HEADERS} ${SRCS_HEADERS_IMGUI} ${SRCS_HEADERS_GLAD})
+
+find_package(OpenGL REQUIRED)
+target_link_libraries(${PROJECT_NAME} OpenGL::GL)
+
+if (WIN32)
+    target_link_libraries(${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/dependencies/glfw/lib-vc2019/glfw3.lib")
+elseif (UNIX)
+    find_package(glfw3 3.3 REQUIRED)
+    target_link_libraries(${PROJECT_NAME} glfw ${CMAKE_DL_LIBS})
+else ()
+    message(FATAL_ERROR "OS not configured in CMakeLists.txt")
+endif ()
+
