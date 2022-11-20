@@ -1,19 +1,24 @@
 #ifndef CUBE_H
 #define CUBE_H
 
+#include <array>
+
 #include "../Entity.h"
-#include "../../Shader/Shader.h"
+#include "../../../Shader/Shader.h"
 
 class Cube : public Entity {
 private:
-    Shader shader;
-//    unsigned int VAO, VBO, EBO;
-//    unsigned int texture;
+    const std::array<float, 12> vertices = {
+            -0.5F, -0.5F, 0.0F,
+            0.5F, -0.5F, 0.0F,
+            -0.5F, 0.5F, 0.0F,
+            0.5F, 0.5F, 0.0F,
+    };
 
 public:
     Cube();
 
-    ~Cube();
+//    ~Cube();
 
     void update(float deltaTime) override;
 
