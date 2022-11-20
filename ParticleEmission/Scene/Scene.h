@@ -20,6 +20,9 @@ public:
     void update(float deltaTime);
 
     void render();
+
+public:
+    void updateProjectionMatrix(int display_w, int display_h);
 };
 
 #endif // SCENE_H

@@ -17,3 +17,7 @@ void Scene::render() {
 //    particleGenerator.render();
     cube.render(camera.getViewMatrix(), camera.getProjectionMatrix());
 }
+
+void Scene::updateProjectionMatrix(int display_w, int display_h) {
+    camera.updateProjectionMatrix(display_w, display_h);
+}

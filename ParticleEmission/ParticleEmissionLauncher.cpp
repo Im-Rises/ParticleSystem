@@ -52,11 +52,25 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
 #endif
 
     // Create window with graphics context
-    window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
-    if (window == NULL)
+    window = glfwCreateWindow(display_w, display_h, PROJECT_NAME, nullptr, nullptr);
+    if (window == nullptr)
         exit(1);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
+
+//    // Initialize GLFW callbacks
+//    glfwSetWindowUserPointer(window, this);
+//    glfwSetKeyCallback(window, InputManager::key_callback);
+//    glfwSetScrollCallback(window, InputManager::scroll_callback);
+//    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
+//    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
+
+//    // Center window
+//    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+//    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+//    auto xPos = mode->width / 2 - windowWidth / 2;
+//    auto yPos = mode->height / 2 - windowHeight / 2;
+//    glfwSetWindowPos(window, xPos, yPos);
 
     // Initialize OpenGL loader
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
@@ -105,7 +119,7 @@ ParticleEmissionLauncher::~ParticleEmissionLauncher() {
 
 void ParticleEmissionLauncher::start() {
     // Create the scene
-    scene = std::make_unique<Scene>();
+    scene = std::make_unique<Scene>(display_w, display_h);
 
     // Variables for the main loop
     float deltaTime = 0.0F;
@@ -149,8 +163,8 @@ void ParticleEmissionLauncher::updateGame(float deltaTime) {
 
 void ParticleEmissionLauncher::updateScreen() {
     ImGui::Render();
-    int display_w, display_h;
     glfwGetFramebufferSize(window, &display_w, &display_h);
+    scene->updateProjectionMatrix(display_w, display_h);
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
                  clear_color.w);
