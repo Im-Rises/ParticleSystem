@@ -5,7 +5,6 @@
 #include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
 
-
 #define MAX_PARTICLES 10000
 
 class ParticleGenerator : public Entity {
@@ -50,6 +49,8 @@ private:
 
 public:
     ParticleGenerator();
+
+    void init();
 
     ~ParticleGenerator();
 

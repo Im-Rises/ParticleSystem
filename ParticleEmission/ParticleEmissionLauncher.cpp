@@ -101,13 +101,21 @@ ParticleEmissionLauncher::~ParticleEmissionLauncher() {
 }
 
 void ParticleEmissionLauncher::start() {
+    // Create the scene
+    scene = std::make_unique<Scene>();
+
+    // Variables for the main loop
+    float deltaTime = 0.0F;
+
     // Main loop
     while (!glfwWindowShouldClose(window)) {
+        deltaTime = ImGui::GetIO().DeltaTime;
+
         handleInputs();
 
-        handleUi();
+        handleUi(deltaTime);
 
-        updateGame();
+        updateGame(deltaTime);
 
         updateScreen();
     }
@@ -117,14 +125,23 @@ void ParticleEmissionLauncher::handleInputs() {
     glfwPollEvents();
 }
 
-void ParticleEmissionLauncher::handleUi() {
+void ParticleEmissionLauncher::handleUi(float deltaTime) {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+
+    {
+        ImGui::Begin("Window info");
+        ImGui::Text("%.3f ms/frame (%.1f FPS)", deltaTime, 1.0f / deltaTime);
+//        ImGui::Text("Window width: %d", windowWidth);
+//        ImGui::Text("Window height: %d", windowHeight);
+        ImGui::End();
+    }
 }
 
-void ParticleEmissionLauncher::updateGame() {
+void ParticleEmissionLauncher::updateGame(float deltaTime) {
+    scene->update(deltaTime);
 }
 
 void ParticleEmissionLauncher::updateScreen() {

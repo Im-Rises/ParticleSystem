@@ -1,7 +1,10 @@
 #include "ParticleGenerator.h"
 
-
 ParticleGenerator::ParticleGenerator() {
+    init();
+}
+
+void ParticleGenerator::init() {
     glGenBuffers(1, &billboardVertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, billboardVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(gVertexBufferData), gVertexBufferData, GL_STATIC_DRAW);

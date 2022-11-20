@@ -1,7 +1,10 @@
 #ifndef PARTICLEEMISSION_H
 #define PARTICLEEMISSION_H
 
+#include <memory>
+
 #include "Scene/Scene.h"
+
 
 #define PROJECT_NAME "Particle Emission 3D"
 
@@ -19,7 +22,7 @@ class ParticleEmissionLauncher {
 private:
     GLFWwindow *window;
 
-    Scene scene;
+    std::unique_ptr<Scene> scene;
 
     struct {
         float x = 0.45f;
@@ -38,9 +41,9 @@ public:
 private:
     void handleInputs();
 
-    void handleUi();
+    void handleUi(float deltaTime);
 
-    void updateGame();
+    void updateGame(float deltaTime);
 
     void updateScreen();
 };
