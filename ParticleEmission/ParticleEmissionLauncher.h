@@ -1,7 +1,7 @@
 #ifndef PARTICLEEMISSION_H
 #define PARTICLEEMISSION_H
 
-#include "Scene.h"
+#include "Scene/Scene.h"
 
 #define PROJECT_NAME "Particle Emission 3D"
 
@@ -15,7 +15,7 @@
 
 struct GLFWwindow;
 
-class ParticleEmissionUi {
+class ParticleEmissionLauncher {
 private:
     GLFWwindow *window;
 
@@ -29,9 +29,9 @@ private:
     } clear_color;
 
 public:
-    ParticleEmissionUi();
+    ParticleEmissionLauncher();
 
-    ~ParticleEmissionUi();
+    ~ParticleEmissionLauncher();
 
     void start();
 
