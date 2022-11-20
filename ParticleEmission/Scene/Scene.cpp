@@ -8,10 +8,10 @@ Scene::~Scene() {
 
 }
 
-void Scene::update() {
-
+void Scene::update(float deltaTime) {
+    particleGenerator.update(deltaTime);
 }
 
 void Scene::render() {
-
+    particleGenerator.render();
 }
