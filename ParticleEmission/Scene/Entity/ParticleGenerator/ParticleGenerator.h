@@ -56,7 +56,7 @@ public:
 
     void update(float deltaTime);
 
-    void render();
+    void render(int display_w, int display_h, glm::mat4 view, float fov);
 
 private:
     int findUnusedParticle();

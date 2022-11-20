@@ -26,11 +26,11 @@ ParticleGenerator::~ParticleGenerator() {
 }
 
 void ParticleGenerator::update(float deltaTime) {
-    int newparticles = (int) (deltaTime * 10000.0);
-    if (newparticles > (int) (0.016f * 10000.0))
-        newparticles = (int) (0.016f * 10000.0);
+    int newParticles = (int) (deltaTime * 10000.0);
+    if (newParticles > (int) (0.016f * 10000.0))
+        newParticles = (int) (0.016f * 10000.0);
 
-    for (int i = 0; i < newparticles; i++) {
+    for (int i = 0; i < newParticles; i++) {
         int particleIndex = findUnusedParticle();
         particlesContainer[particleIndex].life = 5.0f;
         particlesContainer[particleIndex].pos = glm::vec3(0, 0, 0);
@@ -98,7 +98,7 @@ void ParticleGenerator::update(float deltaTime) {
     }
 }
 
-void ParticleGenerator::render() {
+void ParticleGenerator::render(int display_w, int display_h, glm::mat4 view, float fov) {
     glBindBuffer(GL_ARRAY_BUFFER, particlesPositionBuffer);
     glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * 4 * sizeof(GLfloat), nullptr, GL_STREAM_DRAW);
     glBufferSubData(GL_ARRAY_BUFFER, 0, particlesCount * sizeof(GLfloat) * 4, gParticlePositionData);

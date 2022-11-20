@@ -22,7 +22,9 @@ public:
 
     void update(float deltaTime) override;
 
-    void render() override;
+    void render(glm::mat4 cameraProjectionMatrix, glm::mat4 cameraViewMatrix) override;
+
+    void updateModelMatrix();
 };
 
 

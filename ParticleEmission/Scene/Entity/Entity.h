@@ -3,15 +3,16 @@
 
 #include <string>
 #include "../../Shader/Shader.h"
-
+#include "Components/Transform.h"
 
 class Entity {
 protected:
+    Transform transform;
     Shader shader;
     unsigned int VAO, VBO;
 
 public:
-    Entity(std::string vertexShaderPath, std::string fragmentShaderPath);
+    Entity(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
 
     void create();
 
@@ -19,9 +20,9 @@ public:
 
     void destroy();
 
-    void virtual update(float deltaTime) = 0;
+    virtual void update(float deltaTime) = 0;
 
-    void virtual render() = 0;
+    virtual void render(glm::mat4 cameraProjectionMatrix, glm::mat4 cameraViewMatrix) = 0;
 };
 
 

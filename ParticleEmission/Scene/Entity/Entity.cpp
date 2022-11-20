@@ -2,8 +2,9 @@
 
 #include <glad/include/glad/glad.h>
 
-Entity::Entity(std::string vertexShaderPath, std::string fragmentShaderPath) : shader(vertexShaderPath.c_str(),
-                                                                                      fragmentShaderPath.c_str()) {
+Entity::Entity(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) : shader(
+        vertexShaderPath.c_str(),
+        fragmentShaderPath.c_str()) {
     create();
 }
 

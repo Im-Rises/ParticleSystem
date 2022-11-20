@@ -1,7 +1,8 @@
 #include "Cube.h"
 
-#include <glm/glm.hpp>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 Cube::Cube() : Entity("shaders/transform.vert", "shaders/transform.frag") {
 
@@ -15,21 +16,22 @@ void Cube::update(float deltaTime) {
     // No component to update
 }
 
-void Cube::render() {
-    // Matrix calculations
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(fov / 2), static_cast<float>(display_w) / static_cast<float>(display_h),
-                                  0.1f, 100.0f);
-
+void Cube::render(glm::mat4 cameraProjectionMatrix, glm::mat4 cameraViewMatrix) {
     //Shader use
     shader.use();
-    shader.setMat4("model",
-                   glm::translate(model, glm::vec3(-transform.positionX, -transform.positionY, -transform.positionZ)));
-    shader.setMat4("view", view);
-    shader.setMat4("projection", projection);
+    shader.setMat4("model", glm::translate(model, transform.position));
+    shader.setMat4("view", cameraViewMatrix);
+    shader.setMat4("projection", cameraProjectionMatrix);
 
     // Draw
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+}
+
+void Cube::updateModelMatrix() {
+    model = glm::mat4(1.0F);
+    model = glm::rotate(model, glm::radians(transform.rotation.x), glm::vec3(1.0F, 0.0F, 0.0F));
+    model = glm::rotate(model, glm::radians(transform.rotation.y), glm::vec3(0.0F, 1.0F, 0.0F));
+    model = glm::rotate(model, glm::radians(transform.rotation.z), glm::vec3(0.0F, 0.0F, 1.0F));
+    model = glm::scale(model, transform.scale);
 }
