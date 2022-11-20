@@ -54,9 +54,9 @@ public:
 
     ~ParticleGenerator();
 
-    void update(float deltaTime);
+    void update(float deltaTime) override;
 
-    void render(int display_w, int display_h, glm::mat4 view, float fov);
+    void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
 private:
     int findUnusedParticle();

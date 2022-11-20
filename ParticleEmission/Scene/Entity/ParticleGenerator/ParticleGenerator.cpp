@@ -1,6 +1,8 @@
 #include "ParticleGenerator.h"
 
-ParticleGenerator::ParticleGenerator() {
+ParticleGenerator::ParticleGenerator() : Entity(
+        "ParticleGeneratorVertexShader.vert",
+        "ParticleGeneratorFragmentShader.frag") {
     init();
 }
 
@@ -98,7 +100,7 @@ void ParticleGenerator::update(float deltaTime) {
     }
 }
 
-void ParticleGenerator::render(int display_w, int display_h, glm::mat4 view, float fov) {
+void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     glBindBuffer(GL_ARRAY_BUFFER, particlesPositionBuffer);
     glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * 4 * sizeof(GLfloat), nullptr, GL_STREAM_DRAW);
     glBufferSubData(GL_ARRAY_BUFFER, 0, particlesCount * sizeof(GLfloat) * 4, gParticlePositionData);

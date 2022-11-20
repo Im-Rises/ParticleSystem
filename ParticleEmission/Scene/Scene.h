@@ -13,7 +13,7 @@ private:
     Cube cube;
 
 public:
-    Scene();
+    Scene(int display_w, int display_h);
 
     ~Scene();
 

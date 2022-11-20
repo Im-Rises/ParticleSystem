@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene() {
+Scene::Scene(int display_w, int display_h) : camera(display_w, display_h) {
 
 }
 

@@ -7,22 +7,23 @@
 
 class Entity {
 protected:
-    Transform transform;
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 scale;
+    glm::mat4 modelMatrix;
+
     Shader shader;
-    unsigned int VAO, VBO;
 
 public:
     Entity(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
 
-    void create();
-
     ~Entity();
-
-    void destroy();
 
     virtual void update(float deltaTime) = 0;
 
-    virtual void render(glm::mat4 cameraProjectionMatrix, glm::mat4 cameraViewMatrix) = 0;
+    virtual void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) = 0;
+
+    void updateModelMatrix();
 };
 
 
