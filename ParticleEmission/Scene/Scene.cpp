@@ -9,9 +9,11 @@ Scene::~Scene() {
 }
 
 void Scene::update(float deltaTime) {
-    particleGenerator.update(deltaTime);
+//    particleGenerator.update(deltaTime);
+    cube.update(deltaTime);
 }
 
 void Scene::render() {
-    particleGenerator.render();
+//    particleGenerator.render();
+    cube.render();
 }

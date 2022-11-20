@@ -88,6 +88,9 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    // Enable Depth Test
+    glEnable(GL_DEPTH_TEST);
 }
 
 ParticleEmissionLauncher::~ParticleEmissionLauncher() {
@@ -163,4 +166,9 @@ void ParticleEmissionLauncher::updateScreen() {
     }
 
     glfwSwapBuffers(window);
+}
+
+void ParticleEmissionLauncher::toggleWireframeMode() {
+//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

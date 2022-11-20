@@ -5,7 +5,6 @@
 
 #include "Scene/Scene.h"
 
-
 #define PROJECT_NAME "Particle Emission 3D"
 
 #define VERSION_MAJOR "0"
@@ -46,6 +45,9 @@ private:
     void updateGame(float deltaTime);
 
     void updateScreen();
+
+private:
+    void toggleWireframeMode();
 };
 
 
