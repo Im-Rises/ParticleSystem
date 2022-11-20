@@ -1,7 +1,7 @@
-﻿#include "ParticleEmission.h"
+﻿#include "ParticleEmissionUi.h"
 
 int main(int, char**) {
-    ParticleEmission app;
+    ParticleEmissionUi app;
     app.start();
     return 0;
 }

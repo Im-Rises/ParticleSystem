@@ -1,9 +1,11 @@
-#include "ParticleEmission.h"
+#include "ParticleEmissionUi.h"
 
 #include <cstdio>
+#include <glad/glad.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
+
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -19,7 +21,7 @@ static void glfw_error_callback(int error, const char* description) {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
-ParticleEmission::ParticleEmission() {
+ParticleEmissionUi::ParticleEmissionUi() {
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -55,6 +57,10 @@ ParticleEmission::ParticleEmission() {
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
+    // Initialize OpenGL loader
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        exit(1);
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -84,7 +90,7 @@ ParticleEmission::ParticleEmission() {
     ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
-ParticleEmission::~ParticleEmission() {
+ParticleEmissionUi::~ParticleEmissionUi() {
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -94,7 +100,7 @@ ParticleEmission::~ParticleEmission() {
     glfwTerminate();
 }
 
-void ParticleEmission::start() {
+void ParticleEmissionUi::start() {
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;

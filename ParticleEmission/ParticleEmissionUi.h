@@ -3,14 +3,14 @@
 
 struct GLFWwindow;
 
-class ParticleEmission {
+class ParticleEmissionUi {
 private:
     GLFWwindow* window;
 
 public:
-    ParticleEmission();
+    ParticleEmissionUi();
 
-    ~ParticleEmission();
+    ~ParticleEmissionUi();
 
     void start();
 };
