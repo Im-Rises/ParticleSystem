@@ -10,11 +10,15 @@ class Cube : public Entity {
 private:
     unsigned int VAO, VBO;
 
-    const std::array<float, 12> vertices = {
-            -0.5F, -0.5F, 0.0F,
-            0.5F, -0.5F, 0.0F,
-            -0.5F, 0.5F, 0.0F,
-            0.5F, 0.5F, 0.0F,
+    const std::array<float, 18> vertices = {
+            // first triangle
+            0.5f, 0.5f, 0.0f,  // top right
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f, 0.5f, 0.0f,  // top left
+            // second triangle
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f, -0.5f, 0.0f,  // bottom left
+            -0.5f, 0.5f, 0.0f   // top left
     };
 
 public:
