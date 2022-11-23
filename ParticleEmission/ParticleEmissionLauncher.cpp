@@ -169,6 +169,9 @@ void ParticleEmissionLauncher::updateScreen() {
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
                  clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    scene->render();
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     ImGuiIO &io = ImGui::GetIO();
