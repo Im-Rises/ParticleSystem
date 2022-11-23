@@ -5,7 +5,7 @@
 Entity::Entity(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) : shader(
         vertexShaderPath.c_str(),
         fragmentShaderPath.c_str()) {
-    position = glm::vec3(0.0F, 0.0F, 0.0F);
+    position = glm::vec3(-1.0F, 0.0F, 0.0F);
     rotation = glm::vec3(0.0F, 0.0F, 0.0F);
     scale = glm::vec3(1.0F, 1.0F, 1.0F);
     updateModelMatrix();
