@@ -9,12 +9,12 @@ Scene::~Scene() {
 }
 
 void Scene::update(float deltaTime) {
-//    particleGenerator.update(deltaTime);
+    particleGenerator.update(deltaTime);
     cube.update(deltaTime);
 }
 
 void Scene::render() {
-//    particleGenerator.render(camera.getViewMatrix(), camera.getProjectionMatrix());
+    particleGenerator.render(camera.getViewMatrix(), camera.getProjectionMatrix());
     cube.render(camera.getViewMatrix(), camera.getProjectionMatrix());
 }
 
