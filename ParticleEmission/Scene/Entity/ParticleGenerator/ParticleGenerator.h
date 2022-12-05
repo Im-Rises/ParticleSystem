@@ -1,3 +1,4 @@
+/*
 #ifndef PARTICLEGENERATOR_H
 #define PARTICLEGENERATOR_H
 
@@ -5,7 +6,20 @@
 #include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
 
-#define MAX_PARTICLES 10000
+#define MaxParticles 10000
+
+struct Particle {
+    glm::vec3 pos, speed;
+    unsigned char r, g, b, a; // Color
+    float size, angle, weight;
+    float life; // Remaining life of the particle. if <0 : dead and unused.
+    float cameradistance; // *Squared* distance to the camera. if dead : -1.0f
+
+    bool operator<(const Particle &that) const {
+        // Sort in reverse order : far particles drawn first.
+        return this->cameradistance > that.cameradistance;
+    }
+};
 
 class ParticleGenerator : public Entity {
 private:
@@ -24,28 +38,8 @@ private:
             0.5F,
             0.0F,
     };
-    GLfloat gParticlePositionData[MAX_PARTICLES * 4];
-    GLfloat gParticleColorData[MAX_PARTICLES * 4];
-
-    // OpenGL buffer
-    GLuint billboardVertexBuffer;
-    GLuint particlesPositionBuffer;
-    GLuint particlesColorBuffer;
-
-    // Particles
-    GLuint particlesCount = 0;
-
-    struct Particle {
-        glm::vec3 pos, speed;
-        unsigned char r, g, b, a;
-        float size, angle, weight;
-        float life;
-        float cameraDistance;
-    };
-
-    Particle particlesContainer[MAX_PARTICLES];
-
-    int lastUsedParticle = 0;
+    Particle ParticlesContainer[MaxParticles];
+    int LastUsedParticle = 0;
 
 public:
     ParticleGenerator();
@@ -58,9 +52,14 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
+    int FindUnusedParticle();
+
+    void SortParticles();
+
 private:
     int findUnusedParticle();
 };
 
 
 #endif // PARTICLEGENERATOR_H
+*/

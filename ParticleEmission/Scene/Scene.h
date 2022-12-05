@@ -9,7 +9,7 @@
 class Scene {
 private:
     Camera camera;
-    ParticleGenerator particleGenerator;
+//    ParticleGenerator particleGenerator;
     Cube cube;
 
 public:

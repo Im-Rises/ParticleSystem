@@ -10,6 +10,7 @@ protected:
     glm::vec3 position;
     glm::vec3 rotation;
     glm::vec3 scale;
+
     glm::mat4 modelMatrix;
 
     Shader shader;

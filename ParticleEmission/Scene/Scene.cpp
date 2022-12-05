@@ -14,7 +14,7 @@ void Scene::update(float deltaTime) {
 }
 
 void Scene::render() {
-//    particleGenerator.render();
+//    particleGenerator.render(camera.getViewMatrix(), camera.getProjectionMatrix());
     cube.render(camera.getViewMatrix(), camera.getProjectionMatrix());
 }
 
