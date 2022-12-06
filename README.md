@@ -9,6 +9,7 @@ This is a simple UI for the Particle Emission project.
 opengl-tutorial:  
 <http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/>
 
+<!--
 ECS System tutorials:  
 <https://github.com/SanderMertens/ecs-faq>  
 <https://ajmmertens.medium.com/building-an-ecs-1-where-are-my-entities-and-components-63d07c7da742>
@@ -18,6 +19,7 @@ ECS System tutorials:
 Example of ECS system:  
 <https://www.minecraft.net/en-us/attribution>
 <https://github.com/skypjack/entt>
+-->
 
 ## Contributors
 

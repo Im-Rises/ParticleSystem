@@ -1,17 +1,29 @@
 #ifndef PARTICLEGENERATOR_H
 #define PARTICLEGENERATOR_H
 
-#include "../Entity.h"
+#include <vector>
 #include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
 
+#include "../Entity.h"
 
 class ParticleGenerator : public Entity {
 private:
-/*    // OpenGL buffer data
-    static inline constexpr GLfloat g_vertex_buffer_data[] = {
-            -0.5F,
-*/
+    float quadVertices[30] = {
+            // positions     // colors
+            -0.05f, 0.05f, 1.0f, 0.0f, 0.0f,
+            0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
+            -0.05f, -0.05f, 0.0f, 0.0f, 1.0f,
+
+            -0.05f, 0.05f, 1.0f, 0.0f, 0.0f,
+            0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
+            0.05f, 0.05f, 0.0f, 1.0f, 1.0f
+    };
+
+    glm::vec2 translations[100];
+
+    unsigned int instanceVBO;
+    unsigned int quadVAO, quadVBO;
 
 public:
     ParticleGenerator();
@@ -26,6 +38,10 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
+//private:
+//    unsigned int FirstUnusedParticle();
+//
+//    void RespawnParticle(Particle &particle, Entity &object, glm::vec2 offset);
 };
 
 #endif // PARTICLEGENERATOR_H
