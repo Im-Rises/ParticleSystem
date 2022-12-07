@@ -9,6 +9,11 @@ This is a simple UI for the Particle Emission project.
 opengl-tutorial:  
 <http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/>
 
+learnopengl:  
+<https://learnopengl.com/In-Practice/2D-Game/Particles>
+
+levelup:  
+<https://levelup.gitconnected.com/how-to-create-instanced-particles-in-opengl-24cb089911e2>
 <!--
 ECS System tutorials:  
 <https://github.com/SanderMertens/ecs-faq>  
