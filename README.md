@@ -6,14 +6,18 @@ This is a simple UI for the Particle Emission project.
 
 ## Documentation
 
-opengl-tutorial:  
+opengl-tutorial (OpenGL tutorial):  
 <http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/>
 
-learnopengl:  
+learnopengl (OpenGL tutorial):  
 <https://learnopengl.com/In-Practice/2D-Game/Particles>
 
-levelup:  
+levelup (Particle Generation):  
 <https://levelup.gitconnected.com/how-to-create-instanced-particles-in-opengl-24cb089911e2>
+
+unrealistic.dev (Change CMake working directory):  
+<https://unrealistic.dev/posts/setting-debug-parameters-with-cmake-tools-for-visual-studio>
+
 <!--
 ECS System tutorials:  
 <https://github.com/SanderMertens/ecs-faq>  
