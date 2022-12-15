@@ -148,8 +148,8 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Window info");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", deltaTime, 1.0f / deltaTime);
-//        ImGui::Text("Window width: %d", windowWidth);
-//        ImGui::Text("Window height: %d", windowHeight);
+        ImGui::Text("Window width: %d", display_w);
+        ImGui::Text("Window height: %d", display_h);
         ImGui::End();
     }
 }
