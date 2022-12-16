@@ -18,6 +18,9 @@ levelup (Particle Generation):
 unrealistic.dev (Change CMake working directory):  
 <https://unrealistic.dev/posts/setting-debug-parameters-with-cmake-tools-for-visual-studio>
 
+stb (stb_image):  
+<https://github.com/nothings/stb/blob/master/stb_image.h>
+
 <!--
 ECS System tutorials:  
 <https://github.com/SanderMertens/ecs-faq>  
