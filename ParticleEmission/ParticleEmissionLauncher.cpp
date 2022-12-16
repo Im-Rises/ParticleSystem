@@ -6,6 +6,8 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
+#include "InputManager.h"
+
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -60,7 +62,7 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
 
 //    // Initialize GLFW callbacks
 //    glfwSetWindowUserPointer(window, this);
-//    glfwSetKeyCallback(window, InputManager::key_callback);
+    glfwSetKeyCallback(window, InputManager::key_callback);
 //    glfwSetScrollCallback(window, InputManager::scroll_callback);
 //    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
 //    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
@@ -137,6 +139,7 @@ void ParticleEmissionLauncher::start() {
 
 void ParticleEmissionLauncher::handleInputs() {
     glfwPollEvents();
+
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {
