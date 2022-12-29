@@ -6,9 +6,22 @@ This is a simple UI for the Particle Emission project.
 
 ## Documentation
 
-opengl-tutorial:  
+opengl-tutorial (OpenGL tutorial):  
 <http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/>
 
+learnopengl (OpenGL tutorial):  
+<https://learnopengl.com/In-Practice/2D-Game/Particles>
+
+levelup (Particle Generation):  
+<https://levelup.gitconnected.com/how-to-create-instanced-particles-in-opengl-24cb089911e2>
+
+unrealistic.dev (Change CMake working directory):  
+<https://unrealistic.dev/posts/setting-debug-parameters-with-cmake-tools-for-visual-studio>
+
+stb (stb_image):  
+<https://github.com/nothings/stb/blob/master/stb_image.h>
+
+<!--
 ECS System tutorials:  
 <https://github.com/SanderMertens/ecs-faq>  
 <https://ajmmertens.medium.com/building-an-ecs-1-where-are-my-entities-and-components-63d07c7da742>
@@ -18,6 +31,7 @@ ECS System tutorials:
 Example of ECS system:  
 <https://www.minecraft.net/en-us/attribution>
 <https://github.com/skypjack/entt>
+-->
 
 ## Contributors
 

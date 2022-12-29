@@ -1,6 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.8)
-
-include_directories("${CMAKE_SOURCE_DIR}/dependencies")
+﻿include_directories("${CMAKE_SOURCE_DIR}/dependencies")
 include_directories("${CMAKE_SOURCE_DIR}/dependencies/glad/include")
 include_directories("${CMAKE_SOURCE_DIR}/dependencies/glfw/include")
 
@@ -24,3 +22,4 @@ else ()
     message(FATAL_ERROR "OS not configured in CMakeLists.txt")
 endif ()
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")

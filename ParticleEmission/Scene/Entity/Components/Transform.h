@@ -1,7 +1,6 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-
 #include "glm/vec3.hpp"
 
 class Transform {

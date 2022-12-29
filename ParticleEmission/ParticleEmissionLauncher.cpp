@@ -6,6 +6,8 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
+#include "InputManager.h"
+
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -39,16 +41,16 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
     // GL 3.2 + GLSL 150
     const char* glsl_version = "#version 150";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
 #else
     // GL 3.0 + GLSL 130
     const char *glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
     // Create window with graphics context
@@ -60,7 +62,7 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
 
 //    // Initialize GLFW callbacks
 //    glfwSetWindowUserPointer(window, this);
-//    glfwSetKeyCallback(window, InputManager::key_callback);
+    glfwSetKeyCallback(window, InputManager::key_callback);
 //    glfwSetScrollCallback(window, InputManager::scroll_callback);
 //    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
 //    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
@@ -137,6 +139,7 @@ void ParticleEmissionLauncher::start() {
 
 void ParticleEmissionLauncher::handleInputs() {
     glfwPollEvents();
+
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {
@@ -148,8 +151,8 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Window info");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", deltaTime, 1.0f / deltaTime);
-//        ImGui::Text("Window width: %d", windowWidth);
-//        ImGui::Text("Window height: %d", windowHeight);
+        ImGui::Text("Window width: %d", display_w);
+        ImGui::Text("Window height: %d", display_h);
         ImGui::End();
     }
 }

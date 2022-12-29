@@ -3,8 +3,7 @@
 
 #include "Entity/ParticleGenerator/ParticleGenerator.h"
 #include "Entity/Cube/Cube.h"
-#include "Entity/Camera/Camera.h"
-
+#include "Camera/Camera.h"
 
 class Scene {
 private:
