@@ -6,18 +6,19 @@
 
 class Camera {
 private:
+    glm::mat4 viewMatrix;
+    glm::mat4 projectionMatrix;
+
+    glm::vec3 movementBuffer;
+    glm::vec3 rotationBuffer;
+
+public:
     float fov = 90.0F;
     float nearPlane = 0.1F;
     float farPlane = 100.0F;
 
-    glm::mat4 viewMatrix;
-    glm::mat4 projectionMatrix;
-
     glm::vec3 position;
     glm::vec3 rotation;
-
-    glm::vec3 movementBuffer;
-    glm::vec3 rotationBuffer;
 
     float movementSpeed = 1.0F;
     float rotationSpeed = 1.0F;

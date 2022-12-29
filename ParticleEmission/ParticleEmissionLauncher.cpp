@@ -161,31 +161,31 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
 
         ImGui::Text("FOV: ");
         ImGui::SameLine();
-//        ImGui::InputFloat("##fov", );
+        ImGui::InputFloat("##fov", &scene->camera.fov);
 
         ImGui::Text("Near plane: ");
         ImGui::SameLine();
-//        ImGui::InputFloat("##near",);
+        ImGui::InputFloat("##near", &scene->camera.nearPlane);
 
         ImGui::Text("Far plane: ");
         ImGui::SameLine();
-//        ImGui::InputFloat("##far",);
+        ImGui::InputFloat("##far", &scene->camera.farPlane);
 
         ImGui::Text("Camera speed: ");
         ImGui::SameLine();
-//        ImGui::InputFloat("##speed",);
+        ImGui::InputFloat("##speed", &scene->camera.movementSpeed);
 
         ImGui::Text("Camera sensitivity: ");
         ImGui::SameLine();
-//        ImGui::InputFloat("##sensitivity",);
+        ImGui::InputFloat("##sensitivity", &scene->camera.rotationSpeed);
 
         ImGui::Text("Position: ");
         ImGui::SameLine();
-//        ImGui::InputFloat3("##position",);
+        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
 
         ImGui::Text("Rotation: ");
         ImGui::SameLine();
-//        ImGui::InputFloat3("##rotation",);
+        ImGui::InputFloat3("##rotation", (float *) &scene->camera.rotation);
 
         static bool wireframe = false;
         ImGui::Checkbox("Wireframe", &wireframe);
