@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera(int display_w, int display_h) {
-    position = glm::vec3(0.0F, 0.0F, -5.0F);
+    position = glm::vec3(0.0F, 0.0F, -1.0F);
     updateViewMatrix();
     updateProjectionMatrix(display_w, display_h);
 }
