@@ -1,11 +1,17 @@
-#ifndef PARTICLEGENERATOR_H
-#define PARTICLEGENERATOR_H
+#ifndef PARTICLE_GENERATOR_H
+#define PARTICLE_GENERATOR_H
 
 #include <vector>
 #include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
 
 #include "../Entity.h"
+
+/*
+ * Two solutions:
+ * 1. Create separate arrays for, position, color, etc...
+ * 2. Create a single array base on a struct containing all the data
+ */
 
 class ParticleGenerator : public Entity {
 private:
@@ -44,4 +50,4 @@ public:
 //    void RespawnParticle(Particle &particle, Entity &object, glm::vec2 offset);
 };
 
-#endif // PARTICLEGENERATOR_H
+#endif // PARTICLE_GENERATOR_H
