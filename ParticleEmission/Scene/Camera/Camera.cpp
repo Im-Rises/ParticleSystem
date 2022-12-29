@@ -12,11 +12,7 @@ Camera::~Camera() {
 }
 
 void Camera::updateViewMatrix() {
-    viewMatrix = glm::mat4(1.0F);
-    viewMatrix = glm::translate(viewMatrix, position);
-//    viewMatrix = glm::rotate(viewMatrix, glm::radians(rotation.x), glm::vec3(1.0F, 0.0F, 0.0F));
-//    viewMatrix = glm::rotate(viewMatrix, glm::radians(rotation.y), glm::vec3(0.0F, 1.0F, 0.0F));
-//    viewMatrix = glm::rotate(viewMatrix, glm::radians(rotation.z), glm::vec3(0.0F, 0.0F, 1.0F));
+    viewMatrix = glm::lookAt(position, position + cameraFront, cameraUp);
 }
 
 void Camera::updateProjectionMatrix(int display_w, int display_h) {
