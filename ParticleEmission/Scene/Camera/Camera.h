@@ -16,14 +16,25 @@ private:
     glm::vec3 position;
     glm::vec3 rotation;
 
+    glm::vec3 movementBuffer;
+    glm::vec3 rotationBuffer;
+
+    float movementSpeed = 1.0F;
+    float rotationSpeed = 1.0F;
+
 public:
     Camera(int display_w, int display_h);
 
     ~Camera();
 
+private:
     void updateViewMatrix();
 
+public:
     void updateProjectionMatrix(int display_w, int display_h);
+
+public:
+    void update(float deltaTime);
 
 public:
     [[nodiscard]] glm::mat4 getViewMatrix() const;

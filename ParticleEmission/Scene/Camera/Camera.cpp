@@ -23,6 +23,16 @@ void Camera::updateProjectionMatrix(int display_w, int display_h) {
                                         farPlane);
 }
 
+void Camera::update(float deltaTime) {
+    position += movementBuffer * movementSpeed * deltaTime;
+    rotation += rotationBuffer * rotationSpeed * deltaTime;
+
+    updateViewMatrix();
+
+    movementBuffer = glm::vec3(0.0F);
+    rotationBuffer = glm::vec3(0.0F);
+}
+
 glm::mat4 Camera::getViewMatrix() const {
     return viewMatrix;
 }
