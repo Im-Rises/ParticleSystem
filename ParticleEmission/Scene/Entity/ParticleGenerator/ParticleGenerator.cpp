@@ -16,7 +16,7 @@ void ParticleGenerator::init() {
             glm::vec3 translation;
             translation.x = (float) x / 10.0f + offset;
             translation.y = (float) y / 10.0f + offset;
-            translation.z = -1.0f;
+            translation.z = 0.0f;
             translations[index++] = translation;
         }
     }

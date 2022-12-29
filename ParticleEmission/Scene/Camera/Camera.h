@@ -10,18 +10,21 @@ private:
     glm::mat4 projectionMatrix;
 
     glm::vec3 movementBuffer;
-    glm::vec3 rotationBuffer;
 
 public:
+    float movementSpeed = 1.0F;
+    float rotationSpeed = 1.0F;
+
     float fov = 90.0F;
     float nearPlane = 0.1F;
     float farPlane = 100.0F;
 
-    glm::vec3 position;
-    glm::vec3 rotation;
+    bool constrainPitch = true;
+    float yaw = -90.0f;
+    float pitch = 0.0f;
 
-    float movementSpeed = 1.0F;
-    float rotationSpeed = 1.0F;
+    glm::vec3 position;
+//    glm::vec3 rotation;
 
 public:
     Camera(int display_w, int display_h);

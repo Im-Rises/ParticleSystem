@@ -159,34 +159,7 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Camera settings");
 
-        ImGui::Text("FOV: ");
-        ImGui::SameLine();
-        ImGui::InputFloat("##fov", &scene->camera.fov);
-
-        ImGui::Text("Near plane: ");
-        ImGui::SameLine();
-        ImGui::InputFloat("##near", &scene->camera.nearPlane);
-
-        ImGui::Text("Far plane: ");
-        ImGui::SameLine();
-        ImGui::InputFloat("##far", &scene->camera.farPlane);
-
-        ImGui::Text("Camera speed: ");
-        ImGui::SameLine();
-        ImGui::InputFloat("##speed", &scene->camera.movementSpeed);
-
-        ImGui::Text("Camera sensitivity: ");
-        ImGui::SameLine();
-        ImGui::InputFloat("##sensitivity", &scene->camera.rotationSpeed);
-
-        ImGui::Text("Position: ");
-        ImGui::SameLine();
-        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
-
-        ImGui::Text("Rotation: ");
-        ImGui::SameLine();
-        ImGui::InputFloat3("##rotation", (float *) &scene->camera.rotation);
-
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "View settings");
         static bool wireframe = false;
         ImGui::Checkbox("Wireframe", &wireframe);
         if (wireframe) {
@@ -194,6 +167,30 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
+        ImGui::NewLine();
+
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Camera settings");
+        ImGui::Text("FOV:");
+        ImGui::InputFloat("##fov", &scene->camera.fov);
+
+        ImGui::Text("Near plane:");
+        ImGui::InputFloat("##near", &scene->camera.nearPlane);
+
+        ImGui::Text("Far plane:");
+        ImGui::InputFloat("##far", &scene->camera.farPlane);
+
+        ImGui::Text("Speed:");
+        ImGui::InputFloat("##speed", &scene->camera.movementSpeed);
+
+        ImGui::Text("Sensitivity: ");
+
+        ImGui::InputFloat("##sensitivity", &scene->camera.rotationSpeed);
+
+        ImGui::Text("Position:");
+        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
+
+//        ImGui::Text("Rotation:");
+//        ImGui::InputFloat3("##rotation", (float *) &scene->camera.rotation);
 
         ImGui::End();
     }
