@@ -67,12 +67,12 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
 //    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
 //    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
 
-//    // Center window
-//    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-//    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-//    auto xPos = mode->width / 2 - windowWidth / 2;
-//    auto yPos = mode->height / 2 - windowHeight / 2;
-//    glfwSetWindowPos(window, xPos, yPos);
+    // Center window
+    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+    auto xPos = (mode->width - display_w) / 2;
+    auto yPos = (mode->height - display_h) / 2;
+    glfwSetWindowPos(window, xPos, yPos);
 
     // Initialize OpenGL loader
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
@@ -155,6 +155,48 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
         ImGui::Text("Window height: %d", display_h);
         ImGui::End();
     }
+
+    {
+        ImGui::Begin("Camera settings");
+
+        ImGui::Text("FOV: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat("##fov", );
+
+        ImGui::Text("Near plane: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat("##near",);
+
+        ImGui::Text("Far plane: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat("##far",);
+
+        ImGui::Text("Camera speed: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat("##speed",);
+
+        ImGui::Text("Camera sensitivity: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat("##sensitivity",);
+
+        ImGui::Text("Position: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat3("##position",);
+
+        ImGui::Text("Rotation: ");
+        ImGui::SameLine();
+//        ImGui::InputFloat3("##rotation",);
+
+        static bool wireframe = false;
+        ImGui::Checkbox("Wireframe", &wireframe);
+        if (wireframe) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+
+        ImGui::End();
+    }
 }
 
 void ParticleEmissionLauncher::updateGame(float deltaTime) {
@@ -185,7 +227,7 @@ void ParticleEmissionLauncher::updateScreen() {
     glfwSwapBuffers(window);
 }
 
-void ParticleEmissionLauncher::toggleWireframeMode() {
+//void ParticleEmissionLauncher::toggleWireframeMode() {
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
+//}

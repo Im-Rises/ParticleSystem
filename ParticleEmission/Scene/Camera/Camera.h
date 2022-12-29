@@ -36,6 +36,31 @@ public:
 public:
     void update(float deltaTime);
 
+//public:
+//    void moveForward() {
+//        movementBuffer.z = -1.0F;
+//    }
+//
+//    void moveBackward() {
+//        movementBuffer.z = +1.0F;
+//    }
+//
+//    void moveLeft() {
+//        movementBuffer.x = -1.0F;
+//    }
+//
+//    void moveRight() {
+//        movementBuffer.x = +1.0F;
+//    }
+//
+//    void moveUp() {
+//        movementBuffer.y = +1.0F;
+//    }
+//
+//    void moveDown() {
+//        movementBuffer.y = -1.0F;
+//    }
+
 public:
     [[nodiscard]] glm::mat4 getViewMatrix() const;
 
