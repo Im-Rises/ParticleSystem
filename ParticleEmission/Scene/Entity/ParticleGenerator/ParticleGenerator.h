@@ -26,7 +26,7 @@ private:
             0.05f, 0.05f, 0.0f, 1.0f, 1.0f
     };
 
-    glm::vec2 translations[100];
+    glm::vec3 translations[100];
 
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO;

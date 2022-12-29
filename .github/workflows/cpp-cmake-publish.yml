@@ -34,11 +34,9 @@ jobs:
     name: Build ubuntu
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Install libs
         run: |
           sudo apt-get install libglfw3-dev
-          sudo apt install xorg-dev
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       - name: Build

@@ -13,9 +13,10 @@ void ParticleGenerator::init() {
     float offset = 0.1f;
     for (int y = -10; y < 10; y += 2) {
         for (int x = -10; x < 10; x += 2) {
-            glm::vec2 translation;
+            glm::vec3 translation;
             translation.x = (float) x / 10.0f + offset;
             translation.y = (float) y / 10.0f + offset;
+            translation.z = 0.0f;
             translations[index++] = translation;
         }
     }
@@ -57,7 +58,13 @@ void ParticleGenerator::update(float deltaTime) {
 }
 
 void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
+    // Shader
     shader.use();
+    shader.setMat4("model", modelMatrix);
+    shader.setMat4("view", cameraViewMatrix);
+    shader.setMat4("projection", cameraProjectionMatrix);
+
+    // Draw
     glBindVertexArray(quadVAO);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 100); // 100 triangles of 6 vertices each
     glBindVertexArray(0);
