@@ -6,13 +6,16 @@
 
 class Camera {
 private:
-    // Define to right-handed coordinate system
-    const glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    // Define the camera Up
     const glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
     // Matrix transformations
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
+
+
+    glm::vec3 cameraFrontBuffer = glm::vec3(0.0f, 0.0f, -1.0f);
+
 
 public:
     // Camera attributes

@@ -12,7 +12,7 @@ Camera::~Camera() {
 }
 
 void Camera::updateViewMatrix() {
-    viewMatrix = glm::lookAt(position, position + cameraFront, cameraUp);
+    viewMatrix = glm::lookAt(position, position + cameraFrontBuffer, cameraUp);
 }
 
 void Camera::updateProjectionMatrix(int display_w, int display_h) {

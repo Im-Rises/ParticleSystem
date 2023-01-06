@@ -170,6 +170,17 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
         ImGui::NewLine();
 
         ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Camera settings");
+
+        ImGui::Text("Position:");
+        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
+
+        ImGui::Text("Pitch:");
+        ImGui::Checkbox("Pitch constrained", &scene->camera.constrainPitch);
+        ImGui::InputFloat("##pitch", &scene->camera.pitch);
+
+        ImGui::Text("Yaw:");
+        ImGui::InputFloat("##yaw", &scene->camera.yaw);
+
         ImGui::Text("FOV:");
         ImGui::InputFloat("##fov", &scene->camera.fov);
 
@@ -183,14 +194,7 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
         ImGui::InputFloat("##speed", &scene->camera.movementSpeed);
 
         ImGui::Text("Sensitivity: ");
-
         ImGui::InputFloat("##sensitivity", &scene->camera.rotationSpeed);
-
-        ImGui::Text("Position:");
-        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
-
-//        ImGui::Text("Rotation:");
-//        ImGui::InputFloat3("##rotation", (float *) &scene->camera.rotation);
 
         ImGui::End();
     }
