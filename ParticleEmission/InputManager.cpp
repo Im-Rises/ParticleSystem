@@ -26,3 +26,27 @@ void InputManager::key_callback(GLFWwindow *window, int key, int scancode, int a
 //        }
 //    }
 }
+
+bool InputManager::isForwardKeyPressed(GLFWwindow *window) {
+    return glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+}
+
+bool InputManager::isBackwardKeyPressed(GLFWwindow *window) {
+    return glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
+}
+
+bool InputManager::isLeftKeyPressed(GLFWwindow *window) {
+    return glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
+}
+
+bool InputManager::isRightKeyPressed(GLFWwindow *window) {
+    return glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
+}
+
+bool InputManager::isUpKeyPressed(GLFWwindow *window) {
+    return glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+}
+
+bool InputManager::isDownKeyPressed(GLFWwindow *window) {
+    return glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS;
+}

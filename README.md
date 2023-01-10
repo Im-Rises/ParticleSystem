@@ -6,11 +6,14 @@ This is a simple UI for the Particle Emission project.
 
 ## Documentation
 
+learnopengl (OpenGL tutorial):  
+<https://learnopengl.com/In-Practice/2D-Game/Particles>
+
 opengl-tutorial (OpenGL tutorial):  
 <http://www.opengl-tutorial.org/intermediate-tutorials/billboards-particles/particles-instancing/>
 
-learnopengl (OpenGL tutorial):  
-<https://learnopengl.com/In-Practice/2D-Game/Particles>
+3dgep:  
+<https://www.3dgep.com/simulating-particle-effects-using-opengl/>
 
 levelup (Particle Generation):  
 <https://levelup.gitconnected.com/how-to-create-instanced-particles-in-opengl-24cb089911e2>

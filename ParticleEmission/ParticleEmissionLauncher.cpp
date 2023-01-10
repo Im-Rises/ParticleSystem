@@ -140,6 +140,24 @@ void ParticleEmissionLauncher::start() {
 void ParticleEmissionLauncher::handleInputs() {
     glfwPollEvents();
 
+    /* Read inputs and update states (buffers) */
+    if (InputManager::isLeftKeyPressed(window))
+        scene->camera.moveCameraLeft();
+
+    if (InputManager::isRightKeyPressed(window))
+        scene->camera.moveCameraRight();
+
+    if (InputManager::isBackwardKeyPressed(window))
+        scene->camera.moveCameraBackward();
+
+    if (InputManager::isForwardKeyPressed(window))
+        scene->camera.moveCameraForward();
+
+    if (InputManager::isUpKeyPressed(window))
+        scene->camera.moveCameraUp();
+
+    if (InputManager::isDownKeyPressed(window))
+        scene->camera.moveCameraDown();
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {
