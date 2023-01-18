@@ -142,22 +142,22 @@ void ParticleEmissionLauncher::handleInputs() {
 
     /* Read inputs and update states (buffers) */
     if (InputManager::isLeftKeyPressed(window))
-        scene->camera.moveCameraLeft();
+        scene->camera.setMovementBuffer(glm::vec3(-1.0F, 0.0F, 0.0F));
 
-    if (InputManager::isRightKeyPressed(window))
-        scene->camera.moveCameraRight();
-
-    if (InputManager::isBackwardKeyPressed(window))
-        scene->camera.moveCameraBackward();
-
-    if (InputManager::isForwardKeyPressed(window))
-        scene->camera.moveCameraForward();
-
-    if (InputManager::isUpKeyPressed(window))
-        scene->camera.moveCameraUp();
-
-    if (InputManager::isDownKeyPressed(window))
-        scene->camera.moveCameraDown();
+//    if (InputManager::isRightKeyPressed(window))
+//        scene->camera.moveCameraRight();
+//
+//    if (InputManager::isBackwardKeyPressed(window))
+//        scene->camera.moveCameraBackward();
+//
+//    if (InputManager::isForwardKeyPressed(window))
+//        scene->camera.moveCameraForward();
+//
+//    if (InputManager::isUpKeyPressed(window))
+//        scene->camera.moveCameraUp();
+//
+//    if (InputManager::isDownKeyPressed(window))
+//        scene->camera.moveCameraDown();
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {

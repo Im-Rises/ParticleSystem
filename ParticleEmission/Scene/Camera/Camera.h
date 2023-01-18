@@ -39,6 +39,9 @@ public:
 
     ~Camera();
 
+public:
+    void update(float deltaTime);
+
 private:
     void updateViewMatrix();
 
@@ -46,7 +49,7 @@ public:
     void updateProjectionMatrix(int display_w, int display_h);
 
 public:
-    void update(float deltaTime);
+    void setMovementBuffer(glm::vec3 movement);
 
 public:
     [[nodiscard]] glm::mat4 getViewMatrix() const;

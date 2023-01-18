@@ -24,18 +24,6 @@ unrealistic.dev (Change CMake working directory):
 stb (stb_image):  
 <https://github.com/nothings/stb/blob/master/stb_image.h>
 
-<!--
-ECS System tutorials:  
-<https://github.com/SanderMertens/ecs-faq>  
-<https://ajmmertens.medium.com/building-an-ecs-1-where-are-my-entities-and-components-63d07c7da742>
-<https://skypjack.github.io/2019-02-14-ecs-baf-part-1/>
-<https://austinmorlan.com/posts/entity_component_system/>
-
-Example of ECS system:  
-<https://www.minecraft.net/en-us/attribution>
-<https://github.com/skypjack/entt>
--->
-
 ## Contributors
 
 Quentin MOREL:
