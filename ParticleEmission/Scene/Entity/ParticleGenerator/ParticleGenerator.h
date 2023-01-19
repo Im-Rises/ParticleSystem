@@ -4,6 +4,7 @@
 #include <vector>
 #include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
+#include <array>
 
 #include "../Entity.h"
 
@@ -15,18 +16,18 @@
 
 class ParticleGenerator : public Entity {
 private:
-    float quadVertices[30] = {
-            // positions     // colors
-            -0.05f, 0.05f, 1.0f, 0.0f, 0.0f,
-            0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
-            -0.05f, -0.05f, 0.0f, 0.0f, 1.0f,
+    const float quadVertices[30] = {
+            // positions
+            -0.05f, 0.05f, 0.0f,
+            0.05f, -0.05f, 0.0f,
+            -0.05f, -0.05f, 0.0f,
 
-            -0.05f, 0.05f, 1.0f, 0.0f, 0.0f,
-            0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
-            0.05f, 0.05f, 0.0f, 1.0f, 1.0f
+            -0.05f, 0.05f, 0.0f,
+            0.05f, -0.05f, 0.0f,
+            0.05f, 0.05f, 0.0f,
     };
 
-    glm::vec2 translations[100];
+    std::array<glm::vec3, 100> translations;
 
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO;
