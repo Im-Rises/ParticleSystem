@@ -2,6 +2,7 @@
 
 layout(location = 0) in vec3 vertice;
 
+uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform vec3 CameraRight_worldspace;
@@ -19,4 +20,6 @@ void main()
     + CameraUp_worldspace * vertice.y * BillboardSize.y;
 
     gl_Position = view * projection * vec4(vertexPosition_worldspace, 1.0f);
+
+    gl_Position = projection * view * model * vec4(vertice, 1.0f);
 }
