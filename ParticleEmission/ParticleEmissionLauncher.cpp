@@ -153,6 +153,16 @@ void ParticleEmissionLauncher::handleInputs() {
 
     if (InputManager::isBackwardKeyPressed(window))
         scene->camera.moveBackward();
+
+    if (InputManager::isUpKeyPressed(window))
+        scene->camera.moveUp();
+
+    if (InputManager::isDownKeyPressed(window))
+        scene->camera.moveDown();
+
+    double x = 0, y = 0;
+    InputManager::getMouseMovement(window, x, y, InputManager::isKeyMouseMovementPressed(window));
+    scene->camera.processMouseMovement(x, y);
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {
