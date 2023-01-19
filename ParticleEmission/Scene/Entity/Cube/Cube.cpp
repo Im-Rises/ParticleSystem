@@ -41,6 +41,7 @@ void Cube::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) 
     shader.use();
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
+    shader.setMat4("model", modelMatrix);
 
     // Draw
     glBindVertexArray(VAO);
