@@ -5,6 +5,7 @@
 
 Cube::Cube() : Entity("shaders/transform.vert", "shaders/transform.frag") {
     create();
+    position = glm::vec3(-1.0F, 0.0F, 0.0F);
     updateModelMatrix();
 }
 
@@ -41,6 +42,7 @@ void Cube::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) 
     shader.use();
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
+    shader.setMat4("model", modelMatrix);
 
     // Draw
     glBindVertexArray(VAO);

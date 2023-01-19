@@ -10,7 +10,7 @@ class Cube : public Entity {
 private:
     unsigned int VAO, VBO;
 
-    static inline constexpr std::array<float, 108> vertices = {
+    static inline constexpr const std::array<float, 108> vertices = {
             -0.5f, -0.5f, -0.5f,
             0.5f, -0.5f, -0.5f,
             0.5f, 0.5f, -0.5f,
@@ -57,12 +57,16 @@ private:
 public:
     Cube();
 
+private:
     void create();
 
+public:
     ~Cube();
 
+private:
     void destroy();
 
+public:
     void update(float deltaTime) override;
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;

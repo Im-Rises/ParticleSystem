@@ -8,16 +8,9 @@
 
 #include "../Entity.h"
 
-/*
- * Two solutions:
- * 1. Create separate arrays for, position, color, etc...
- * 2. Create a single array base on a struct containing all the data
- */
-
 class ParticleGenerator : public Entity {
 private:
-    static constexpr float quadVertices[30] = {
-            // positions
+    static constexpr const float quadVertices[18] = {
             -0.05f, 0.05f, 0.0f,
             0.05f, -0.05f, 0.0f,
             -0.05f, -0.05f, 0.0f,
