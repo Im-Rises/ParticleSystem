@@ -3,6 +3,7 @@
 
 #include "Entity/ParticleGenerator/ParticleGenerator.h"
 #include "Entity/Cube/Cube.h"
+#include "Entity/Billboard/Billboard.h"
 #include "Camera/Camera.h"
 
 class Scene {
@@ -12,6 +13,7 @@ public:
 private:
     ParticleGenerator particleGenerator;
     Cube cube;
+    Billboard billboard;
 
 public:
     Scene(int display_w, int display_h);
