@@ -14,13 +14,13 @@ private:
     glm::mat4 projectionMatrix;
 
 
-    glm::vec3 cameraFrontBuffer = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraFrontBuffer = glm::vec3(0.0f, 0.0f, 0.0f);
 
 
 public:
     // Camera attributes
     float movementSpeed = 1.0F;
-    float rotationSpeed = 1.0F;
+    float rotationSpeed = 0.1F;
     float fov = 90.0F;
     float nearPlane = 0.1F;
     float farPlane = 100.0F;
@@ -29,7 +29,7 @@ public:
     bool constrainPitch = true;
     float yaw = -90.0f;
     float pitch = 0.0f;
-    glm::vec3 position;
+    glm::vec3 position = glm::vec3(0.0F, 0.0F, 3.0F);
 
     // Movement buffer to take into account the deltaTime
     glm::vec3 movementBuffer;
@@ -49,7 +49,6 @@ public:
     void updateProjectionMatrix(int display_w, int display_h);
 
 public:
-//    void setMovementBuffer(glm::vec3 movement);
     void moveForward();
 
     void moveBackward();
@@ -61,6 +60,8 @@ public:
     void moveUp();
 
     void moveDown();
+
+    void processMouseMovement(float xMovement, float yMovement);
 
 
 public:

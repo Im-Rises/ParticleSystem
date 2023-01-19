@@ -62,10 +62,12 @@ void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProje
 //    shader.setMat4("model", modelMatrix);
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
+//    shader.setVec3("cameraRight", cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]);
+//    shader.setVec3("cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, translations.size() / 6,
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6,
                           translations.size()); // 100 triangles of 6 vertices each
     glBindVertexArray(0);
 }

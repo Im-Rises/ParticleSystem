@@ -105,6 +105,8 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 ParticleEmissionLauncher::~ParticleEmissionLauncher() {
@@ -153,6 +155,16 @@ void ParticleEmissionLauncher::handleInputs() {
 
     if (InputManager::isBackwardKeyPressed(window))
         scene->camera.moveBackward();
+
+    if (InputManager::isUpKeyPressed(window))
+        scene->camera.moveUp();
+
+    if (InputManager::isDownKeyPressed(window))
+        scene->camera.moveDown();
+
+    double x = 0, y = 0;
+    InputManager::getMouseMovement(window, x, y, InputManager::isKeyMouseMovementPressed(window));
+    scene->camera.processMouseMovement(x, y);
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {
@@ -224,7 +236,7 @@ void ParticleEmissionLauncher::updateScreen() {
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
                  clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     scene->render();
 
