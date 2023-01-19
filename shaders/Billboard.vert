@@ -12,14 +12,6 @@ uniform vec2 BillboardSize;
 
 void main()
 {
-    vec3 particleCenter_wordspace = BillboardPos;
-
-    vec3 vertexPosition_worldspace =
-    particleCenter_wordspace
-    + CameraRight_worldspace * vertice.x * BillboardSize.x
-    + CameraUp_worldspace * vertice.y * BillboardSize.y;
-
-    gl_Position = view * projection * vec4(vertexPosition_worldspace, 1.0f);
-
-    gl_Position = projection * view * model * vec4(vertice, 1.0f);
+    vec3 pos = BillboardPos + CameraRight_worldspace * vertice.x * BillboardSize.x + CameraUp_worldspace * vertice.y * BillboardSize.y;
+    gl_Position = projection * view * model * vec4(pos, 1.0);
 }

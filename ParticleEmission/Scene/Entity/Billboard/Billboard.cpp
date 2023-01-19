@@ -48,7 +48,7 @@ void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMat
     shader.setVec3("CameraUp_worldspace",
                    glm::vec3(cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]));
     shader.setVec3("BillboardPos", glm::vec3(0, 0, 0));
-    shader.setVec3("BillboardSize", glm::vec3(0.5f, 0.5f, 0.5f));
+    shader.setVec2("BillboardSize", glm::vec2(0.1f, 0.1f));
 
     // Draw
     glBindVertexArray(VAO);
