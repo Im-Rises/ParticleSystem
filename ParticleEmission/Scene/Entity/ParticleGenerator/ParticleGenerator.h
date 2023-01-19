@@ -16,7 +16,7 @@
 
 class ParticleGenerator : public Entity {
 private:
-    static constexpr float quadVertices[30] = {
+    static constexpr float quadVertices[18] = {
             // positions
             -0.05f, 0.05f, 0.0f,
             0.05f, -0.05f, 0.0f,

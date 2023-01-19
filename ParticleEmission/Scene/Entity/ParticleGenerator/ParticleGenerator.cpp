@@ -67,7 +67,7 @@ void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProje
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, translations.size() / 6,
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6,
                           translations.size()); // 100 triangles of 6 vertices each
     glBindVertexArray(0);
 }
