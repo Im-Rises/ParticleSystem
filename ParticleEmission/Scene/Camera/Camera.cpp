@@ -1,8 +1,6 @@
 #include "Camera.h"
 
 Camera::Camera(int display_w, int display_h) {
-    position = glm::vec3(0.0F, 0.0F, 3.0F);
-//    rotation = glm::vec3(0.0F, 0.0F, 0.0F);
     updateViewMatrix();
     updateProjectionMatrix(display_w, display_h);
 }
@@ -13,9 +11,7 @@ Camera::~Camera() {
 
 void Camera::update(float deltaTime) {
     position += movementBuffer * movementSpeed * deltaTime;
-
     updateViewMatrix();
-
     movementBuffer = glm::vec3(0.0F);
 }
 
@@ -32,27 +28,33 @@ void Camera::updateProjectionMatrix(int display_w, int display_h) {
 }
 
 void Camera::moveForward() {
-    movementBuffer.z -= 1.0F;
+//    movementBuffer.z -= 1.0F; // Move independently from camere rotation
+    movementBuffer += cameraFrontBuffer; // Move in the direction the camera is facing
 }
 
 void Camera::moveBackward() {
-    movementBuffer.z += 1.0F;
+//    movementBuffer.z += 1.0F;
+    movementBuffer -= cameraFrontBuffer;
 }
 
 void Camera::moveLeft() {
-    movementBuffer.x -= 1.0F;
+//    movementBuffer.x -= 1.0F;
+    movementBuffer -= glm::normalize(glm::cross(cameraFrontBuffer, cameraUp));
 }
 
 void Camera::moveRight() {
-    movementBuffer.x += 1.0F;
+//    movementBuffer.x += 1.0F;
+    movementBuffer += glm::normalize(glm::cross(cameraFrontBuffer, cameraUp));
 }
 
 void Camera::moveUp() {
-    movementBuffer.y += 1.0F;
+//    movementBuffer.y += 1.0F;
+    movementBuffer += cameraUp;
 }
 
 void Camera::moveDown() {
-    movementBuffer.y -= 1.0F;
+//    movementBuffer.y -= 1.0F;
+    movementBuffer -= cameraUp;
 }
 
 void Camera::processMouseMovement(float xMovement, float yMovement) {
