@@ -55,6 +55,22 @@ void Camera::moveDown() {
     movementBuffer.y -= 1.0F;
 }
 
+void Camera::processMouseMovement(float xMovement, float yMovement) {
+    yaw += xMovement * rotationSpeed;
+    pitch += yMovement * rotationSpeed;
+
+    if (constrainPitch) {
+        if (pitch > 89.0f)
+            pitch = 89.0f;
+        if (pitch < -89.0f)
+            pitch = -89.0f;
+    }
+
+    cameraFrontBuffer.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    cameraFrontBuffer.y = sin(glm::radians(pitch));
+    cameraFrontBuffer.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+}
+
 glm::mat4 Camera::getViewMatrix() const {
     return viewMatrix;
 }

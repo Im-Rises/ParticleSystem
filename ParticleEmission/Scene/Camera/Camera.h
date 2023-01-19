@@ -20,7 +20,7 @@ private:
 public:
     // Camera attributes
     float movementSpeed = 1.0F;
-    float rotationSpeed = 1.0F;
+    float rotationSpeed = 0.1F;
     float fov = 90.0F;
     float nearPlane = 0.1F;
     float farPlane = 100.0F;
@@ -60,6 +60,8 @@ public:
     void moveUp();
 
     void moveDown();
+
+    void processMouseMovement(float xMovement, float yMovement);
 
 
 public:

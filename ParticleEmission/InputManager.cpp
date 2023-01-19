@@ -1,21 +1,9 @@
 #include "InputManager.h"
 
-void InputManager::cursor_position_callback(GLFWwindow *window, double xPos, double yPos) {
-//    if (mouseRightButtonPressed)
-//    {
-//        auto* engine = (PhysicalEngineLauncher*)glfwGetWindowUserPointer(window);
-//        Camera* camera = engine->scene->getCameraPtr();
-//        float xOffset = static_cast<float>(xPos) - mouseLastPosX;
-//        float yOffset = mouseLastPosY - static_cast<float>(yPos);
-//        camera->processMouseMovement(xOffset, yOffset);
-//    }
-//    mouseLastPosX = static_cast<float>(xPos);
-//    mouseLastPosY = static_cast<float>(yPos);
-}
+double InputManager::lastMouseX = 0.0;
+double InputManager::lastMouseY = 0.0;
 
 void InputManager::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-//    auto* engine = (ParticleEngineLauncher*)glfwGetWindowUserPointer(window);
-
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 
@@ -62,4 +50,19 @@ bool InputManager::isUpKeyPressed(GLFWwindow *window) {
 
 bool InputManager::isDownKeyPressed(GLFWwindow *window) {
     return glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;//GLFW_KEY_PAGE_DOWN
+}
+
+void InputManager::getMouseMovement(GLFWwindow *window, double &xMovement, double &yMovement, bool isMovementEnable) {
+    double x, y;
+    glfwGetCursorPos(window, &x, &y);
+    if (isMovementEnable) {
+        xMovement = x - lastMouseX;
+        yMovement = lastMouseY - y;
+    }
+    lastMouseX = x;
+    lastMouseY = y;
+}
+
+bool InputManager::isKeyMouseMovementPressed(GLFWwindow *window) {
+    return glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
 }
