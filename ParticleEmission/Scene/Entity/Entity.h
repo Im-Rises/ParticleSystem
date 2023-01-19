@@ -7,9 +7,9 @@
 
 class Entity {
 protected:
-    glm::vec3 position;
-    glm::vec3 rotation;
-    glm::vec3 scale;
+    glm::vec3 position = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 rotation = glm::vec3(0.0F, 0.0F, 0.0F);
+    glm::vec3 scale = glm::vec3(1.0F, 1.0F, 1.0F);
 
     glm::mat4 modelMatrix;
 

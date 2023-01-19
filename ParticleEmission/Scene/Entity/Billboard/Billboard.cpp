@@ -5,6 +5,7 @@
 Billboard::Billboard()
         : Entity("shaders/Billboard.vert", "shaders/Billboard.frag") {
     create();
+    position = glm::vec3(1.0F, 0.0F, 0.0F);
     updateModelMatrix();
 }
 

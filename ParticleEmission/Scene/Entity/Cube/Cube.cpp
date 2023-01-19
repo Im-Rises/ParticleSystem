@@ -5,6 +5,7 @@
 
 Cube::Cube() : Entity("shaders/transform.vert", "shaders/transform.frag") {
     create();
+    position = glm::vec3(-1.0F, 0.0F, 0.0F);
     updateModelMatrix();
 }
 
