@@ -5,20 +5,23 @@ layout (location = 1) in vec3 aOffset;
 
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 cameraRight;
-uniform vec3 cameraUp;
+//uniform vec3 cameraRight;
+//uniform vec3 cameraUp;
 
 void main()
 {
-    float particleSize = 0.1;
-    vec3 particleCenter = aPos.xyz;
+    // Billboard the particule
+    //    float particleSize = 0.1;
+    //    vec3 particleCenter = aPos.xyz;
+    //
+    //    vec3 vertexPosition = particleCenter +
+    //    aPos.x * particleSize * cameraRight +
+    //    aPos.y * particleSize * cameraUp;
+    //
+    //    // Output position of the vertex
+    //    gl_Position = projection * view * vec4(vertexPosition+aOffset, 1.0f);
 
-    vec3 vertexPosition = particleCenter +
-    aPos.x * particleSize * cameraRight +
-    aPos.y * particleSize * cameraUp;
 
-    // Output position of the vertex
-    gl_Position = projection * view * vec4(vertexPosition+aOffset, 1.0f);
-
-    //    gl_Position = projection * view * vec4(aPos + aOffset, 1.0);
+    // Simple shader
+    gl_Position = projection * view * vec4(aPos + aOffset, 1.0);
 }
