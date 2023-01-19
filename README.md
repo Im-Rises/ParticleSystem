@@ -4,6 +4,12 @@
 
 This is a simple UI for the Particle Emission project.
 
+## Todo
+
+- [ ] Implement the center of a particle and its size using a new VBO for the shader
+- [ ] Implement the color of a particle using a new VBO for the shader
+- [ ] Add a texture to the particle (circle)
+
 ## Documentation
 
 learnopengl (OpenGL tutorial):  

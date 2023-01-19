@@ -49,7 +49,6 @@ public:
     void updateProjectionMatrix(int display_w, int display_h);
 
 public:
-//    void setMovementBuffer(glm::vec3 movement);
     void moveForward();
 
     void moveBackward();
