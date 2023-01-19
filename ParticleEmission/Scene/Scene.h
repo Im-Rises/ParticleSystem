@@ -6,8 +6,10 @@
 #include "Camera/Camera.h"
 
 class Scene {
-private:
+public:
     Camera camera;
+
+private:
     ParticleGenerator particleGenerator;
     Cube cube;
 

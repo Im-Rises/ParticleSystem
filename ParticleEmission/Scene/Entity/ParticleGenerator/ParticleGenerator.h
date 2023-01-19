@@ -16,7 +16,7 @@
 
 class ParticleGenerator : public Entity {
 private:
-    float quadVertices[30] = {
+    const float quadVertices[30] = {
             // positions
             -0.05f, 0.05f, 0.0f,
             0.05f, -0.05f, 0.0f,

@@ -9,6 +9,7 @@ Scene::~Scene() {
 }
 
 void Scene::update(float deltaTime) {
+    camera.update(deltaTime);
     cube.update(deltaTime);
     particleGenerator.update(deltaTime);
 }

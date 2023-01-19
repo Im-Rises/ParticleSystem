@@ -1,5 +1,6 @@
 #include "ParticleEmissionLauncher.h"
 
+#include <iostream>
 #include <cstdio>
 #include <glad/glad.h>
 #include <imgui/imgui.h>
@@ -67,12 +68,12 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
 //    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
 //    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
 
-//    // Center window
-//    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-//    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-//    auto xPos = mode->width / 2 - windowWidth / 2;
-//    auto yPos = mode->height / 2 - windowHeight / 2;
-//    glfwSetWindowPos(window, xPos, yPos);
+    // Center window
+    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+    auto xPos = (mode->width - display_w) / 2;
+    auto yPos = (mode->height - display_h) / 2;
+    glfwSetWindowPos(window, xPos, yPos);
 
     // Initialize OpenGL loader
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
@@ -140,6 +141,18 @@ void ParticleEmissionLauncher::start() {
 void ParticleEmissionLauncher::handleInputs() {
     glfwPollEvents();
 
+    /* Read inputs and update states (buffers) */
+    if (InputManager::isLeftKeyPressed(window))
+        scene->camera.moveLeft();
+
+    if (InputManager::isRightKeyPressed(window))
+        scene->camera.moveRight();
+
+    if (InputManager::isForwardKeyPressed(window))
+        scene->camera.moveForward();
+
+    if (InputManager::isBackwardKeyPressed(window))
+        scene->camera.moveBackward();
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {
@@ -153,6 +166,49 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
         ImGui::Text("%.3f ms/frame (%.1f FPS)", deltaTime, 1.0f / deltaTime);
         ImGui::Text("Window width: %d", display_w);
         ImGui::Text("Window height: %d", display_h);
+        ImGui::End();
+    }
+
+    {
+        ImGui::Begin("Camera settings");
+
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "View settings");
+        static bool wireframe = false;
+        ImGui::Checkbox("Wireframe", &wireframe);
+        if (wireframe) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+        ImGui::NewLine();
+
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Camera settings");
+
+        ImGui::Text("Position:");
+        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
+
+        ImGui::Text("Pitch:");
+        ImGui::Checkbox("Pitch constrained", &scene->camera.constrainPitch);
+        ImGui::InputFloat("##pitch", &scene->camera.pitch);
+
+        ImGui::Text("Yaw:");
+        ImGui::InputFloat("##yaw", &scene->camera.yaw);
+
+        ImGui::Text("FOV:");
+        ImGui::InputFloat("##fov", &scene->camera.fov);
+
+        ImGui::Text("Near plane:");
+        ImGui::InputFloat("##near", &scene->camera.nearPlane);
+
+        ImGui::Text("Far plane:");
+        ImGui::InputFloat("##far", &scene->camera.farPlane);
+
+        ImGui::Text("Speed:");
+        ImGui::InputFloat("##speed", &scene->camera.movementSpeed);
+
+        ImGui::Text("Sensitivity: ");
+        ImGui::InputFloat("##sensitivity", &scene->camera.rotationSpeed);
+
         ImGui::End();
     }
 }
@@ -185,7 +241,7 @@ void ParticleEmissionLauncher::updateScreen() {
     glfwSwapBuffers(window);
 }
 
-void ParticleEmissionLauncher::toggleWireframeMode() {
+//void ParticleEmissionLauncher::toggleWireframeMode() {
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
+//}

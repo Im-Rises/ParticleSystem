@@ -16,7 +16,7 @@ void ParticleGenerator::init() {
             glm::vec3 translation;
             translation.x = (float) x / 10.0f + offset;
             translation.y = (float) y / 10.0f + offset;
-            translation.z = -2.0f;
+            translation.z = 0.0f;
             translations[index++] = translation;
         }
     }
@@ -65,6 +65,7 @@ void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProje
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, translations.size()); // 100 triangles of 6 vertices each
+    glDrawArraysInstanced(GL_TRIANGLES, 0, translations.size() / 6,
+                          translations.size()); // 100 triangles of 6 vertices each
     glBindVertexArray(0);
 }
