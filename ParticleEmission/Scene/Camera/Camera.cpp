@@ -31,8 +31,28 @@ void Camera::updateProjectionMatrix(int display_w, int display_h) {
                                         farPlane);
 }
 
-void Camera::setMovementBuffer(glm::vec3 movement) {
-    movementBuffer = movement;
+void Camera::moveForward() {
+    movementBuffer.z -= 1.0F;
+}
+
+void Camera::moveBackward() {
+    movementBuffer.z += 1.0F;
+}
+
+void Camera::moveLeft() {
+    movementBuffer.x -= 1.0F;
+}
+
+void Camera::moveRight() {
+    movementBuffer.x += 1.0F;
+}
+
+void Camera::moveUp() {
+    movementBuffer.y += 1.0F;
+}
+
+void Camera::moveDown() {
+    movementBuffer.y -= 1.0F;
 }
 
 glm::mat4 Camera::getViewMatrix() const {

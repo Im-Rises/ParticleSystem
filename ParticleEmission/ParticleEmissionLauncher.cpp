@@ -1,5 +1,6 @@
 #include "ParticleEmissionLauncher.h"
 
+#include <iostream>
 #include <cstdio>
 #include <glad/glad.h>
 #include <imgui/imgui.h>
@@ -142,22 +143,16 @@ void ParticleEmissionLauncher::handleInputs() {
 
     /* Read inputs and update states (buffers) */
     if (InputManager::isLeftKeyPressed(window))
-        scene->camera.setMovementBuffer(glm::vec3(-1.0F, 0.0F, 0.0F));
+        scene->camera.moveLeft();
 
-//    if (InputManager::isRightKeyPressed(window))
-//        scene->camera.moveCameraRight();
-//
-//    if (InputManager::isBackwardKeyPressed(window))
-//        scene->camera.moveCameraBackward();
-//
-//    if (InputManager::isForwardKeyPressed(window))
-//        scene->camera.moveCameraForward();
-//
-//    if (InputManager::isUpKeyPressed(window))
-//        scene->camera.moveCameraUp();
-//
-//    if (InputManager::isDownKeyPressed(window))
-//        scene->camera.moveCameraDown();
+    if (InputManager::isRightKeyPressed(window))
+        scene->camera.moveRight();
+
+    if (InputManager::isForwardKeyPressed(window))
+        scene->camera.moveForward();
+
+    if (InputManager::isBackwardKeyPressed(window))
+        scene->camera.moveBackward();
 }
 
 void ParticleEmissionLauncher::handleUi(float deltaTime) {

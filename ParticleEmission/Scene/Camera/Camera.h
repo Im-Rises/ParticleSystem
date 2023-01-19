@@ -49,7 +49,19 @@ public:
     void updateProjectionMatrix(int display_w, int display_h);
 
 public:
-    void setMovementBuffer(glm::vec3 movement);
+//    void setMovementBuffer(glm::vec3 movement);
+    void moveForward();
+
+    void moveBackward();
+
+    void moveLeft();
+
+    void moveRight();
+
+    void moveUp();
+
+    void moveDown();
+
 
 public:
     [[nodiscard]] glm::mat4 getViewMatrix() const;
