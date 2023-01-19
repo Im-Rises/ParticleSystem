@@ -17,9 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install libs
-        run: |
-          sudo apt-get install libglfw3-dev libglew-dev libglm-dev
+      #      - name: Install libs
+      #        run: |
       #          sudo apt-get install libglfw3-dev
 
       - name: Configure CMake
