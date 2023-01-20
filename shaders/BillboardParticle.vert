@@ -11,9 +11,9 @@ uniform vec3 cameraUp;
 
 void main()
 {
-    vec2 size = vec2(1, 1);
+    vec2 scale = vec2(1, 1);
     vec3 pos = position
-    + cameraRight * vertice.x * size.x
-    + cameraUp * vertice.y * size.y;
+    + cameraRight * vertice.x * scale.x
+    + cameraUp * vertice.y * scale.y;
     gl_Position = projection * view * vec4(pos, 1.0);
 }
