@@ -8,7 +8,7 @@
 
 #include "../Entity.h"
 
-class ParticleGenerator : public Entity {
+class ParticleGeneratorBillboard : public Entity {
 private:
     static constexpr const float quadVertices[18] = {
             -0.05f, 0.05f, 0.0f,
@@ -26,11 +26,11 @@ private:
     unsigned int quadVAO, quadVBO;
 
 public:
-    ParticleGenerator();
+    ParticleGeneratorBillboard();
 
     void init();
 
-    ~ParticleGenerator();
+    ~ParticleGeneratorBillboard();
 
     void destroy();
 
@@ -38,10 +38,6 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
-//private:
-//    unsigned int FirstUnusedParticle();
-//
-//    void RespawnParticle(Particle &particle, Entity &object, glm::vec2 offset);
 };
 
 #endif // PARTICLE_GENERATOR_H

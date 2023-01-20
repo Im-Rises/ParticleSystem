@@ -1,14 +1,14 @@
-#include "ParticleGenerator.h"
+#include "ParticleGeneratorBillboard.h"
 
 #include <iostream>
 
-ParticleGenerator::ParticleGenerator() : Entity(
-        "shaders/ParticleGenerator.vert",
-        "shaders/ParticleGenerator.frag") {
+ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity(
+        "shaders/BillboardParticle.vert",
+        "shaders/BillboardParticle.frag") {
     init();
 }
 
-void ParticleGenerator::init() {
+void ParticleGeneratorBillboard::init() {
     int index = 0;
     float offset = 0.1f;
     for (int y = -10; y < 10; y += 2) {
@@ -43,31 +43,29 @@ void ParticleGenerator::init() {
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
 }
 
-ParticleGenerator::~ParticleGenerator() {
+ParticleGeneratorBillboard::~ParticleGeneratorBillboard() {
     destroy();
 }
 
-void ParticleGenerator::destroy() {
+void ParticleGeneratorBillboard::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &quadVBO);
 }
 
-void ParticleGenerator::update(float deltaTime) {
+void ParticleGeneratorBillboard::update(float deltaTime) {
 
 }
 
-void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
+void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     // Shader
     shader.use();
-//    shader.setMat4("model", modelMatrix);
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
-//    shader.setVec3("cameraRight", cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]);
-//    shader.setVec3("cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
+    shader.setVec3("cameraRight", cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]);
+    shader.setVec3("cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 6,
-                          translations.size()); // 100 triangles of 6 vertices each
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, translations.size());
     glBindVertexArray(0);
 }

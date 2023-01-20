@@ -1,4 +1,4 @@
-#include "ParticleEmissionLauncher.h"
+#include "ParticleSystemLauncher.h"
 
 #include <iostream>
 #include <cstdio>
@@ -25,7 +25,7 @@ static void glfw_error_callback(int error, const char *description) {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
-ParticleEmissionLauncher::ParticleEmissionLauncher() {
+ParticleSystemLauncher::ParticleSystemLauncher() {
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -109,7 +109,7 @@ ParticleEmissionLauncher::ParticleEmissionLauncher() {
     glEnable(GL_DEPTH_TEST);
 }
 
-ParticleEmissionLauncher::~ParticleEmissionLauncher() {
+ParticleSystemLauncher::~ParticleSystemLauncher() {
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -119,7 +119,7 @@ ParticleEmissionLauncher::~ParticleEmissionLauncher() {
     glfwTerminate();
 }
 
-void ParticleEmissionLauncher::start() {
+void ParticleSystemLauncher::start() {
     // Create the scene
     scene = std::make_unique<Scene>(display_w, display_h);
 
@@ -140,7 +140,7 @@ void ParticleEmissionLauncher::start() {
     }
 }
 
-void ParticleEmissionLauncher::handleInputs() {
+void ParticleSystemLauncher::handleInputs() {
     glfwPollEvents();
 
     /* Read inputs and update states (buffers) */
@@ -167,7 +167,7 @@ void ParticleEmissionLauncher::handleInputs() {
     scene->camera.processMouseMovement(x, y);
 }
 
-void ParticleEmissionLauncher::handleUi(float deltaTime) {
+void ParticleSystemLauncher::handleUi(float deltaTime) {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -223,13 +223,45 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
 
         ImGui::End();
     }
+
+    {
+        ImGui::Begin("Particle settings");
+
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Particle settings");
+
+//        ImGui::Text("Particle count:");
+//        ImGui::InputInt("##particleCount", &scene->particleCount);
+//
+//        ImGui::Text("Particle size:");
+//        ImGui::InputFloat("##particleSize", &scene->particleSize);
+//
+//        ImGui::Text("Particle speed:");
+//        ImGui::InputFloat("##particleSpeed", &scene->particleSpeed);
+//
+//        ImGui::Text("Particle life:");
+//        ImGui::InputFloat("##particleLife", &scene->particleLife);
+//
+//        ImGui::Text("Particle color:");
+//        ImGui::ColorEdit3("##particleColor", (float *) &scene->particleColor);
+//
+//        ImGui::Text("Particle emission rate:");
+//        ImGui::InputFloat("##particleEmissionRate", &scene->particleEmissionRate);
+//
+//        ImGui::Text("Particle emission radius:");
+//        ImGui::InputFloat("##particleEmissionRadius", &scene->particleEmissionRadius);
+//
+//        ImGui::Text("Particle emission direction:");
+//        ImGui::InputFloat3("##particleEmissionDirection", (float *) &scene->particleEmissionDirection);
+
+        ImGui::End();
+    }
 }
 
-void ParticleEmissionLauncher::updateGame(float deltaTime) {
+void ParticleSystemLauncher::updateGame(float deltaTime) {
     scene->update(deltaTime);
 }
 
-void ParticleEmissionLauncher::updateScreen() {
+void ParticleSystemLauncher::updateScreen() {
     ImGui::Render();
     glfwGetFramebufferSize(window, &display_w, &display_h);
     scene->updateProjectionMatrix(display_w, display_h);
@@ -253,7 +285,7 @@ void ParticleEmissionLauncher::updateScreen() {
     glfwSwapBuffers(window);
 }
 
-//void ParticleEmissionLauncher::toggleWireframeMode() {
+//void ParticleSystemLauncher::toggleWireframeMode() {
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 //}
