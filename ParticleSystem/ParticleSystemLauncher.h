@@ -13,11 +13,11 @@
 
 #define PROJECT_VERSION VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH
 
-#define PROJECT_GITHUB "https://github.com/Im-Rises/ParticleEmission"
+#define PROJECT_GITHUB "https://github.com/Im-Rises/ParticleSystem"
 
 struct GLFWwindow;
 
-class ParticleEmissionLauncher {
+class ParticleSystemLauncher {
 private:
     GLFWwindow *window;
     int display_w = 1280, display_h = 720;
@@ -32,9 +32,9 @@ private:
     } clear_color;
 
 public:
-    ParticleEmissionLauncher();
+    ParticleSystemLauncher();
 
-    ~ParticleEmissionLauncher();
+    ~ParticleSystemLauncher();
 
     void start();
 
