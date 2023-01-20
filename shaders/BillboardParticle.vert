@@ -11,7 +11,7 @@ uniform vec3 cameraUp;
 
 void main()
 {
-    vec2 size = vec2(0.5, 0.5);
+    vec2 size = vec2(1, 1);
     vec3 pos = position
     + cameraRight * vertice.x * size.x
     + cameraUp * vertice.y * size.y;

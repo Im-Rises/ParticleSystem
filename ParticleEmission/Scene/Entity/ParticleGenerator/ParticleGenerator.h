@@ -38,10 +38,6 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
-//private:
-//    unsigned int FirstUnusedParticle();
-//
-//    void RespawnParticle(Particle &particle, Entity &object, glm::vec2 offset);
 };
 
 #endif // PARTICLE_GENERATOR_H

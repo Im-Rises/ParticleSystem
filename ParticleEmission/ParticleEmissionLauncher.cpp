@@ -223,6 +223,38 @@ void ParticleEmissionLauncher::handleUi(float deltaTime) {
 
         ImGui::End();
     }
+    
+    {
+        ImGui::Begin("Particle settings");
+
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Particle settings");
+
+//        ImGui::Text("Particle count:");
+//        ImGui::InputInt("##particleCount", &scene->particleCount);
+//
+//        ImGui::Text("Particle size:");
+//        ImGui::InputFloat("##particleSize", &scene->particleSize);
+//
+//        ImGui::Text("Particle speed:");
+//        ImGui::InputFloat("##particleSpeed", &scene->particleSpeed);
+//
+//        ImGui::Text("Particle life:");
+//        ImGui::InputFloat("##particleLife", &scene->particleLife);
+//
+//        ImGui::Text("Particle color:");
+//        ImGui::ColorEdit3("##particleColor", (float *) &scene->particleColor);
+//
+//        ImGui::Text("Particle emission rate:");
+//        ImGui::InputFloat("##particleEmissionRate", &scene->particleEmissionRate);
+//
+//        ImGui::Text("Particle emission radius:");
+//        ImGui::InputFloat("##particleEmissionRadius", &scene->particleEmissionRadius);
+//
+//        ImGui::Text("Particle emission direction:");
+//        ImGui::InputFloat3("##particleEmissionDirection", (float *) &scene->particleEmissionDirection);
+
+        ImGui::End();
+    }
 }
 
 void ParticleEmissionLauncher::updateGame(float deltaTime) {
