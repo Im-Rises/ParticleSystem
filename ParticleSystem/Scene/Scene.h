@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "Entity/ParticleGenerator/ParticleGenerator.h"
+#include "Entity/ParticleGenerator/ParticleGeneratorBillboard.h"
 #include "Entity/Cube/Cube.h"
 #include "Entity/Billboard/Billboard.h"
 #include "Camera/Camera.h"
@@ -11,7 +11,7 @@ public:
     Camera camera;
 
 private:
-    ParticleGenerator particleGenerator;
+    ParticleGeneratorBillboard particleGenerator;
     Cube cube;
     Billboard billboard;
 

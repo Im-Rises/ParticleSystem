@@ -1,14 +1,14 @@
-#include "ParticleGenerator.h"
+#include "ParticleGeneratorBillboard.h"
 
 #include <iostream>
 
-ParticleGenerator::ParticleGenerator() : Entity(
+ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity(
         "shaders/BillboardParticle.vert",
         "shaders/BillboardParticle.frag") {
     init();
 }
 
-void ParticleGenerator::init() {
+void ParticleGeneratorBillboard::init() {
     int index = 0;
     float offset = 0.1f;
     for (int y = -10; y < 10; y += 2) {
@@ -43,20 +43,20 @@ void ParticleGenerator::init() {
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
 }
 
-ParticleGenerator::~ParticleGenerator() {
+ParticleGeneratorBillboard::~ParticleGeneratorBillboard() {
     destroy();
 }
 
-void ParticleGenerator::destroy() {
+void ParticleGeneratorBillboard::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &quadVBO);
 }
 
-void ParticleGenerator::update(float deltaTime) {
+void ParticleGeneratorBillboard::update(float deltaTime) {
 
 }
 
-void ParticleGenerator::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
+void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     // Shader
     shader.use();
     shader.setMat4("view", cameraViewMatrix);

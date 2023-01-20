@@ -1,4 +1,4 @@
-# ParticleEmission
+# ParticleSystem
 
 ## Description
 
