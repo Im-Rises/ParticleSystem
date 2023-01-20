@@ -50,11 +50,15 @@ void Camera::moveRight() {
 void Camera::moveUp() {
 //    movementBuffer.y += 1.0F;
     movementBuffer += cameraUp;
+    // Move up in the direction of the camera's up vector
+//    movementBuffer = glm::normalize(glm::cross(glm::cross(cameraFrontBuffer, cameraUp), cameraFrontBuffer));
 }
 
 void Camera::moveDown() {
 //    movementBuffer.y -= 1.0F;
     movementBuffer -= cameraUp;
+    // Move down in the direction of the camera's up vector
+//    movementBuffer = glm::normalize(glm::cross(glm::cross(cameraFrontBuffer, cameraUp), cameraFrontBuffer));
 }
 
 void Camera::processMouseMovement(float xMovement, float yMovement) {

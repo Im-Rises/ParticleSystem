@@ -45,11 +45,11 @@ bool InputManager::isRightKeyPressed(GLFWwindow *window) {
 }
 
 bool InputManager::isUpKeyPressed(GLFWwindow *window) {
-    return glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS;//GLFW_KEY_PAGE_UP
+    return glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;//GLFW_KEY_PAGE_UP
 }
 
 bool InputManager::isDownKeyPressed(GLFWwindow *window) {
-    return glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;//GLFW_KEY_PAGE_DOWN
+    return glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS;//GLFW_KEY_PAGE_DOWN
 }
 
 void InputManager::getMouseMovement(GLFWwindow *window, double &xMovement, double &yMovement, bool isMovementEnable) {
