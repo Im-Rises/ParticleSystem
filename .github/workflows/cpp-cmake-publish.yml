@@ -30,6 +30,8 @@ jobs:
           path: |
             ./ParticleEmission.exe
             ./imgui.ini
+            ./shaders/BillboardParticle.vert
+            ./shaders/BillboardParticle.frag
   build-ubuntu:
     name: Build ubuntu
     runs-on: ubuntu-latest
@@ -53,6 +55,8 @@ jobs:
           path: |
             ./ParticleEmissionLauncher
             ./imgui.ini
+            ./shaders/BillboardParticle.vert
+            ./shaders/BillboardParticle.frag
   build-macos:
     name: Build macos
     runs-on: macos-latest
@@ -73,6 +77,8 @@ jobs:
           path: |
             ./ParticleEmissionLauncher
             ./imgui.ini
+            ./shaders/BillboardParticle.vert
+            ./shaders/BillboardParticle.frag
   release-project:
     name: Release project
     runs-on: ubuntu-latest
