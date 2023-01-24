@@ -8,7 +8,7 @@ class Billboard : public Entity {
 private:
     unsigned int VAO, VBO;
 
-    static inline constexpr const std::array<float, 18> vertices = {
+    static constexpr std::array<float, 18> vertices = {
             -0.5f, -0.5f, -0.0f,
             0.5f, -0.5f, -0.0f,
             0.5f, 0.5f, -0.0f,
@@ -17,6 +17,8 @@ private:
             -0.5f, 0.5f, -0.0f,
             -0.5f, -0.5f, -0.0f,
     };
+
+    unsigned int texture;
 
 
 public:
@@ -35,6 +37,9 @@ public:
     void update(float deltaTime) override;
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
+
+private:
+    void loadTexture(const std::string_view &texturePath);
 };
 
 

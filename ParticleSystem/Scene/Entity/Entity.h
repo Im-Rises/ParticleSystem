@@ -3,7 +3,7 @@
 
 #include <string>
 #include "../../Shader/Shader.h"
-#include "Components/Transform.h"
+//#include <glm/glm.hpp>
 
 class Entity {
 protected:
@@ -15,6 +15,8 @@ protected:
 
     Shader shader;
 
+//    unsigned int texture;
+
 public:
     Entity(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
 
@@ -25,6 +27,8 @@ public:
     virtual void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) = 0;
 
     void updateModelMatrix();
+
+//    void loadTexture(const std::string_view &texturePath);
 };
 
 

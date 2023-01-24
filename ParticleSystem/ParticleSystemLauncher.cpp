@@ -14,7 +14,7 @@
 #include <GLES2/gl2.h>
 #endif
 
-#include <GLFW/glfw3.h> // Will drag system OpenGL headers
+#include <GLFW/glfw3.h>
 #include <cstdlib>
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
@@ -164,7 +164,7 @@ void ParticleSystemLauncher::handleInputs() {
 
     double x = 0, y = 0;
     InputManager::getMouseMovement(window, x, y, InputManager::isKeyMouseMovementPressed(window));
-    scene->camera.processMouseMovement(x, y);
+    scene->camera.processMouseMovement((float) x, (float) y);
 }
 
 void ParticleSystemLauncher::handleUi(float deltaTime) {
@@ -184,7 +184,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Camera settings");
 
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "View settings");
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "View settings");
         static bool wireframe = false;
         ImGui::Checkbox("Wireframe", &wireframe);
         if (wireframe) {
@@ -194,7 +194,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         }
         ImGui::NewLine();
 
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Camera settings");
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Camera settings");
 
         ImGui::Text("Position:");
         ImGui::InputFloat3("##position", (float *) &scene->camera.position);
@@ -227,7 +227,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Particle settings");
 
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Particle settings");
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Particle settings");
 
 //        ImGui::Text("Particle count:");
 //        ImGui::InputInt("##particleCount", &scene->particleCount);

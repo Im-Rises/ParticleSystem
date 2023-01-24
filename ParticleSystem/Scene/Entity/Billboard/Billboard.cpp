@@ -2,6 +2,11 @@
 
 #include <glad/glad.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+
+#include <stb/stb_image.h>
+#include <iostream>
+
 Billboard::Billboard()
         : Entity("shaders/Billboard.vert", "shaders/Billboard.frag") {
     create();
@@ -10,6 +15,8 @@ Billboard::Billboard()
 }
 
 void Billboard::create() {
+//    loadTexture("textures/container.jpg");
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -21,7 +28,7 @@ void Billboard::create() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
 
-    shader.use();
+//    shader.use();
 }
 
 Billboard::~Billboard() {
@@ -39,10 +46,10 @@ void Billboard::update(float deltaTime) {
 
 void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     //Shader
+//    glBindTexture(GL_TEXTURE_2D, texture);
     shader.use();
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
-//    shader.setMat4("model", modelMatrix);
     shader.setVec3("CameraRight_worldspace",
                    glm::vec3(cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]));
     shader.setVec3("CameraUp_worldspace",
@@ -53,4 +60,26 @@ void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMat
     // Draw
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, (GLsizei) vertices.size());
+}
+
+void Billboard::loadTexture(const std::string_view &texturePath) {
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    // Set the texture wrapping/filtering options (on the currently bound texture object)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // Load and generate the texture
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load(texturePath.data(), &width, &height, &nrChannels, 0);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    } else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
 }

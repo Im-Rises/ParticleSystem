@@ -8,6 +8,8 @@ This is a simple UI for the Particle Emission project.
 
 - [ ] Add a texture to the particle (circle)
 - [ ] Implement the color of a particle using a new VBO for the shader
+- [ ] Correct all types of variables (float, int, etc.) for the openGL version
+- [ ] Move loadTexture to the Texture class not in the Entity or Billboard classes
 
 ## Documentation
 
