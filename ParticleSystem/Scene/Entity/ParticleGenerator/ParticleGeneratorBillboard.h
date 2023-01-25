@@ -7,17 +7,30 @@
 #include <array>
 
 #include "../Entity.h"
+#include "../../../Texture/Texture.h"
 
 class ParticleGeneratorBillboard : public Entity {
 private:
     static constexpr const float quadVertices[18] = {
-            -0.05f, 0.05f, 0.0f,
-            0.05f, -0.05f, 0.0f,
-            -0.05f, -0.05f, 0.0f,
+        -0.05f,
+        0.05f,
+        0.0f,
+        0.05f,
+        -0.05f,
+        0.0f,
+        -0.05f,
+        -0.05f,
+        0.0f,
 
-            -0.05f, 0.05f, 0.0f,
-            0.05f, -0.05f, 0.0f,
-            0.05f, 0.05f, 0.0f,
+        -0.05f,
+        0.05f,
+        0.0f,
+        0.05f,
+        -0.05f,
+        0.0f,
+        0.05f,
+        0.05f,
+        0.0f,
     };
 
     std::array<glm::vec3, 100> translations;
@@ -25,10 +38,12 @@ private:
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO;
 
+    Texture texture;
+
 public:
     ParticleGeneratorBillboard();
 
-    void init();
+    void create();
 
     ~ParticleGeneratorBillboard();
 
@@ -37,7 +52,6 @@ public:
     void update(float deltaTime) override;
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
-
 };
 
 #endif // PARTICLE_GENERATOR_H

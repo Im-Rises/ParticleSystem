@@ -1,19 +1,22 @@
 #include "ParticleGeneratorBillboard.h"
 
-ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity(
-        "shaders/BillboardParticle.vert",
-        "shaders/BillboardParticle.frag") {
-    init();
+ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/BillboardParticle.vert",
+                                                               "shaders/BillboardParticle.frag"),
+                                                           texture("textures/ball2.png") {
+    create();
+    position = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
-void ParticleGeneratorBillboard::init() {
+void ParticleGeneratorBillboard::create() {
     int index = 0;
     float offset = 0.1f;
-    for (int y = -10; y < 10; y += 2) {
-        for (int x = -10; x < 10; x += 2) {
+    for (int y = -10; y < 10; y += 2)
+    {
+        for (int x = -10; x < 10; x += 2)
+        {
             glm::vec3 translation;
-            translation.x = (float) x / 10.0f + offset;
-            translation.y = (float) y / 10.0f + offset;
+            translation.x = (float)x / 10.0f + offset;
+            translation.y = (float)y / 10.0f + offset;
             translation.z = 0.0f;
             translations[index++] = translation;
         }
@@ -31,11 +34,11 @@ void ParticleGeneratorBillboard::init() {
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
@@ -51,7 +54,6 @@ void ParticleGeneratorBillboard::destroy() {
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
-
 }
 
 void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {

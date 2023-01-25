@@ -7,7 +7,7 @@
 #include <stb/stb_image.h>
 
 Billboard::Billboard()
-    : Entity("shaders/Billboard.vert", "shaders/Billboard.frag"), texture("textures/ball.png") {
+    : Entity("shaders/Billboard.vert", "shaders/Billboard.frag"), texture("textures/ball2.png") {
     create();
     position = glm::vec3(1.0F, 0.0F, 0.0F);
     updateModelMatrix();
@@ -50,12 +50,12 @@ void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMat
     shader.use();
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
-    shader.setVec3("CameraRight_worldspace",
+    shader.setVec3("cameraRight",
         glm::vec3(cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]));
-    shader.setVec3("CameraUp_worldspace",
+    shader.setVec3("cameraUp",
         glm::vec3(cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]));
-    shader.setVec3("BillboardPos", position);
-    shader.setVec2("BillboardSize", glm::vec2(scale.x, scale.y));
+    shader.setVec3("billboardPos", position);
+    shader.setVec2("billboardSize", glm::vec2(scale.x, scale.y));
 
     // Texture
     glBindTexture(GL_TEXTURE_2D, texture.getTexture());
