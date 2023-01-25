@@ -3,7 +3,7 @@
 
 #include <string>
 #include "../../Shader/Shader.h"
-#include "Components/Transform.h"
+//#include <glm/glm.hpp>
 
 class Entity {
 protected:
