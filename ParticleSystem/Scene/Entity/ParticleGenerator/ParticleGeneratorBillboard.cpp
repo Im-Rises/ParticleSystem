@@ -60,6 +60,7 @@ ParticleGeneratorBillboard::~ParticleGeneratorBillboard() {
 void ParticleGeneratorBillboard::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &quadVBO);
+    glDeleteBuffers(1, &quadEBO);
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
@@ -72,6 +73,9 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     shader.setMat4("projection", cameraProjectionMatrix);
     shader.setVec3("cameraRight", cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]);
     shader.setVec3("cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
+
+    // Texture
+    glBindTexture(GL_TEXTURE_2D, texture.getTexture());
 
     // Draw
     glBindVertexArray(quadVAO);
