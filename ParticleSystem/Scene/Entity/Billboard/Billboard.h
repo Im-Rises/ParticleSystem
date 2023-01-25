@@ -8,14 +8,17 @@ class Billboard : public Entity {
 private:
     unsigned int VAO, VBO;
 
-    static constexpr std::array<float, 18> vertices = {
-            -0.5f, -0.5f, -0.0f,
-            0.5f, -0.5f, -0.0f,
-            0.5f, 0.5f, -0.0f,
+    static constexpr std::array<float, 20> vertices = {
+            // positions          // texture coords
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f
+    };
 
-            0.5f, 0.5f, -0.f,
-            -0.5f, 0.5f, -0.0f,
-            -0.5f, -0.5f, -0.0f,
+    static constexpr std::array<unsigned int, 6> indices = {
+            0, 1, 2,
+            2, 3, 0
     };
 
     unsigned int texture;
