@@ -6,19 +6,19 @@
 
 class Billboard : public Entity {
 private:
-    unsigned int VAO, VBO;
+    unsigned int VAO, VBO, EBO;
 
     static constexpr std::array<float, 20> vertices = {
             // positions          // texture coords
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f, // top right
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f  // top left
     };
 
     static constexpr std::array<unsigned int, 6> indices = {
-            0, 1, 2,
-            2, 3, 0
+            0, 1, 3, // first triangle
+            1, 2, 3  // second triangle
     };
 
     unsigned int texture;
