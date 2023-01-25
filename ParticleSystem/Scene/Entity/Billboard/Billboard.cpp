@@ -8,15 +8,13 @@
 #include <iostream>
 
 Billboard::Billboard()
-        : Entity("shaders/Billboard.vert", "shaders/Billboard.frag") {
+        : Entity("shaders/Billboard.vert", "shaders/Billboard.frag"), texture("textures/container.jpg") {
     create();
     position = glm::vec3(1.0F, 0.0F, 0.0F);
     updateModelMatrix();
 }
 
 void Billboard::create() {
-    loadTexture("textures/container.jpg");
-
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -51,7 +49,6 @@ void Billboard::update(float deltaTime) {
 
 void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     //Shader
-    glBindTexture(GL_TEXTURE_2D, texture);
     shader.use();
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
@@ -62,29 +59,10 @@ void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMat
     shader.setVec3("BillboardPos", glm::vec3(1, 0, 0));
     shader.setVec2("BillboardSize", glm::vec2(0.1f, 0.1f));
 
+    // Texture
+    glBindTexture(GL_TEXTURE_2D, texture.getTexture());
+
     // Draw
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-}
-
-void Billboard::loadTexture(const std::string_view &texturePath) {
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    // Set the texture wrapping/filtering options (on the currently bound texture object)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // Load and generate the texture
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load(texturePath.data(), &width, &height, &nrChannels, 0);
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    } else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
 }

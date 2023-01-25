@@ -15,8 +15,6 @@ protected:
 
     Shader shader;
 
-//    unsigned int texture;
-
 public:
     Entity(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
 
@@ -27,8 +25,6 @@ public:
     virtual void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) = 0;
 
     void updateModelMatrix();
-
-//    void loadTexture(const std::string_view &texturePath);
 };
 
 

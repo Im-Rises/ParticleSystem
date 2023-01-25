@@ -3,6 +3,7 @@
 
 #include <array>
 #include "../Entity.h"
+#include "../../../Texture/Texture.h"
 
 class Billboard : public Entity {
 private:
@@ -21,7 +22,7 @@ private:
             1, 2, 3  // second triangle
     };
 
-    unsigned int texture;
+    Texture texture;
 
 
 public:
@@ -41,8 +42,6 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
-private:
-    void loadTexture(const std::string_view &texturePath);
 };
 
 
