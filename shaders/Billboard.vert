@@ -11,6 +11,7 @@ uniform mat4 projection;
 uniform vec3 cameraRight;
 uniform vec3 cameraUp;
 
+//ToDo: Change to layout variable
 uniform vec3 billboardPos;
 uniform vec2 billboardSize;
 
