@@ -20,4 +20,3 @@ void Entity::updateModelMatrix() {
     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.z), glm::vec3(0.0F, 0.0F, 1.0F));
     modelMatrix = glm::scale(modelMatrix, scale);
 }
-

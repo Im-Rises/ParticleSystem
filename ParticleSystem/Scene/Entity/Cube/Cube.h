@@ -10,7 +10,7 @@ class Cube : public Entity {
 private:
     unsigned int VAO, VBO;
 
-    static inline constexpr const std::array<float, 108> vertices = {
+    static constexpr std::array<float, 108> vertices = {
             -0.5f, -0.5f, -0.5f,
             0.5f, -0.5f, -0.5f,
             0.5f, 0.5f, -0.5f,

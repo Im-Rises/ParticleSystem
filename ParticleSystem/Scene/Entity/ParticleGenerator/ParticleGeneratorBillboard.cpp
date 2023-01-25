@@ -1,7 +1,5 @@
 #include "ParticleGeneratorBillboard.h"
 
-#include <iostream>
-
 ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity(
         "shaders/BillboardParticle.vert",
         "shaders/BillboardParticle.frag") {

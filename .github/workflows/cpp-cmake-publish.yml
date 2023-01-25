@@ -30,8 +30,8 @@ jobs:
           path: |
             ./ParticleSystem.exe
             ./imgui.ini
-            ./shaders/BillboardParticle.vert
-            ./shaders/BillboardParticle.frag
+            ./shaders/*
+            ./textures/*
   build-ubuntu:
     name: Build ubuntu
     runs-on: ubuntu-latest
@@ -55,8 +55,8 @@ jobs:
           path: |
             ./ParticleSystemLauncher
             ./imgui.ini
-            ./shaders/BillboardParticle.vert
-            ./shaders/BillboardParticle.frag
+            ./shaders/*
+            ./textures/*
   build-macos:
     name: Build macos
     runs-on: macos-latest
@@ -77,8 +77,8 @@ jobs:
           path: |
             ./ParticleSystemLauncher
             ./imgui.ini
-            ./shaders/BillboardParticle.vert
-            ./shaders/BillboardParticle.frag
+            ./shaders/*
+            ./textures/*
   release-project:
     name: Release project
     runs-on: ubuntu-latest

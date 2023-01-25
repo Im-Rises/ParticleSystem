@@ -1,19 +1,15 @@
-#ifndef PARTICLEEMISSION_H
-#define PARTICLEEMISSION_H
+#ifndef PARTICLE_EMISSION_H
+#define PARTICLE_EMISSION_H
 
 #include <memory>
 
 #include "Scene/Scene.h"
 
-#define PROJECT_NAME "Particle Emission 3D"
+constexpr char *PROJECT_NAME = "Particle Emission 3D";
 
-#define VERSION_MAJOR "0"
-#define VERSION_MINOR "4"
-#define VERSION_PATCH "1"
+constexpr char *PROJECT_VERSION = "0.5.0";
 
-#define PROJECT_VERSION VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH
-
-#define PROJECT_GITHUB "https://github.com/Im-Rises/ParticleSystem"
+constexpr char *PROJECT_GITHUB = "https://github.com/Im-Rises/ParticleSystem";
 
 struct GLFWwindow;
 
@@ -47,9 +43,9 @@ private:
 
     void updateScreen();
 
-private:
-    void toggleWireframeMode();
+//private:
+//    void toggleWireframeMode();
 };
 
 
-#endif // PARTICLEEMISSION_H
+#endif // PARTICLE_EMISSION_H
