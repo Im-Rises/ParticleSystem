@@ -1,0 +1,10 @@
+#ifndef PARTICLESYSTEM_TEXTURE_H
+#define PARTICLESYSTEM_TEXTURE_H
+
+
+class Texture {
+
+};
+
+
+#endif //PARTICLESYSTEM_TEXTURE_H

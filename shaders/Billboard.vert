@@ -11,10 +11,13 @@ uniform vec3 CameraUp_worldspace;
 uniform vec3 BillboardPos;
 uniform vec2 BillboardSize;
 
+out vec2 UV;
+
 void main()
 {
     vec3 pos = BillboardPos
     + CameraRight_worldspace * vertice.x * BillboardSize.x
     + CameraUp_worldspace * vertice.y * BillboardSize.y;
     gl_Position = projection * view * vec4(pos, 1.0);
+    UV = vertice.xy;
 }

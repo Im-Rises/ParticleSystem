@@ -15,7 +15,7 @@ Billboard::Billboard()
 }
 
 void Billboard::create() {
-//    loadTexture("textures/container.jpg");
+    loadTexture("textures/container.jpg");
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -27,8 +27,6 @@ void Billboard::create() {
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
-
-//    shader.use();
 }
 
 Billboard::~Billboard() {
@@ -46,7 +44,7 @@ void Billboard::update(float deltaTime) {
 
 void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     //Shader
-//    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
     shader.use();
     shader.setMat4("view", cameraViewMatrix);
     shader.setMat4("projection", cameraProjectionMatrix);
