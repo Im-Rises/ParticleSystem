@@ -5,11 +5,11 @@
 
 class Texture {
 private:
-    unsigned int texture;
+    unsigned int textureID;
     unsigned int width, height;
 
 public:
-    explicit Texture(const std::string_view &texturePath);
+    explicit Texture(const std::string_view& texturePath);
 
     ~Texture();
 
@@ -19,8 +19,7 @@ public:
     unsigned int getWidth() const;
 
     unsigned int getHeight() const;
-
 };
 
 
-#endif //TEXTURE_H
+#endif // TEXTURE_H
