@@ -11,12 +11,14 @@
 
 class ParticleGeneratorBillboard : public Entity {
 private:
-    static constexpr std::array<float, 20> vertices = {
-        // positions          // texture coords
-        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,   // top right
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f   // top left
+    static constexpr int MAX_PARTICLES = 1000;
+
+    static constexpr std::array<float, 12> vertices = {
+        // positions
+        0.5f, 0.5f, 0.0f,   // top right
+        0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f, // bottom left
+        -0.5f, 0.5f, 0.0f,  // top left
     };
 
     static constexpr std::array<unsigned int, 6> indices = {
@@ -24,15 +26,15 @@ private:
         1, 2, 3  // second triangle
     };
 
-//    struct Particle {
-//        glm::vec3 position, velocity;
-//        glm::vec4 color;
-//        float life;
-//
-//        Particle() : position(0.0f), velocity(0.0f), color(1.0f), life(0.0f) {}
-//    };
+    struct Particle {
+        glm::vec3 position;
+        glm::vec2 scale;
+        glm::vec3 color;
+        Particle() : position(0.0f), scale(0.1f), color(1.0f) {}
+    };
 
-    std::array<glm::vec3, 100> translations;
+    std::array<Particle, MAX_PARTICLES> particles;
+    std::array<glm::vec3, MAX_PARTICLES> velocities;
 
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO, quadEBO;

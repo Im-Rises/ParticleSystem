@@ -13,14 +13,14 @@ uniform vec3 u_cameraUp;
 
 //ToDo: Change to layout variable
 uniform vec3 u_billboardPos;
-uniform vec2 u_billboardSize;
+uniform vec2 u_billboardScale;
 
 
 void main()
 {
 	vec3 pos = u_billboardPos
-	+ u_cameraRight * a_vertice.x * u_billboardSize.x
-	+ u_cameraUp * a_vertice.y * u_billboardSize.y;
+	+ u_cameraRight * a_vertice.x * u_billboardScale.x
+	+ u_cameraUp * a_vertice.y * u_billboardScale.y;
 	gl_Position = u_projection * u_view * vec4(pos, 1.0);
 	v_UV = a_textureCoord;
 }

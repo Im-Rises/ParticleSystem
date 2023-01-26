@@ -54,7 +54,7 @@ void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMat
     shader.setVec3("u_cameraUp",
         glm::vec3(cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]));
     shader.setVec3("u_billboardPos", position);
-    shader.setVec2("u_billboardSize", glm::vec2(scale.x, scale.y));
+    shader.setVec2("u_billboardScale", glm::vec2(scale.x, scale.y));
 
     // Texture
     glBindTexture(GL_TEXTURE_2D, texture.getTexture());
