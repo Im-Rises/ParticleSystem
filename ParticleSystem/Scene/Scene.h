@@ -11,8 +11,8 @@ public:
     Camera camera;
 
 private:
-    //    Billboard billboard;
-    //    Cube cube;
+    Billboard billboard;
+    Cube cube;
     ParticleGeneratorBillboard particleGenerator;
 
 public:

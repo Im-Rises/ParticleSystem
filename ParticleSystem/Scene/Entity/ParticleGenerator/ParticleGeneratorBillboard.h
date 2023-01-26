@@ -24,6 +24,14 @@ private:
         1, 2, 3  // second triangle
     };
 
+//    struct Particle {
+//        glm::vec3 position, velocity;
+//        glm::vec4 color;
+//        float life;
+//
+//        Particle() : position(0.0f), velocity(0.0f), color(1.0f), life(0.0f) {}
+//    };
+
     std::array<glm::vec3, 100> translations;
 
     unsigned int instanceVBO;

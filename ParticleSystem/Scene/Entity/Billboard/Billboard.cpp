@@ -47,14 +47,14 @@ void Billboard::update(float deltaTime) {
 void Billboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     // Shader
     shader.use();
-    shader.setMat4("view", cameraViewMatrix);
-    shader.setMat4("projection", cameraProjectionMatrix);
-    shader.setVec3("cameraRight",
+    shader.setMat4("u_view", cameraViewMatrix);
+    shader.setMat4("u_projection", cameraProjectionMatrix);
+    shader.setVec3("u_cameraRight",
         glm::vec3(cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]));
-    shader.setVec3("cameraUp",
+    shader.setVec3("u_cameraUp",
         glm::vec3(cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]));
-    shader.setVec3("billboardPos", position);
-    shader.setVec2("billboardSize", glm::vec2(scale.x, scale.y));
+    shader.setVec3("u_billboardPos", position);
+    shader.setVec2("u_billboardSize", glm::vec2(scale.x, scale.y));
 
     // Texture
     glBindTexture(GL_TEXTURE_2D, texture.getTexture());

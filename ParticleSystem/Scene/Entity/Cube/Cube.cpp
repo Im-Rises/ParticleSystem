@@ -18,7 +18,7 @@ void Cube::create() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 }
 
@@ -36,13 +36,13 @@ void Cube::update(float deltaTime) {
 }
 
 void Cube::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
-    //Shader
+    // Shader
     shader.use();
-    shader.setMat4("view", cameraViewMatrix);
-    shader.setMat4("projection", cameraProjectionMatrix);
-    shader.setMat4("model", modelMatrix);
+    shader.setMat4("u_view", cameraViewMatrix);
+    shader.setMat4("u_projection", cameraProjectionMatrix);
+    shader.setMat4("u_model", modelMatrix);
 
     // Draw
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, (GLsizei) vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertices.size());
 }
