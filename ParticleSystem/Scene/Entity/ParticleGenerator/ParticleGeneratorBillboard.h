@@ -34,7 +34,14 @@ private:
     };
 
     std::array<Particle, MAX_PARTICLES> particles;
-    std::array<glm::vec3, MAX_PARTICLES> velocities;
+
+    struct MovementData {
+        glm::vec3 velocity;
+        float lifeTime;
+        MovementData() : velocity(0.0f), lifeTime(0.0f) {}
+    };
+
+    std::array<MovementData, MAX_PARTICLES> movementData;
 
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO, quadEBO;

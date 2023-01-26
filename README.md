@@ -6,9 +6,7 @@ This is a simple UI for the Particle Emission project.
 
 ## Todo
 
-- [ ] Implement the color of a particle using a new VBO for the shader
 - [ ] Correct all types of variables (float, int, etc.) for the openGL version
-- [ ] Create a Transform class to handle the position, rotation and scale of an entity
 
 ## Documentation
 

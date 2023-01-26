@@ -69,6 +69,22 @@ void ParticleGeneratorBillboard::destroy() {
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
+    for (int i = 0; i < MAX_PARTICLES; i++)
+    {
+        movementData[i].lifeTime -= deltaTime;
+        if (movementData[i].lifeTime <= 0.0f)
+        {
+            movementData[i].lifeTime = 1.0f;
+            movementData[i].velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+            particles[i].position = glm::vec3(0.0f, 0.0f, 0.0f);
+            particles[i].scale = glm::vec2(0.1f, 0.1f);
+            particles[i].color = glm::vec3(1.0f, 1.0f, 1.0f);
+        }
+
+        particles[i].position += movementData[i].velocity * deltaTime;
+        movementData[i].velocity.y -= 9.81f * deltaTime;
+        movementData[i].velocity.x += i;
+    }
 }
 
 void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
@@ -86,4 +102,8 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glBindVertexArray(quadVAO);
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, particles.size());
     glBindVertexArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
