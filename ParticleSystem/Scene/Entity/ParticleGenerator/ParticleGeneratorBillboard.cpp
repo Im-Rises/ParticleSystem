@@ -82,6 +82,8 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
         }
 
         particles[i].position += movementData[i].velocity * deltaTime;
+        particles[i].scale += glm::vec2(0.1f, 0.1f) * deltaTime;
+        particles[i].color -= glm::vec3(0.1f, 0.1f, 0.1f);
         movementData[i].velocity.y -= 9.81f * deltaTime;
         movementData[i].velocity.x += i;
     }
