@@ -8,18 +8,9 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/Billb
 }
 
 void ParticleGeneratorBillboard::create() {
-    int index = 0;
-    float offset = 0.1f;
-    for (int y = -10; y < 10; y += 2)
+    for (int i = 0; i < MAX_PARTICLES; i++)
     {
-        for (int x = -10; x < 10; x += 2)
-        {
-            glm::vec3 translation;
-            translation.x = (float)x / 10.0f + offset;
-            translation.y = (float)y / 10.0f + offset;
-            translation.z = 0.0f;
-            particles[index++].position = translation;
-        }
+        resetParticle(i);
     }
 
     glGenBuffers(1, &instanceVBO);
@@ -72,20 +63,16 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
     for (int i = 0; i < MAX_PARTICLES; i++)
     {
         movementData[i].lifeTime -= deltaTime;
-        if (movementData[i].lifeTime <= 0.0f)
-        {
-            movementData[i].lifeTime = 1.0f;
-            movementData[i].velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-            particles[i].position = glm::vec3(0.0f, 0.0f, 0.0f);
-            particles[i].scale = glm::vec2(0.1f, 0.1f);
-            particles[i].color = glm::vec3(1.0f, 1.0f, 1.0f);
-        }
 
-        particles[i].position += movementData[i].velocity * deltaTime;
-        particles[i].scale += glm::vec2(0.1f, 0.1f) * deltaTime;
-        particles[i].color -= glm::vec3(0.1f, 0.1f, 0.1f);
-        movementData[i].velocity.y -= 9.81f * deltaTime;
-        movementData[i].velocity.x += i;
+        if (movementData[i].lifeTime > 0)
+        {
+            movementData[i].velocity.y -= 9.81f * deltaTime;
+            particles[i].position += movementData[i].velocity * deltaTime;
+        }
+        else
+        {
+            resetParticle(i);
+        }
     }
 }
 
@@ -108,4 +95,14 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
+    movementData[index].lifeTime = randomValue(0.5f, 1.0f);
+    movementData[index].velocity = glm::vec3(0.0f, 0.0f, 0.0f); // randomVec3(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    movementData[index].velocity.y = randomValue(0.0f, 1.0f);
+
+    particles[index].position = randomVec3(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    particles[index].scale = glm::vec2(0.1f, 0.1f);
+    particles[index].color = randomVec3(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 }

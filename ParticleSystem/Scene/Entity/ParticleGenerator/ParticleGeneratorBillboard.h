@@ -48,6 +48,10 @@ private:
 
     Texture texture;
 
+    //    float lifeTime = 1.0f;
+    //    glm::vec3 scale = glm::vec3(0.1f, 0.1f, 0.1f);
+    //    unsigned int particlesCount = 0;
+
 public:
     ParticleGeneratorBillboard();
 
@@ -57,9 +61,23 @@ public:
 
     void destroy();
 
+public:
     void update(float deltaTime) override;
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
+
+private:
+    void resetParticle(unsigned int index);
+
+private:
+    template <typename T>
+    T randomValue(T min, T max) {
+        return min + (max - min) * ((float)rand() / RAND_MAX);
+    }
+
+    glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max) {
+        return glm::vec3(randomValue(min.x, max.x), randomValue(min.y, max.y), randomValue(min.z, max.z));
+    }
 };
 
 #endif // PARTICLE_GENERATOR_H

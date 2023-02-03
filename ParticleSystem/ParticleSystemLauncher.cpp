@@ -186,8 +186,8 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Camera settings");
 
-        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "View settings");
         static bool wireframe = false;
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "View settings");
         ImGui::Checkbox("Wireframe", &wireframe);
         if (wireframe)
         {
