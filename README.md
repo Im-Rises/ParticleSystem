@@ -106,6 +106,8 @@ The speed and some parameters can be modified directly in the ImGui windows.
 | Translate camera downwards    | Right Mouse Button + Mouse ↓ movement |
 | Exit app                      | ESC                                   |
 
+To change the particle system parameters, you can use the ImGui windows named `Particle settings` and `Camera Settings`.
+
 > **Note**
 > You can the inputs by changing their attribution in the `InputManager.cpp` file,
 > if so you'll need to compile the project.
