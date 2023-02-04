@@ -19,7 +19,7 @@ private:
 
 public:
     // Camera attributes
-    float movementSpeed = 1.0F;
+    float movementSpeed = 3.0F;
     float rotationSpeed = 0.1F;
     float fov = 90.0F;
     float nearPlane = 0.1F;

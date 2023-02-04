@@ -128,11 +128,13 @@ Then you can start by double-clicking the executable of typing the following com
 
 The speed and some parameters can be modified directly in the ImGui windows.
 
-| Action        | Key                                 |
-|---------------|-------------------------------------|
-| Move camera   | WASD (← → ↑ ↓)                      |
-| Rotate camera | Right Mouse Button + Mouse movement |
-| Exit app      | ESC                                 |
+| Action              | Key                                 |
+|---------------------|-------------------------------------|
+| Translate camera    | WASD (← → ↑ ↓)                      |
+| Pause/Resume        | P                                   |
+| Move up/down camera | SPACE/SHIFT                         |
+| Rotate camera       | Right Mouse Button + Mouse movement |
+| Exit app            | ESC                                 |
 
 > **Note**
 > You can the inputs by changing their attribution in the `InputManager.cpp` file,

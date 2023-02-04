@@ -7,6 +7,9 @@
 #include "Camera/Camera.h"
 
 class Scene {
+private:
+    bool isPaused = false;
+
 public:
     Camera camera;
     ParticleGeneratorBillboard particleGenerator;
@@ -26,6 +29,8 @@ public:
 
 public:
     void updateProjectionMatrix(int display_w, int display_h);
+
+    void togglePause();
 };
 
 #endif // SCENE_H
