@@ -16,6 +16,17 @@ The UI is made using ImGui and allows you to modify some parameters of the parti
 > **Note**  
 > This project was made as a learning exercise to learn some OpenGL features.
 
+## Features
+
+- [x] Particle system
+- [x] ImGui UI
+- [x] Camera movement
+- [x] Particle emitter
+- [x] Particle emitter with gravity
+- [x] Pausing the simulation
+- [x] Different settings for the particle system
+- [x] Different settings for the camera
+
 ## Images and Videos
 
 [![Watch the video](https://user-images.githubusercontent.com/59691442/216751976-c06c492d-5dfb-466c-afe9-ec44e94e5db9.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
@@ -23,6 +34,27 @@ The UI is made using ImGui and allows you to modify some parameters of the parti
 [![Watch the video](https://user-images.githubusercontent.com/59691442/216753254-f3315a71-f073-420e-b4e3-86a024913683.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
 
 Click on the images to watch the video.
+
+## Table of Contents
+
+1. [Description](#description)
+2. [Features](#features)
+3. [Images and Videos](#images-and-videos)
+4. [Table of Contents](#table-of-contents)
+5. [Quickstart](#quickstart)
+	1. [Windows](#windows)
+	2. [Linux](#linux)
+	3. [MacOs](#macos)
+6. [Controls](#controls)
+7. [Project Architecture](#project-architecture)
+8. [Dependencies](#dependencies)
+9. [Compilation](#compilation)
+	1. [Windows](#windows)
+	2. [Linux](#linux)
+	3. [MacOs](#macos)
+10. [GitHub-Actions](#github-actions)
+11. [Documentation](#documentation)
+12. [Contributors](#contributors)
 
 ## Quickstart
 
