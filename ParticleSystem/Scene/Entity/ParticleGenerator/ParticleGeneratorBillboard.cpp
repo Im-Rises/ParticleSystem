@@ -5,14 +5,10 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/Billb
                                                            texture("textures/ball2.png") {
     create();
     position = glm::vec3(0.0f, 0.0f, 0.0f);
+    reset();
 }
 
 void ParticleGeneratorBillboard::create() {
-    for (int i = 0; i < MAX_PARTICLES; i++)
-    {
-        resetParticle(i);
-    }
-
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STATIC_DRAW);
@@ -43,8 +39,8 @@ void ParticleGeneratorBillboard::create() {
     glEnableVertexAttribArray(3);
 
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
-    glVertexAttribDivisor(2, 1); // tell OpenGL this is an instanced vertex attribute.
-    glVertexAttribDivisor(3, 1); // tell OpenGL this is an instanced vertex attribute.
+    glVertexAttribDivisor(2, 1);
+    glVertexAttribDivisor(3, 1);
 
     glBindVertexArray(0);
 }
@@ -66,7 +62,7 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
 
         if (movementData[i].lifeTime > 0)
         {
-            movementData[i].velocity.y -= 9.81f * deltaTime;
+            movementData[i].velocity += sumForces * deltaTime;
             particles[i].position += movementData[i].velocity * deltaTime;
         }
         else
@@ -97,12 +93,33 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    movementData[index].lifeTime = randomValue(0.5f, 1.0f);
-    movementData[index].velocity = glm::vec3(0.0f, 0.0f, 0.0f); // randomVec3(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-    movementData[index].velocity.y = randomValue(0.0f, 1.0f);
+void ParticleGeneratorBillboard::reset() {
+    for (int i = 0; i < MAX_PARTICLES; i++)
+    {
+        resetParticle(i);
+    }
+}
 
-    particles[index].position = randomVec3(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-    particles[index].scale = glm::vec2(0.1f, 0.1f);
-    particles[index].color = randomVec3(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
+    particles[index].position = randomVec3(minSpread, maxSpread) + position;
+
+    if (randomizeLifeTime)
+        movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
+    else
+        movementData[index].lifeTime = fixedLifeTime;
+
+    if (randomizeInitialVelocity)
+        movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+    else
+        movementData[index].velocity = fixedInitialVelocity;
+
+    if (randomizeScale)
+        particles[index].scale = randomValue(minScale, maxScale);
+    else
+        particles[index].scale = fixedScale;
+
+    if (randomizeColor)
+        particles[index].color = randomVec3(minColor, maxColor);
+    else
+        particles[index].color = fixedColor;
 }

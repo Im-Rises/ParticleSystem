@@ -11,7 +11,7 @@
 
 class ParticleGeneratorBillboard : public Entity {
 private:
-    static constexpr int MAX_PARTICLES = 1000;
+    static constexpr int MAX_PARTICLES = 10000;
 
     static constexpr std::array<float, 12> vertices = {
         // positions
@@ -48,9 +48,31 @@ private:
 
     Texture texture;
 
-    //    float lifeTime = 1.0f;
-    //    glm::vec3 scale = glm::vec3(0.1f, 0.1f, 0.1f);
-    //    unsigned int particlesCount = 0;
+public:
+    glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
+
+    glm::vec3 minSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
+    glm::vec3 maxSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
+
+    bool randomizeLifeTime = true;
+    float fixedLifeTime = 1.0f;
+    float minLifeTime = 0.1f;
+    float maxLifeTime = 5.0f;
+
+    bool randomizeInitialVelocity = true;
+    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
+    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
+
+    bool randomizeScale = true;
+    glm::vec2 fixedScale = glm::vec2(0.1f, 0.1f);
+    glm::vec2 minScale = glm::vec2(0.1f, 0.1f);
+    glm::vec2 maxScale = glm::vec2(0.2f, 0.2f);
+
+    bool randomizeColor = true;
+    glm::vec3 fixedColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 minColor = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 public:
     ParticleGeneratorBillboard();
@@ -66,6 +88,8 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
+    void reset();
+
 private:
     void resetParticle(unsigned int index);
 
@@ -77,6 +101,10 @@ private:
 
     glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max) {
         return glm::vec3(randomValue(min.x, max.x), randomValue(min.y, max.y), randomValue(min.z, max.z));
+    }
+
+    glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max) {
+        return glm::vec2(randomValue(min.x, max.x), randomValue(min.y, max.y));
     }
 };
 
