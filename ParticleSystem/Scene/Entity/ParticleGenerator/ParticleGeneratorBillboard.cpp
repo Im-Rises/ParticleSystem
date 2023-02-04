@@ -159,3 +159,7 @@ void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
     movementData.resize(particlesCount);
     reset();
 }
+
+const int ParticleGeneratorBillboard::getParticlesCount() const {
+    return particlesCount;
+}

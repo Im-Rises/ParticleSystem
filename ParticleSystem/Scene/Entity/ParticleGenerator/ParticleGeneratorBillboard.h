@@ -81,7 +81,7 @@ public:
     glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 public:
-    explicit ParticleGeneratorBillboard(int maxParticles = 1);
+    explicit ParticleGeneratorBillboard(int maxParticles = 10000);
 
     void create();
 
@@ -104,9 +104,10 @@ private:
     float randomFloat(float min, float max);
     glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max);
     glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max);
-    
+
 public:
     void setParticlesCount(int particlesCount);
+    const int getParticlesCount() const;
 };
 
 #endif // PARTICLE_GENERATOR_H
