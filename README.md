@@ -20,7 +20,9 @@ The UI is made using ImGui and allows you to modify some parameters of the parti
 
 [![Watch the video](https://user-images.githubusercontent.com/59691442/216751976-c06c492d-5dfb-466c-afe9-ec44e94e5db9.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
 
-Click on the image to watch the video.
+[![Watch the video](https://user-images.githubusercontent.com/59691442/216753254-f3315a71-f073-420e-b4e3-86a024913683.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
+
+Click on the images to watch the video.
 
 ## Quickstart
 

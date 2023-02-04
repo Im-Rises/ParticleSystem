@@ -253,11 +253,15 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::DragFloat3("##forces", (float*)&scene->particleGenerator.sumForces);
 
         ImGui::NewLine();
-        ImGui::Text("Particles min spread:");
-        ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minSpread, 0.1f);
-        ImGui::Text("Particles max spread:");
-        ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread, 0.1f);
-
+        ImGui::Checkbox("Randomize spread", &scene->particleGenerator.randomizePosition);
+        if (scene->particleGenerator.randomizePosition)
+        {
+            ImGui::Text("Particles min spread:");
+            ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minSpread, 0.1f);
+            ImGui::Text("Particles max spread:");
+            ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread, 0.1f);
+        }
+        
         ImGui::NewLine();
         ImGui::Checkbox("Randomize lifetime", &scene->particleGenerator.randomizeLifeTime);
         if (scene->particleGenerator.randomizeLifeTime)
