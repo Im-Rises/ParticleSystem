@@ -246,13 +246,13 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         }
         ImGui::NewLine();
 
-        ImGui::Text("Particles count: %d", scene->particleGenerator.getParticlesCount());
-        ImGui::DragInt("##particlesCount", &scene->particlesCount, 1, 1, 1000000);
+        //        ImGui::Text("Particles count: %d", scene->particleGenerator.getParticlesCount());
+        static int particlesCount = 10;
+        ImGui::DragInt("##particlesCount", &particlesCount, 1, 1, 100000);
         ImGui::Button("Validate##validateParticlesCount");
         if (ImGui::IsItemClicked())
         {
-            //            scene->particleGenerator.setParticlesCount(scene->particlesCount);
-            scene->restartParticlesGenerator();
+            scene->particleGenerator.setParticlesCount(particlesCount);
         }
 
         ImGui::NewLine();

@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene(int display_w, int display_h) : camera(display_w, display_h), particleGenerator(particlesCount) {
+Scene::Scene(int display_w, int display_h) : camera(display_w, display_h) {
 }
 
 Scene::~Scene() {
@@ -30,10 +30,4 @@ void Scene::updateProjectionMatrix(int display_w, int display_h) {
 
 void Scene::togglePause() {
     isPaused = !isPaused;
-}
-
-void Scene::restartParticlesGenerator() {
-    //    this->particlesCount = particlesCount;
-    //    particleGenerator.destroy();
-    //    particleGenerator = ParticleGeneratorBillboard(particlesCount);
 }

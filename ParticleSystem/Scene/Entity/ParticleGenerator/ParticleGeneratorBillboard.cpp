@@ -153,7 +153,9 @@ glm::vec2 ParticleGeneratorBillboard::randomVec2(glm::vec2 min, glm::vec2 max) {
 glm::vec3 ParticleGeneratorBillboard::randomVec3(glm::vec3 min, glm::vec3 max) {
     return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z) };
 }
-
-const int& ParticleGeneratorBillboard::getParticlesCount() {
-    return particlesCount;
+void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
+    this->particlesCount = particlesCount;
+    particles.resize(particlesCount);
+    movementData.resize(particlesCount);
+    reset();
 }
