@@ -29,7 +29,7 @@ public:
     bool constrainPitch = true;
     float yaw = -90.0f;
     float pitch = 0.0f;
-    glm::vec3 position = glm::vec3(0.0F, 0.0F, 3.0F);
+    glm::vec3 position = glm::vec3(0.0F, 0.0F, 8.0F);
 
     // Movement buffer to take into account the deltaTime
     glm::vec3 movementBuffer;
@@ -68,8 +68,7 @@ public:
     [[nodiscard]] glm::mat4 getViewMatrix() const;
 
     [[nodiscard]] glm::mat4 getProjectionMatrix() const;
-
 };
 
 
-#endif //CAMERA_H
+#endif // CAMERA_H

@@ -49,16 +49,30 @@ private:
     Texture texture;
 
 public:
+    glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
+
+    glm::vec3 minSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
+    glm::vec3 maxSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
+
     bool randomizeLifeTime = true;
+    float fixedLifeTime = 1.0f;
     float minLifeTime = 0.1f;
     float maxLifeTime = 5.0f;
-    glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
+
+    bool randomizeInitialVelocity = true;
+    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
     glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
-    glm::vec3 minSpread = glm::vec3(-3.0f, -1.0f, -1.0f);
-    glm::vec3 maxSpread = glm::vec3(+3.0f, +1.0f, +1.0f);
+
+    bool randomizeScale = true;
+    glm::vec2 fixedScale = glm::vec2(0.1f, 0.1f);
     glm::vec2 minScale = glm::vec2(0.1f, 0.1f);
-    glm::vec2 maxScale = glm::vec2(0.1f, 0.1f);
+    glm::vec2 maxScale = glm::vec2(0.2f, 0.2f);
+
+    bool randomizeColor = true;
+    glm::vec3 fixedColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 minColor = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 public:
     ParticleGeneratorBillboard();
@@ -73,6 +87,8 @@ public:
     void update(float deltaTime) override;
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
+
+    void reset();
 
 private:
     void resetParticle(unsigned int index);

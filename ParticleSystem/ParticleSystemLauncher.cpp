@@ -236,41 +236,87 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Particle settings");
 
-        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Origin position");
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Reset particles");
+        ImGui::Button("Reset");
+        if (ImGui::IsItemClicked())
+        {
+            scene->particleGenerator.reset();
+        }
         ImGui::NewLine();
 
-        //        ImGui::Text("Particles count:");
-        //        ImGui::DragInt("##particlesCount", &scene->particleGenerator.particlesCount);
-        //        ImGui::Button("Validate##validateParticlesCount");
-
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Settings");
         ImGui::Text("Origin:");
         ImGui::DragFloat3("##origin", (float*)&scene->particleGenerator.position);
 
         ImGui::NewLine();
         ImGui::Text("Forces sum:");
         ImGui::DragFloat3("##forces", (float*)&scene->particleGenerator.sumForces);
-        ImGui::Text("Minimum inital velocity:");
-        ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
-        ImGui::Text("Maximum inital velocity:");
-        ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
 
         ImGui::NewLine();
         ImGui::Text("Particles min spread:");
-        ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minSpread);
+        ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minSpread, 0.1f);
         ImGui::Text("Particles max spread:");
-        ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread);
+        ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread, 0.1f);
 
         ImGui::NewLine();
-        ImGui::Text("Particle min scale:");
-        ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale);
-        ImGui::Text("Particle max scale:");
-        ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale);
+        ImGui::Checkbox("Randomize lifetime", &scene->particleGenerator.randomizeLifeTime);
+        if (scene->particleGenerator.randomizeLifeTime)
+        {
+            ImGui::Text("Particle min lifetime:");
+            ImGui::DragFloat("##minLifetime", &scene->particleGenerator.minLifeTime, 0.1f);
+            ImGui::Text("Particle max lifetime:");
+            ImGui::DragFloat("##maxLifetime", &scene->particleGenerator.maxLifeTime, 0.1f);
+        }
+        else
+        {
+            ImGui::Text("Particle lifetime:");
+            ImGui::DragFloat("##lifetime", &scene->particleGenerator.fixedLifeTime, 0.1f);
+        }
 
         ImGui::NewLine();
-        ImGui::Text("Particle min lifetime:");
-        ImGui::DragFloat("##minLifetime", &scene->particleGenerator.minLifeTime);
-        ImGui::Text("Particle max lifetime:");
-        ImGui::DragFloat("##maxLifetime", &scene->particleGenerator.maxLifeTime);
+        ImGui::Checkbox("Randomize initial velocity", &scene->particleGenerator.randomizeInitialVelocity);
+        if (scene->particleGenerator.randomizeInitialVelocity)
+        {
+            ImGui::Text("Minimum inital velocity:");
+            ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
+            ImGui::Text("Maximum inital velocity:");
+            ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
+        }
+        else
+        {
+            ImGui::Text("Initial velocity:");
+            ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.fixedInitialVelocity);
+        }
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize scale", &scene->particleGenerator.randomizeScale);
+        if (scene->particleGenerator.randomizeScale)
+        {
+            ImGui::Text("Particle min scale:");
+            ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
+            ImGui::Text("Particle max scale:");
+            ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale, 0.1f);
+        }
+        else
+        {
+            ImGui::Text("Particle scale:");
+            ImGui::DragFloat2("##scale", (float*)&scene->particleGenerator.fixedScale, 0.1f);
+        }
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize color", &scene->particleGenerator.randomizeColor);
+        if (scene->particleGenerator.randomizeColor)
+        {
+            ImGui::Text("Particle min color:");
+            ImGui::ColorEdit3("##minColor", (float*)&scene->particleGenerator.minColor);
+            ImGui::Text("Particle max color:");
+            ImGui::ColorEdit3("##maxColor", (float*)&scene->particleGenerator.maxColor);
+        }
+        else
+        {
+            ImGui::Text("Particle color:");
+            ImGui::ColorEdit3("##color", (float*)&scene->particleGenerator.fixedColor);
+        }
 
         ImGui::End();
     }

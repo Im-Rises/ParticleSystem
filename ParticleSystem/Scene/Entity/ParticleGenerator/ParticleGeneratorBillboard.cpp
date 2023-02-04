@@ -5,14 +5,10 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/Billb
                                                            texture("textures/ball2.png") {
     create();
     position = glm::vec3(0.0f, 0.0f, 0.0f);
+    reset();
 }
 
 void ParticleGeneratorBillboard::create() {
-    for (int i = 0; i < MAX_PARTICLES; i++)
-    {
-        resetParticle(i);
-    }
-
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STATIC_DRAW);
@@ -97,11 +93,33 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
-    movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+void ParticleGeneratorBillboard::reset() {
+    for (int i = 0; i < MAX_PARTICLES; i++)
+    {
+        resetParticle(i);
+    }
+}
 
+void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     particles[index].position = randomVec3(minSpread, maxSpread) + position;
-    particles[index].scale = randomVec2(minScale, maxScale);
-    particles[index].color = randomVec3(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+
+    if (randomizeLifeTime)
+        movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
+    else
+        movementData[index].lifeTime = fixedLifeTime;
+
+    if (randomizeInitialVelocity)
+        movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+    else
+        movementData[index].velocity = fixedInitialVelocity;
+
+    if (randomizeScale)
+        particles[index].scale = randomValue(minScale, maxScale);
+    else
+        particles[index].scale = fixedScale;
+
+    if (randomizeColor)
+        particles[index].color = randomVec3(minColor, maxColor);
+    else
+        particles[index].color = fixedColor;
 }
