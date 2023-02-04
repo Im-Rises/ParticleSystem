@@ -256,6 +256,21 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::DragFloat3("##forces", (float*)&scene->particleGenerator.sumForces);
 
         ImGui::NewLine();
+        ImGui::Checkbox("Randomize initial velocity", &scene->particleGenerator.randomizeInitialVelocity);
+        if (scene->particleGenerator.randomizeInitialVelocity)
+        {
+            ImGui::Text("Minimum inital velocity:");
+            ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
+            ImGui::Text("Maximum inital velocity:");
+            ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
+        }
+        else
+        {
+            ImGui::Text("Initial velocity:");
+            ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.fixedInitialVelocity);
+        }
+
+        ImGui::NewLine();
         ImGui::Checkbox("Randomize spread", &scene->particleGenerator.randomizePosition);
         if (scene->particleGenerator.randomizePosition)
         {
@@ -281,24 +296,10 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         }
 
         ImGui::NewLine();
-        ImGui::Checkbox("Randomize initial velocity", &scene->particleGenerator.randomizeInitialVelocity);
-        if (scene->particleGenerator.randomizeInitialVelocity)
-        {
-            ImGui::Text("Minimum inital velocity:");
-            ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
-            ImGui::Text("Maximum inital velocity:");
-            ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
-        }
-        else
-        {
-            ImGui::Text("Initial velocity:");
-            ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.fixedInitialVelocity);
-        }
-
-        ImGui::NewLine();
         ImGui::Checkbox("Randomize scale", &scene->particleGenerator.randomizeScale);
         if (scene->particleGenerator.randomizeScale)
         {
+            ImGui::Checkbox("Keep aspect ratio", &scene->particleGenerator.keepScaleAspectRatio);
             ImGui::Text("Particle min scale:");
             ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
             ImGui::Text("Particle max scale:");

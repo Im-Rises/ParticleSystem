@@ -2,10 +2,15 @@
 
 ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/BillboardParticle.vert",
                                                                "shaders/BillboardParticle.frag"),
-                                                           texture("textures/ball.png") {
-    create();
+                                                           texture("textures/ball.png"),
+                                                           randomEngine(std::random_device()()) {
+    // Init particles
+    particles.resize(MAX_PARTICLES);
+    movementData.resize(MAX_PARTICLES);
     position = glm::vec3(0.0f, 0.0f, 0.0f);
     reset();
+    // Init opengl buffers
+    create();
 }
 
 void ParticleGeneratorBillboard::create() {
@@ -101,23 +106,31 @@ void ParticleGeneratorBillboard::reset() {
 }
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
+    if (randomizeInitialVelocity)
+        movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+    else
+        movementData[index].velocity = fixedInitialVelocity;
+    
     if (randomizePosition)
         particles[index].position = randomVec3(minSpread, maxSpread) + position;
     else
         particles[index].position = position;
 
     if (randomizeLifeTime)
-        movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
+        movementData[index].lifeTime = randomFloat(minLifeTime, maxLifeTime);
     else
         movementData[index].lifeTime = fixedLifeTime;
 
-    if (randomizeInitialVelocity)
-        movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
-    else
-        movementData[index].velocity = fixedInitialVelocity;
-
     if (randomizeScale)
-        particles[index].scale = randomValue(minScale, maxScale);
+    {
+        if (keepScaleAspectRatio)
+        {
+            float scale = randomFloat(minScale.x, maxScale.x);
+            particles[index].scale = { scale, scale };
+        }
+        else
+            particles[index].scale = randomVec2(minScale, maxScale);
+    }
     else
         particles[index].scale = fixedScale;
 
@@ -125,4 +138,17 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
         particles[index].color = randomVec3(minColor, maxColor);
     else
         particles[index].color = fixedColor;
+}
+
+float ParticleGeneratorBillboard::randomFloat(float min, float max) {
+    std::uniform_real_distribution<float> dist(min, max);
+    return dist(randomEngine);
+}
+
+glm::vec2 ParticleGeneratorBillboard::randomVec2(glm::vec2 min, glm::vec2 max) {
+    return { randomFloat(min.x, max.x), randomFloat(min.y, max.y) };
+}
+
+glm::vec3 ParticleGeneratorBillboard::randomVec3(glm::vec3 min, glm::vec3 max) {
+    return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z) };
 }
