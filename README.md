@@ -9,14 +9,18 @@
 
 ## Description
 
-This is a simple UI for the Particle System project using GLFW, OpenGL, Glad, DearImgui and stb_image.
+This project is a particle system made in C++ using OpenGL and GLFW.
+
+The UI is made using ImGui and allows you to modify some parameters of the particle system and the camera view.
 
 > **Note**  
 > This project was made as a learning exercise to learn some OpenGL features.
 
 ## Images and Videos
 
-PLACEHOLDER
+[![Watch the video](https://user-images.githubusercontent.com/59691442/216751976-c06c492d-5dfb-466c-afe9-ec44e94e5db9.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
+
+Click on the image to watch the video.
 
 ## Quickstart
 
@@ -88,7 +92,7 @@ Then you can start by double-clicking the executable of typing the following com
 
 ## Controls
 
-The speed and some parameters can be modified diretcly in the ImGui windows.
+The speed and some parameters can be modified directly in the ImGui windows.
 
 | Action                        | Key                                   |
 |-------------------------------|---------------------------------------|
@@ -101,7 +105,7 @@ The speed and some parameters can be modified diretcly in the ImGui windows.
 | Exit app                      | ESC                                   |
 
 > **Note**
-> You can the inputs by changing their attribution in the `InputManager.cpp` file, 
+> You can the inputs by changing their attribution in the `InputManager.cpp` file,
 > if so you'll need to compile the project.
 
 ## Project Architecture
