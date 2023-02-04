@@ -1,24 +1,26 @@
 #version 330 core
 
-layout(location = 0) in vec3 vertice;
-layout(location = 1) in vec2 textureCoord;
+layout(location = 0) in vec3 a_vertice;
+layout(location = 1) in vec2 a_textureCoord;
 
-uniform mat4 view;
-uniform mat4 projection;
+out vec2 v_UV;
 
-uniform vec3 CameraRight_worldspace;
-uniform vec3 CameraUp_worldspace;
+uniform mat4 u_view;
+uniform mat4 u_projection;
 
-uniform vec3 BillboardPos;
-uniform vec2 BillboardSize;
+uniform vec3 u_cameraRight;
+uniform vec3 u_cameraUp;
 
-out vec2 UV;
+//ToDo: Change to layout variable
+uniform vec3 u_billboardPos;
+uniform vec2 u_billboardScale;
+
 
 void main()
 {
-    vec3 pos = BillboardPos
-    + CameraRight_worldspace * vertice.x * BillboardSize.x
-    + CameraUp_worldspace * vertice.y * BillboardSize.y;
-    gl_Position = projection * view * vec4(pos, 1.0);
-    UV = textureCoord;
+	vec3 pos = u_billboardPos
+	+ u_cameraRight * a_vertice.x * u_billboardScale.x
+	+ u_cameraUp * a_vertice.y * u_billboardScale.y;
+	gl_Position = u_projection * u_view * vec4(pos, 1.0);
+	v_UV = a_textureCoord;
 }

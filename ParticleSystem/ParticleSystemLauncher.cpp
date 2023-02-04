@@ -21,7 +21,7 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-static void glfw_error_callback(int error, const char *description) {
+static void glfw_error_callback(int error, const char* description) {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
@@ -31,7 +31,7 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     if (!glfwInit())
         exit(1);
 
-    // Decide GL+GLSL versions
+        // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
     // GL ES 2.0 + GLSL 100
     const char* glsl_version = "#version 100";
@@ -47,11 +47,11 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
 #else
     // GL 3.0 + GLSL 130
-    const char *glsl_version = "#version 130";
+    const char* glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // 3.0+ only
 #endif
 
     // Create window with graphics context
@@ -61,29 +61,29 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
-//    // Initialize GLFW callbacks
-//    glfwSetWindowUserPointer(window, this);
+    //    // Initialize GLFW callbacks
+    //    glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, InputManager::key_callback);
-//    glfwSetScrollCallback(window, InputManager::scroll_callback);
-//    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
-//    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
+    //    glfwSetScrollCallback(window, InputManager::scroll_callback);
+    //    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
+    //    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
 
     // Center window
-    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
     auto xPos = (mode->width - display_w) / 2;
     auto yPos = (mode->height - display_h) / 2;
     glfwSetWindowPos(window, xPos, yPos);
 
     // Initialize OpenGL loader
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         exit(1);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    (void) io;
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
     // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
@@ -96,8 +96,9 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     // ImGui::StyleColorsLight();
 
     // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-    ImGuiStyle &style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
@@ -127,7 +128,8 @@ void ParticleSystemLauncher::start() {
     float deltaTime = 0.0F;
 
     // Main loop
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window))
+    {
         deltaTime = ImGui::GetIO().DeltaTime;
 
         handleInputs();
@@ -164,7 +166,7 @@ void ParticleSystemLauncher::handleInputs() {
 
     double x = 0, y = 0;
     InputManager::getMouseMovement(window, x, y, InputManager::isKeyMouseMovementPressed(window));
-    scene->camera.processMouseMovement((float) x, (float) y);
+    scene->camera.processMouseMovement((float)x, (float)y);
 }
 
 void ParticleSystemLauncher::handleUi(float deltaTime) {
@@ -184,12 +186,15 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Camera settings");
 
-        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "View settings");
         static bool wireframe = false;
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "View settings");
         ImGui::Checkbox("Wireframe", &wireframe);
-        if (wireframe) {
+        if (wireframe)
+        {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        } else {
+        }
+        else
+        {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
         ImGui::NewLine();
@@ -197,29 +202,33 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Camera settings");
 
         ImGui::Text("Position:");
-        ImGui::InputFloat3("##position", (float *) &scene->camera.position);
+        ImGui::DragFloat3("##position", (float*)&scene->camera.position);
 
+        ImGui::NewLine();
         ImGui::Text("Pitch:");
         ImGui::Checkbox("Pitch constrained", &scene->camera.constrainPitch);
-        ImGui::InputFloat("##pitch", &scene->camera.pitch);
+        ImGui::DragFloat("##pitch", &scene->camera.pitch);
 
         ImGui::Text("Yaw:");
-        ImGui::InputFloat("##yaw", &scene->camera.yaw);
+        ImGui::DragFloat("##yaw", &scene->camera.yaw);
 
+        ImGui::NewLine();
         ImGui::Text("FOV:");
-        ImGui::InputFloat("##fov", &scene->camera.fov);
+        ImGui::DragFloat("##fov", &scene->camera.fov);
 
+        ImGui::NewLine();
         ImGui::Text("Near plane:");
-        ImGui::InputFloat("##near", &scene->camera.nearPlane);
+        ImGui::DragFloat("##near", &scene->camera.nearPlane);
 
         ImGui::Text("Far plane:");
-        ImGui::InputFloat("##far", &scene->camera.farPlane);
+        ImGui::DragFloat("##far", &scene->camera.farPlane);
 
+        ImGui::NewLine();
         ImGui::Text("Speed:");
-        ImGui::InputFloat("##speed", &scene->camera.movementSpeed);
+        ImGui::DragFloat("##speed", &scene->camera.movementSpeed);
 
         ImGui::Text("Sensitivity: ");
-        ImGui::InputFloat("##sensitivity", &scene->camera.rotationSpeed);
+        ImGui::DragFloat("##sensitivity", &scene->camera.rotationSpeed);
 
         ImGui::End();
     }
@@ -227,31 +236,87 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     {
         ImGui::Begin("Particle settings");
 
-        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Particle settings");
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Reset particles");
+        ImGui::Button("Reset");
+        if (ImGui::IsItemClicked())
+        {
+            scene->particleGenerator.reset();
+        }
+        ImGui::NewLine();
 
-//        ImGui::Text("Particle count:");
-//        ImGui::InputInt("##particleCount", &scene->particleCount);
-//
-//        ImGui::Text("Particle size:");
-//        ImGui::InputFloat("##particleSize", &scene->particleSize);
-//
-//        ImGui::Text("Particle speed:");
-//        ImGui::InputFloat("##particleSpeed", &scene->particleSpeed);
-//
-//        ImGui::Text("Particle life:");
-//        ImGui::InputFloat("##particleLife", &scene->particleLife);
-//
-//        ImGui::Text("Particle color:");
-//        ImGui::ColorEdit3("##particleColor", (float *) &scene->particleColor);
-//
-//        ImGui::Text("Particle emission rate:");
-//        ImGui::InputFloat("##particleEmissionRate", &scene->particleEmissionRate);
-//
-//        ImGui::Text("Particle emission radius:");
-//        ImGui::InputFloat("##particleEmissionRadius", &scene->particleEmissionRadius);
-//
-//        ImGui::Text("Particle emission direction:");
-//        ImGui::InputFloat3("##particleEmissionDirection", (float *) &scene->particleEmissionDirection);
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Settings");
+        ImGui::Text("Origin:");
+        ImGui::DragFloat3("##origin", (float*)&scene->particleGenerator.position);
+
+        ImGui::NewLine();
+        ImGui::Text("Forces sum:");
+        ImGui::DragFloat3("##forces", (float*)&scene->particleGenerator.sumForces);
+
+        ImGui::NewLine();
+        ImGui::Text("Particles min spread:");
+        ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minSpread, 0.1f);
+        ImGui::Text("Particles max spread:");
+        ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread, 0.1f);
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize lifetime", &scene->particleGenerator.randomizeLifeTime);
+        if (scene->particleGenerator.randomizeLifeTime)
+        {
+            ImGui::Text("Particle min lifetime:");
+            ImGui::DragFloat("##minLifetime", &scene->particleGenerator.minLifeTime, 0.1f);
+            ImGui::Text("Particle max lifetime:");
+            ImGui::DragFloat("##maxLifetime", &scene->particleGenerator.maxLifeTime, 0.1f);
+        }
+        else
+        {
+            ImGui::Text("Particle lifetime:");
+            ImGui::DragFloat("##lifetime", &scene->particleGenerator.fixedLifeTime, 0.1f);
+        }
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize initial velocity", &scene->particleGenerator.randomizeInitialVelocity);
+        if (scene->particleGenerator.randomizeInitialVelocity)
+        {
+            ImGui::Text("Minimum inital velocity:");
+            ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
+            ImGui::Text("Maximum inital velocity:");
+            ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
+        }
+        else
+        {
+            ImGui::Text("Initial velocity:");
+            ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.fixedInitialVelocity);
+        }
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize scale", &scene->particleGenerator.randomizeScale);
+        if (scene->particleGenerator.randomizeScale)
+        {
+            ImGui::Text("Particle min scale:");
+            ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
+            ImGui::Text("Particle max scale:");
+            ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale, 0.1f);
+        }
+        else
+        {
+            ImGui::Text("Particle scale:");
+            ImGui::DragFloat2("##scale", (float*)&scene->particleGenerator.fixedScale, 0.1f);
+        }
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize color", &scene->particleGenerator.randomizeColor);
+        if (scene->particleGenerator.randomizeColor)
+        {
+            ImGui::Text("Particle min color:");
+            ImGui::ColorEdit3("##minColor", (float*)&scene->particleGenerator.minColor);
+            ImGui::Text("Particle max color:");
+            ImGui::ColorEdit3("##maxColor", (float*)&scene->particleGenerator.maxColor);
+        }
+        else
+        {
+            ImGui::Text("Particle color:");
+            ImGui::ColorEdit3("##color", (float*)&scene->particleGenerator.fixedColor);
+        }
 
         ImGui::End();
     }
@@ -267,16 +332,17 @@ void ParticleSystemLauncher::updateScreen() {
     scene->updateProjectionMatrix(display_w, display_h);
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
-                 clear_color.w);
+        clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     scene->render();
 
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    ImGuiIO &io = ImGui::GetIO();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-        GLFWwindow *backup_current_context = glfwGetCurrentContext();
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        GLFWwindow* backup_current_context = glfwGetCurrentContext();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
         glfwMakeContextCurrent(backup_current_context);
@@ -285,7 +351,7 @@ void ParticleSystemLauncher::updateScreen() {
     glfwSwapBuffers(window);
 }
 
-//void ParticleSystemLauncher::toggleWireframeMode() {
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-//}
+// void ParticleSystemLauncher::toggleWireframeMode() {
+//     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+// }

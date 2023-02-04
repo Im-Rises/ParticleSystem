@@ -9,11 +9,11 @@
 class Scene {
 public:
     Camera camera;
-
-private:
     ParticleGeneratorBillboard particleGenerator;
-    Cube cube;
-    Billboard billboard;
+
+    // private:
+    //     Billboard billboard;
+    //     Cube cube;
 
 public:
     Scene(int display_w, int display_h);

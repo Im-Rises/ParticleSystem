@@ -1,19 +1,25 @@
 #version 330 core
 
-layout (location = 0) in vec3 vertice;
-layout (location = 1) in vec3 position;
+layout (location = 0) in vec3 a_vertice;
+layout (location = 1) in vec3 a_position;
+layout (location = 2) in vec2 a_scale;
+layout (location = 3) in vec3 a_color;
 
-uniform mat4 view;
-uniform mat4 projection;
+out vec2 v_UV;
+out vec3 v_color;
 
-uniform vec3 cameraRight;
-uniform vec3 cameraUp;
+uniform mat4 u_view;
+uniform mat4 u_projection;
+
+uniform vec3 u_cameraRight;
+uniform vec3 u_cameraUp;
 
 void main()
 {
-    vec2 scale = vec2(1, 1);
-    vec3 pos = position
-    + cameraRight * vertice.x * scale.x
-    + cameraUp * vertice.y * scale.y;
-    gl_Position = projection * view * vec4(pos, 1.0);
+	vec3 billboardPos = a_position
+	+ u_cameraRight * a_vertice.x * a_scale.x
+	+ u_cameraUp * a_vertice.y * a_scale.y;
+	gl_Position = u_projection * u_view * vec4(billboardPos, 1.0);
+	v_UV = a_vertice.xy + vec2(0.5, 0.5);
+	v_color = a_color;
 }
