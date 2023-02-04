@@ -164,6 +164,9 @@ void ParticleSystemLauncher::handleInputs() {
     if (InputManager::isDownKeyPressed(window))
         scene->camera.moveDown();
 
+    if (InputManager::isPauseKeyPressed(window))
+        scene->togglePause();
+
     double x = 0, y = 0;
     InputManager::getMouseMovement(window, x, y, InputManager::isKeyMouseMovementPressed(window));
     scene->camera.processMouseMovement((float)x, (float)y);
@@ -261,7 +264,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
             ImGui::Text("Particles max spread:");
             ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread, 0.1f);
         }
-        
+
         ImGui::NewLine();
         ImGui::Checkbox("Randomize lifetime", &scene->particleGenerator.randomizeLifeTime);
         if (scene->particleGenerator.randomizeLifeTime)

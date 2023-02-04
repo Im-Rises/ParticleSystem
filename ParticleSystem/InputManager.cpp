@@ -32,6 +32,23 @@ bool InputManager::isDownKeyPressed(GLFWwindow* window) {
     return glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS; // GLFW_KEY_PAGE_DOWN
 }
 
+bool InputManager::isPauseKeyPressed(GLFWwindow* window) {
+    static bool isPauseKeyPressed = false;
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    {
+        if (!isPauseKeyPressed)
+        {
+            isPauseKeyPressed = true;
+            return true;
+        }
+    }
+    else
+    {
+        isPauseKeyPressed = false;
+    }
+    return false;
+}
+
 void InputManager::getMouseMovement(GLFWwindow* window, double& xMovement, double& yMovement, bool isMovementEnable) {
     double x, y;
     glfwGetCursorPos(window, &x, &y);
@@ -43,7 +60,6 @@ void InputManager::getMouseMovement(GLFWwindow* window, double& xMovement, doubl
     lastMouseX = x;
     lastMouseY = y;
 }
-
 bool InputManager::isKeyMouseMovementPressed(GLFWwindow* window) {
     return glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
 }
