@@ -11,9 +11,9 @@ public:
     Camera camera;
     ParticleGeneratorBillboard particleGenerator;
 
-private:
-    Billboard billboard;
-    Cube cube;
+    // private:
+    //     Billboard billboard;
+    //     Cube cube;
 
 public:
     Scene(int display_w, int display_h);

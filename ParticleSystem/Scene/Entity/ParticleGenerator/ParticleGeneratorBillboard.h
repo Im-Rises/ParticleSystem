@@ -11,7 +11,7 @@
 
 class ParticleGeneratorBillboard : public Entity {
 private:
-    static constexpr int MAX_PARTICLES = 1000;
+    static constexpr int MAX_PARTICLES = 10000;
 
     static constexpr std::array<float, 12> vertices = {
         // positions
@@ -49,12 +49,14 @@ private:
     Texture texture;
 
 public:
+    bool randomizeLifeTime = true;
     float minLifeTime = 0.1f;
-    float maxLifeTime = 1.0f;
+    float maxLifeTime = 5.0f;
     glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
-    glm::vec3 initialVelocity = glm::vec3(0.0f, +1.0f, 0.0f);
-    glm::vec3 minSpread = glm::vec3(-1.0f, -1.0f, -1.0f);
-    glm::vec3 maxSpread = glm::vec3(+1.0f, +1.0f, +1.0f);
+    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
+    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
+    glm::vec3 minSpread = glm::vec3(-3.0f, -1.0f, -1.0f);
+    glm::vec3 maxSpread = glm::vec3(+3.0f, +1.0f, +1.0f);
     glm::vec2 minScale = glm::vec2(0.1f, 0.1f);
     glm::vec2 maxScale = glm::vec2(0.1f, 0.1f);
 

@@ -239,9 +239,9 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Origin position");
         ImGui::NewLine();
 
-        ImGui::Text("Particles count:");
-        ImGui::DragInt("##particlesCount", &scene->particleGenerator.particlesCount);
-        ImGui::Button("Validate##validateParticlesCount");
+        //        ImGui::Text("Particles count:");
+        //        ImGui::DragInt("##particlesCount", &scene->particleGenerator.particlesCount);
+        //        ImGui::Button("Validate##validateParticlesCount");
 
         ImGui::Text("Origin:");
         ImGui::DragFloat3("##origin", (float*)&scene->particleGenerator.position);
@@ -249,8 +249,10 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::NewLine();
         ImGui::Text("Forces sum:");
         ImGui::DragFloat3("##forces", (float*)&scene->particleGenerator.sumForces);
-        ImGui::Text("Inital velocity:");
-        ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.initialVelocity);
+        ImGui::Text("Minimum inital velocity:");
+        ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
+        ImGui::Text("Maximum inital velocity:");
+        ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
 
         ImGui::NewLine();
         ImGui::Text("Particles min spread:");

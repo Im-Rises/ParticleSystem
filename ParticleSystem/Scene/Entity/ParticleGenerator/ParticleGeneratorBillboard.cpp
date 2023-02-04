@@ -43,8 +43,8 @@ void ParticleGeneratorBillboard::create() {
     glEnableVertexAttribArray(3);
 
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
-    glVertexAttribDivisor(2, 1); // tell OpenGL this is an instanced vertex attribute.
-    glVertexAttribDivisor(3, 1); // tell OpenGL this is an instanced vertex attribute.
+    glVertexAttribDivisor(2, 1);
+    glVertexAttribDivisor(3, 1);
 
     glBindVertexArray(0);
 }
@@ -99,7 +99,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
-    movementData[index].velocity = initialVelocity;
+    movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
 
     particles[index].position = randomVec3(minSpread, maxSpread) + position;
     particles[index].scale = randomVec2(minScale, maxScale);
