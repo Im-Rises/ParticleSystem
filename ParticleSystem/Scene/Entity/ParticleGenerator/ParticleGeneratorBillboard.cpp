@@ -2,7 +2,7 @@
 
 ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/BillboardParticle.vert",
                                                                "shaders/BillboardParticle.frag"),
-                                                           texture("textures/ball2.png") {
+                                                           texture("textures/ball.png") {
     create();
     position = glm::vec3(0.0f, 0.0f, 0.0f);
     reset();
