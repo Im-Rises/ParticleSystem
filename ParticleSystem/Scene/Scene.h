@@ -11,6 +11,9 @@ private:
     bool isPaused = false;
 
 public:
+    int particlesCount = 10000;
+
+public:
     Camera camera;
     ParticleGeneratorBillboard particleGenerator;
 
@@ -31,6 +34,8 @@ public:
     void updateProjectionMatrix(int display_w, int display_h);
 
     void togglePause();
+
+    void restartParticlesGenerator();
 };
 
 #endif // SCENE_H

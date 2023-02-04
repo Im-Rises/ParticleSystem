@@ -230,7 +230,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::DragFloat("##speed", &scene->camera.movementSpeed);
 
         ImGui::Text("Sensitivity: ");
-        ImGui::DragFloat("##sensitivity", &scene->camera.rotationSpeed);
+        ImGui::DragFloat("##sensitivity", &scene->camera.rotationSpeed, 0.1f);
 
         ImGui::End();
     }
@@ -246,6 +246,16 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         }
         ImGui::NewLine();
 
+        ImGui::Text("Particles count: %d", scene->particleGenerator.getParticlesCount());
+        ImGui::DragInt("##particlesCount", &scene->particlesCount, 1, 1, 1000000);
+        ImGui::Button("Validate##validateParticlesCount");
+        if (ImGui::IsItemClicked())
+        {
+            //            scene->particleGenerator.setParticlesCount(scene->particlesCount);
+            scene->restartParticlesGenerator();
+        }
+
+        ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Settings");
         ImGui::Text("Origin:");
         ImGui::DragFloat3("##origin", (float*)&scene->particleGenerator.position);

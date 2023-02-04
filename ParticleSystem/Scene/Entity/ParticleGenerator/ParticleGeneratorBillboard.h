@@ -13,7 +13,7 @@
 
 class ParticleGeneratorBillboard : public Entity {
 private:
-    unsigned int particlesNumber;
+    int particlesCount;
 
     std::mt19937 randomEngine;
 
@@ -81,7 +81,7 @@ public:
     glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 public:
-    ParticleGeneratorBillboard(unsigned int maxParticles = 10000);
+    explicit ParticleGeneratorBillboard(int maxParticles = 10000);
 
     void create();
 
@@ -94,6 +94,7 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
+public:
     void reset();
 
 private:
@@ -101,9 +102,11 @@ private:
 
 private:
     float randomFloat(float min, float max);
-
     glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max);
     glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max);
+
+public:
+    const int& getParticlesCount();
 };
 
 #endif // PARTICLE_GENERATOR_H

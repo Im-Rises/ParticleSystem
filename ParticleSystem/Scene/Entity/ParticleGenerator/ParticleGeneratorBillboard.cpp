@@ -1,13 +1,13 @@
 #include "ParticleGeneratorBillboard.h"
 
-ParticleGeneratorBillboard::ParticleGeneratorBillboard(unsigned int maxParticles) : Entity("shaders/BillboardParticle.vert",
-                                                                                        "shaders/BillboardParticle.frag"),
-                                                                                    texture("textures/ball.png"),
-                                                                                    randomEngine(std::random_device()()) {
+ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entity("shaders/BillboardParticle.vert",
+                                                                               "shaders/BillboardParticle.frag"),
+                                                                           texture("textures/ball.png"),
+                                                                           randomEngine(std::random_device()()) {
     // Init particles
-    particlesNumber = maxParticles;
-    particles.resize(particlesNumber);
-    movementData.resize(particlesNumber);
+    particlesCount = maxParticles;
+    particles.resize(particlesCount);
+    movementData.resize(particlesCount);
     position = glm::vec3(0.0f, 0.0f, 0.0f);
     reset();
     // Init opengl buffers
@@ -62,7 +62,7 @@ void ParticleGeneratorBillboard::destroy() {
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
-    for (unsigned int i = 0; i < particlesNumber; i++)
+    for (int i = 0; i < particlesCount; i++)
     {
         movementData[i].lifeTime -= deltaTime;
 
@@ -100,7 +100,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 }
 
 void ParticleGeneratorBillboard::reset() {
-    for (unsigned int i = 0; i < particlesNumber; i++)
+    for (int i = 0; i < particlesCount; i++)
     {
         resetParticle(i);
     }
@@ -152,4 +152,8 @@ glm::vec2 ParticleGeneratorBillboard::randomVec2(glm::vec2 min, glm::vec2 max) {
 
 glm::vec3 ParticleGeneratorBillboard::randomVec3(glm::vec3 min, glm::vec3 max) {
     return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z) };
+}
+
+const int& ParticleGeneratorBillboard::getParticlesCount() {
+    return particlesCount;
 }
