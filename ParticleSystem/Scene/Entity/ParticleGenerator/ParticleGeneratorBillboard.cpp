@@ -142,6 +142,8 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
 }
 
 float ParticleGeneratorBillboard::randomFloat(float min, float max) {
+    if (min > max)
+        std::swap(min, max);
     std::uniform_real_distribution<float> dist(min, max);
     return dist(randomEngine);
 }

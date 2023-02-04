@@ -312,10 +312,20 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         if (scene->particleGenerator.randomizeScale)
         {
             ImGui::Checkbox("Keep aspect ratio", &scene->particleGenerator.keepScaleAspectRatio);
-            ImGui::Text("Particle min scale:");
-            ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
-            ImGui::Text("Particle max scale:");
-            ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale, 0.1f);
+            if (scene->particleGenerator.keepScaleAspectRatio)
+            {
+                ImGui::Text("Particle min scale:");
+                ImGui::DragFloat("##minScale", &scene->particleGenerator.minScale.x, 0.1f);
+                ImGui::Text("Particle max scale:");
+                ImGui::DragFloat("##maxScale", &scene->particleGenerator.maxScale.x, 0.1f);
+            }
+            else
+            {
+                ImGui::Text("Particle min scale:");
+                ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
+                ImGui::Text("Particle max scale:");
+                ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale, 0.1f);
+            }
         }
         else
         {
