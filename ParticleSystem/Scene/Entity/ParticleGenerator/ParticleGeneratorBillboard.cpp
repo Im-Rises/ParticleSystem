@@ -1,12 +1,13 @@
 #include "ParticleGeneratorBillboard.h"
 
-ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/BillboardParticle.vert",
-                                                               "shaders/BillboardParticle.frag"),
-                                                           texture("textures/ball.png"),
-                                                           randomEngine(std::random_device()()) {
+ParticleGeneratorBillboard::ParticleGeneratorBillboard(unsigned int maxParticles) : Entity("shaders/BillboardParticle.vert",
+                                                                                        "shaders/BillboardParticle.frag"),
+                                                                                    texture("textures/ball.png"),
+                                                                                    randomEngine(std::random_device()()) {
     // Init particles
-    particles.resize(MAX_PARTICLES);
-    movementData.resize(MAX_PARTICLES);
+    particlesNumber = maxParticles;
+    particles.resize(particlesNumber);
+    movementData.resize(particlesNumber);
     position = glm::vec3(0.0f, 0.0f, 0.0f);
     reset();
     // Init opengl buffers
@@ -61,7 +62,7 @@ void ParticleGeneratorBillboard::destroy() {
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
-    for (int i = 0; i < MAX_PARTICLES; i++)
+    for (unsigned int i = 0; i < particlesNumber; i++)
     {
         movementData[i].lifeTime -= deltaTime;
 
@@ -90,7 +91,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, particles.size());
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)particles.size());
     glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
@@ -99,7 +100,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 }
 
 void ParticleGeneratorBillboard::reset() {
-    for (int i = 0; i < MAX_PARTICLES; i++)
+    for (unsigned int i = 0; i < particlesNumber; i++)
     {
         resetParticle(i);
     }
@@ -110,7 +111,7 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
         movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
     else
         movementData[index].velocity = fixedInitialVelocity;
-    
+
     if (randomizePosition)
         particles[index].position = randomVec3(minSpread, maxSpread) + position;
     else

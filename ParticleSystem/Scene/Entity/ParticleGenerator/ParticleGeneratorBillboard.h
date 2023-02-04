@@ -13,7 +13,7 @@
 
 class ParticleGeneratorBillboard : public Entity {
 private:
-    static constexpr int MAX_PARTICLES = 10000;
+    unsigned int particlesNumber;
 
     std::mt19937 randomEngine;
 
@@ -81,7 +81,7 @@ public:
     glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 public:
-    ParticleGeneratorBillboard();
+    ParticleGeneratorBillboard(unsigned int maxParticles = 10000);
 
     void create();
 

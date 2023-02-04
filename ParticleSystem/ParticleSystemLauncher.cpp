@@ -1,6 +1,5 @@
 #include "ParticleSystemLauncher.h"
 
-#include <iostream>
 #include <cstdio>
 #include <glad/glad.h>
 #include <imgui/imgui.h>

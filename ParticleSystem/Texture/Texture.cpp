@@ -1,13 +1,14 @@
 #include "Texture.h"
 
-#include <stb/stb_image.h>
 #include <glad/glad.h>
 #include <iostream>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 
 Texture::Texture(const std::string_view& texturePath) {
     glGenTextures(1, &textureID);
 
-    int width, height, nrComponents;
     unsigned char* data = stbi_load(texturePath.data(), &width, &height, &nrComponents, 0);
     if (data)
     {
