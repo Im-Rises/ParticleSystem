@@ -101,7 +101,10 @@ void ParticleGeneratorBillboard::reset() {
 }
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    particles[index].position = randomVec3(minSpread, maxSpread) + position;
+    if (randomizePosition)
+        particles[index].position = randomVec3(minSpread, maxSpread) + position;
+    else
+        particles[index].position = position;
 
     if (randomizeLifeTime)
         movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);

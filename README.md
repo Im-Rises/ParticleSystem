@@ -20,7 +20,9 @@ The UI is made using ImGui and allows you to modify some parameters of the parti
 
 [![Watch the video](https://user-images.githubusercontent.com/59691442/216751976-c06c492d-5dfb-466c-afe9-ec44e94e5db9.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
 
-Click on the image to watch the video.
+[![Watch the video](https://user-images.githubusercontent.com/59691442/216753254-f3315a71-f073-420e-b4e3-86a024913683.png)](https://www.youtube.com/watch?v=h5X1RaElC7Y)
+
+Click on the images to watch the video.
 
 ## Quickstart
 
@@ -94,15 +96,11 @@ Then you can start by double-clicking the executable of typing the following com
 
 The speed and some parameters can be modified directly in the ImGui windows.
 
-| Action                        | Key                                   |
-|-------------------------------|---------------------------------------|
-| Toggle fullscreen             | F11                                   |
-| Camera zoom                   | Mouse wheel                           |
-| Translate camera to the left  | Right Mouse Button + Mouse ← movement |
-| Translate camera to the right | Right Mouse Button + Mouse → movement |
-| Translate camera upwards      | Right Mouse Button + Mouse ↑ movement |
-| Translate camera downwards    | Right Mouse Button + Mouse ↓ movement |
-| Exit app                      | ESC                                   |
+| Action        | Key                                 |
+|---------------|-------------------------------------|
+| Move camera   | WASD (← → ↑ ↓)                      |
+| Rotate camera | Right Mouse Button + Mouse movement |
+| Exit app      | ESC                                 |
 
 > **Note**
 > You can the inputs by changing their attribution in the `InputManager.cpp` file,

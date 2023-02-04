@@ -51,6 +51,7 @@ private:
 public:
     glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
 
+    bool randomizePosition = true;
     glm::vec3 minSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
     glm::vec3 maxSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
 
