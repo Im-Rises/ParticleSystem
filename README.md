@@ -96,17 +96,11 @@ Then you can start by double-clicking the executable of typing the following com
 
 The speed and some parameters can be modified directly in the ImGui windows.
 
-| Action                        | Key                                   |
-|-------------------------------|---------------------------------------|
-| Toggle fullscreen             | F11                                   |
-| Camera zoom                   | Mouse wheel                           |
-| Translate camera to the left  | Right Mouse Button + Mouse ← movement |
-| Translate camera to the right | Right Mouse Button + Mouse → movement |
-| Translate camera upwards      | Right Mouse Button + Mouse ↑ movement |
-| Translate camera downwards    | Right Mouse Button + Mouse ↓ movement |
-| Exit app                      | ESC                                   |
-
-To change the particle system parameters, you can use the ImGui windows named `Particle settings` and `Camera Settings`.
+| Action        | Key                                 |
+|---------------|-------------------------------------|
+| Move camera   | WASD (← → ↑ ↓)                      |
+| Rotate camera | Right Mouse Button + Mouse movement |
+| Exit app      | ESC                                 |
 
 > **Note**
 > You can the inputs by changing their attribution in the `InputManager.cpp` file,
