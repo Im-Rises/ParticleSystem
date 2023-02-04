@@ -66,7 +66,7 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
 
         if (movementData[i].lifeTime > 0)
         {
-            movementData[i].velocity.y -= 9.81f * deltaTime;
+            movementData[i].velocity += sumForces * deltaTime;
             particles[i].position += movementData[i].velocity * deltaTime;
         }
         else
@@ -98,11 +98,10 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 }
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    movementData[index].lifeTime = randomValue(0.5f, 1.0f);
-    movementData[index].velocity = glm::vec3(0.0f, 0.0f, 0.0f); // randomVec3(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-    movementData[index].velocity.y = randomValue(0.0f, 1.0f);
+    movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
+    movementData[index].velocity = initialVelocity;
 
-    particles[index].position = randomVec3(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-    particles[index].scale = glm::vec2(0.1f, 0.1f);
+    particles[index].position = randomVec3(minSpread, maxSpread) + position;
+    particles[index].scale = randomVec2(minScale, maxScale);
     particles[index].color = randomVec3(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 }

@@ -48,9 +48,15 @@ private:
 
     Texture texture;
 
-    //    float lifeTime = 1.0f;
-    //    glm::vec3 scale = glm::vec3(0.1f, 0.1f, 0.1f);
-    //    unsigned int particlesCount = 0;
+public:
+    float minLifeTime = 0.1f;
+    float maxLifeTime = 1.0f;
+    glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
+    glm::vec3 initialVelocity = glm::vec3(0.0f, +1.0f, 0.0f);
+    glm::vec3 minSpread = glm::vec3(-1.0f, -1.0f, -1.0f);
+    glm::vec3 maxSpread = glm::vec3(+1.0f, +1.0f, +1.0f);
+    glm::vec2 minScale = glm::vec2(0.1f, 0.1f);
+    glm::vec2 maxScale = glm::vec2(0.1f, 0.1f);
 
 public:
     ParticleGeneratorBillboard();
@@ -77,6 +83,10 @@ private:
 
     glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max) {
         return glm::vec3(randomValue(min.x, max.x), randomValue(min.y, max.y), randomValue(min.z, max.z));
+    }
+
+    glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max) {
+        return glm::vec2(randomValue(min.x, max.x), randomValue(min.y, max.y));
     }
 };
 
