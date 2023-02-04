@@ -7,7 +7,7 @@
 #include <stb/stb_image.h>
 
 Billboard::Billboard()
-    : Entity("shaders/Billboard.vert", "shaders/Billboard.frag"), texture("textures/ball2.png") {
+    : Entity("shaders/Billboard.vert", "shaders/Billboard.frag"), texture("textures/ball.png") {
     create();
     position = glm::vec3(1.0F, 0.0F, 0.0F);
 }
