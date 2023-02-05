@@ -5,13 +5,22 @@
 #include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
 #include <array>
+#include <vector>
+#include <random>
 
 #include "../Entity.h"
 #include "../../../Texture/Texture.h"
 
+enum SpreadType {
+    SPREAD_TYPE_SPHERE,
+    SPREAD_TYPE_RECTANGLE,
+};
+
 class ParticleGeneratorBillboard : public Entity {
 private:
-    static constexpr int MAX_PARTICLES = 10000;
+    int particlesCount;
+
+    std::mt19937 randomEngine;
 
     static constexpr std::array<float, 12> vertices = {
         // positions
@@ -33,7 +42,7 @@ private:
         Particle() : position(0.0f), scale(0.1f), color(1.0f) {}
     };
 
-    std::array<Particle, MAX_PARTICLES> particles;
+    std::vector<Particle> particles;
 
     struct MovementData {
         glm::vec3 velocity;
@@ -41,7 +50,7 @@ private:
         MovementData() : velocity(0.0f), lifeTime(0.0f) {}
     };
 
-    std::array<MovementData, MAX_PARTICLES> movementData;
+    std::vector<MovementData> movementData;
 
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO, quadEBO;
@@ -51,21 +60,24 @@ private:
 public:
     glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
 
+    bool randomizeInitialVelocity = true;
+    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
+    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
+
+    SpreadType spreadType = SPREAD_TYPE_SPHERE;
+    float spreadRadius = 2.0f;
     bool randomizePosition = true;
-    glm::vec3 minSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
-    glm::vec3 maxSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
+    glm::vec3 minRectangleSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
+    glm::vec3 maxRectangleSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
 
     bool randomizeLifeTime = true;
     float fixedLifeTime = 1.0f;
     float minLifeTime = 0.1f;
     float maxLifeTime = 5.0f;
 
-    bool randomizeInitialVelocity = true;
-    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
-    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
-
     bool randomizeScale = true;
+    bool keepScaleAspectRatio = true;
     glm::vec2 fixedScale = glm::vec2(0.1f, 0.1f);
     glm::vec2 minScale = glm::vec2(0.1f, 0.1f);
     glm::vec2 maxScale = glm::vec2(0.2f, 0.2f);
@@ -76,7 +88,7 @@ public:
     glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 public:
-    ParticleGeneratorBillboard();
+    explicit ParticleGeneratorBillboard(int maxParticles = 10000);
 
     void create();
 
@@ -89,24 +101,22 @@ public:
 
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
+public:
     void reset();
 
 private:
     void resetParticle(unsigned int index);
 
 private:
-    template <typename T>
-    T randomValue(T min, T max) {
-        return min + (max - min) * ((float)rand() / RAND_MAX);
-    }
+    float randomFloat(float min, float max);
+    glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max);
+    glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max);
+    glm::vec3 randomVec3InSphere(float radius);
+    glm::vec3 randomVec3InRectangle(glm::vec3 min, glm::vec3 max);
 
-    glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max) {
-        return glm::vec3(randomValue(min.x, max.x), randomValue(min.y, max.y), randomValue(min.z, max.z));
-    }
-
-    glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max) {
-        return glm::vec2(randomValue(min.x, max.x), randomValue(min.y, max.y));
-    }
+public:
+    void setParticlesCount(int particlesCount);
+    [[nodiscard]] const int getParticlesCount() const;
 };
 
 #endif // PARTICLE_GENERATOR_H

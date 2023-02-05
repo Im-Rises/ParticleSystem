@@ -1,1 +1,9 @@
-Checks: 'cppcoreguidelines-*,modernize-*,-modernize-use-trailing-return-type,bugprone-*,clang-analyzer-*,readability-*,performance-*,portability-*,clang-diagnostic-*'
+Checks:
+    - modernize-use-nullptr
+        - modernize-use-override
+        - modernize-use-using
+        - modernize-use-equals-default
+        - modernize-use-equals-delete
+        - modernize-use-bool-literals
+        - modernize-use-transparent-functors
+        - modernize-use-nullptr

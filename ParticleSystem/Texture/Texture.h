@@ -6,7 +6,8 @@
 class Texture {
 private:
     unsigned int textureID;
-    unsigned int width, height;
+    int width, height;
+    int nrComponents;
 
 public:
     explicit Texture(const std::string_view& texturePath);

@@ -1,6 +1,5 @@
 #include "ParticleSystemLauncher.h"
 
-#include <iostream>
 #include <cstdio>
 #include <glad/glad.h>
 #include <imgui/imgui.h>
@@ -33,21 +32,21 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
 
         // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
-    // GL ES 2.0 + GLSL 100
-    const char* glsl_version = "#version 100";
+    // GL ES 2.0 + GLSL 330
+    const char* glsl_version = "#version 330";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
 #elif defined(__APPLE__)
-    // GL 3.2 + GLSL 150
-    const char* glsl_version = "#version 150";
+    // GL 3.3 + GLSL 330
+    const char* glsl_version = "#version 330";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
 #else
-    // GL 3.0 + GLSL 130
-    const char* glsl_version = "#version 130";
+    // GL 3.3 + GLSL 330
+    const char* glsl_version = "#version 330";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
@@ -55,7 +54,7 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
 #endif
 
     // Create window with graphics context
-    window = glfwCreateWindow(display_w, display_h, PROJECT_NAME, nullptr, nullptr);
+    window = glfwCreateWindow(display_w, display_h, PROJECT_NAME.data(), nullptr, nullptr);
     if (window == nullptr)
         exit(1);
     glfwMakeContextCurrent(window);
@@ -231,7 +230,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::DragFloat("##speed", &scene->camera.movementSpeed);
 
         ImGui::Text("Sensitivity: ");
-        ImGui::DragFloat("##sensitivity", &scene->camera.rotationSpeed);
+        ImGui::DragFloat("##sensitivity", &scene->camera.rotationSpeed, 0.1f);
 
         ImGui::End();
     }
@@ -245,8 +244,21 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         {
             scene->particleGenerator.reset();
         }
-        ImGui::NewLine();
 
+        ImGui::NewLine();
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Particles count");
+        ImGui::Text("Current count: %d", scene->particleGenerator.getParticlesCount());
+        static int newParticlesCount = 10000;
+        ImGui::Text("New count:");
+        ImGui::SameLine();
+        ImGui::DragInt("##particlesCount", &newParticlesCount, 1, 1, 100000);
+        ImGui::Button("Validate##validateParticlesCount");
+        if (ImGui::IsItemClicked())
+        {
+            scene->particleGenerator.setParticlesCount(newParticlesCount);
+        }
+
+        ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Settings");
         ImGui::Text("Origin:");
         ImGui::DragFloat3("##origin", (float*)&scene->particleGenerator.position);
@@ -256,13 +268,41 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::DragFloat3("##forces", (float*)&scene->particleGenerator.sumForces);
 
         ImGui::NewLine();
+        ImGui::Checkbox("Randomize initial velocity", &scene->particleGenerator.randomizeInitialVelocity);
+        if (scene->particleGenerator.randomizeInitialVelocity)
+        {
+            ImGui::Text("Minimum initial velocity:");
+            ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
+            ImGui::Text("Maximum initial velocity:");
+            ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
+        }
+        else
+        {
+            ImGui::Text("Initial velocity:");
+            ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.fixedInitialVelocity);
+        }
+
+        ImGui::NewLine();
         ImGui::Checkbox("Randomize spread", &scene->particleGenerator.randomizePosition);
         if (scene->particleGenerator.randomizePosition)
         {
-            ImGui::Text("Particles min spread:");
-            ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minSpread, 0.1f);
-            ImGui::Text("Particles max spread:");
-            ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxSpread, 0.1f);
+            ImGui::Text("Spread type:");
+            ImGui::Selectable("Sphere", scene->particleGenerator.spreadType == SpreadType::SPREAD_TYPE_SPHERE);
+            if (ImGui::IsItemClicked())
+            {
+                scene->particleGenerator.spreadType = SpreadType::SPREAD_TYPE_SPHERE;
+                ImGui::Text("Radius:");
+                ImGui::DragFloat("##radius", &scene->particleGenerator.spreadRadius, 0.1f);
+            }
+            ImGui::Selectable("Rectangle", scene->particleGenerator.spreadType == SpreadType::SPREAD_TYPE_RECTANGLE);
+            if (ImGui::IsItemClicked())
+            {
+                scene->particleGenerator.spreadType = SpreadType::SPREAD_TYPE_RECTANGLE;
+                ImGui::Text("Particles min spread:");
+                ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minRectangleSpread, 0.1f);
+                ImGui::Text("Particles max spread:");
+                ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxRectangleSpread, 0.1f);
+            }
         }
 
         ImGui::NewLine();
@@ -281,28 +321,24 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         }
 
         ImGui::NewLine();
-        ImGui::Checkbox("Randomize initial velocity", &scene->particleGenerator.randomizeInitialVelocity);
-        if (scene->particleGenerator.randomizeInitialVelocity)
-        {
-            ImGui::Text("Minimum inital velocity:");
-            ImGui::DragFloat3("##minInitialVelocity", (float*)&scene->particleGenerator.minInitialVelocity);
-            ImGui::Text("Maximum inital velocity:");
-            ImGui::DragFloat3("##maxInitialVelocity", (float*)&scene->particleGenerator.maxInitialVelocity);
-        }
-        else
-        {
-            ImGui::Text("Initial velocity:");
-            ImGui::DragFloat3("##initialVelocity", (float*)&scene->particleGenerator.fixedInitialVelocity);
-        }
-
-        ImGui::NewLine();
         ImGui::Checkbox("Randomize scale", &scene->particleGenerator.randomizeScale);
         if (scene->particleGenerator.randomizeScale)
         {
-            ImGui::Text("Particle min scale:");
-            ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
-            ImGui::Text("Particle max scale:");
-            ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale, 0.1f);
+            ImGui::Checkbox("Keep aspect ratio", &scene->particleGenerator.keepScaleAspectRatio);
+            if (scene->particleGenerator.keepScaleAspectRatio)
+            {
+                ImGui::Text("Particle min scale:");
+                ImGui::DragFloat("##minScale", &scene->particleGenerator.minScale.x, 0.1f);
+                ImGui::Text("Particle max scale:");
+                ImGui::DragFloat("##maxScale", &scene->particleGenerator.maxScale.x, 0.1f);
+            }
+            else
+            {
+                ImGui::Text("Particle min scale:");
+                ImGui::DragFloat2("##minScale", (float*)&scene->particleGenerator.minScale, 0.1f);
+                ImGui::Text("Particle max scale:");
+                ImGui::DragFloat2("##maxScale", (float*)&scene->particleGenerator.maxScale, 0.1f);
+            }
         }
         else
         {
@@ -357,8 +393,3 @@ void ParticleSystemLauncher::updateScreen() {
 
     glfwSwapBuffers(window);
 }
-
-// void ParticleSystemLauncher::toggleWireframeMode() {
-//     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-// }

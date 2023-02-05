@@ -1,11 +1,17 @@
 #include "ParticleGeneratorBillboard.h"
 
-ParticleGeneratorBillboard::ParticleGeneratorBillboard() : Entity("shaders/BillboardParticle.vert",
-                                                               "shaders/BillboardParticle.frag"),
-                                                           texture("textures/ball.png") {
-    create();
+ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entity("shaders/BillboardParticle.vert",
+                                                                               "shaders/BillboardParticle.frag"),
+                                                                           texture("textures/ball.png"),
+                                                                           randomEngine(std::random_device()()) {
+    // Init particles
+    particlesCount = maxParticles;
+    particles.resize(particlesCount);
+    movementData.resize(particlesCount);
     position = glm::vec3(0.0f, 0.0f, 0.0f);
     reset();
+    // Init opengl buffers
+    create();
 }
 
 void ParticleGeneratorBillboard::create() {
@@ -56,7 +62,7 @@ void ParticleGeneratorBillboard::destroy() {
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
-    for (int i = 0; i < MAX_PARTICLES; i++)
+    for (int i = 0; i < particlesCount; i++)
     {
         movementData[i].lifeTime -= deltaTime;
 
@@ -85,7 +91,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, particles.size());
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)particles.size());
     glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
@@ -94,30 +100,50 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 }
 
 void ParticleGeneratorBillboard::reset() {
-    for (int i = 0; i < MAX_PARTICLES; i++)
+    for (int i = 0; i < particlesCount; i++)
     {
         resetParticle(i);
     }
 }
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    if (randomizePosition)
-        particles[index].position = randomVec3(minSpread, maxSpread) + position;
-    else
-        particles[index].position = position;
-
-    if (randomizeLifeTime)
-        movementData[index].lifeTime = randomValue(minLifeTime, maxLifeTime);
-    else
-        movementData[index].lifeTime = fixedLifeTime;
-
     if (randomizeInitialVelocity)
         movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
     else
         movementData[index].velocity = fixedInitialVelocity;
 
+    if (randomizePosition)
+    {
+        switch (spreadType)
+        {
+        case SpreadType::SPREAD_TYPE_SPHERE:
+            particles[index].position = randomVec3InSphere(spreadRadius);
+            break;
+        case SpreadType::SPREAD_TYPE_RECTANGLE:
+            particles[index].position = randomVec3InRectangle(minRectangleSpread, maxRectangleSpread);
+            break;
+        default:
+            break;
+        }
+    }
+    else
+        particles[index].position = position;
+
+    if (randomizeLifeTime)
+        movementData[index].lifeTime = randomFloat(minLifeTime, maxLifeTime);
+    else
+        movementData[index].lifeTime = fixedLifeTime;
+
     if (randomizeScale)
-        particles[index].scale = randomValue(minScale, maxScale);
+    {
+        if (keepScaleAspectRatio)
+        {
+            float scale = randomFloat(minScale.x, maxScale.x);
+            particles[index].scale = { scale, scale };
+        }
+        else
+            particles[index].scale = randomVec2(minScale, maxScale);
+    }
     else
         particles[index].scale = fixedScale;
 
@@ -125,4 +151,39 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
         particles[index].color = randomVec3(minColor, maxColor);
     else
         particles[index].color = fixedColor;
+}
+
+float ParticleGeneratorBillboard::randomFloat(float min, float max) {
+    if (min > max)
+        std::swap(min, max);
+    std::uniform_real_distribution<float> dist(min, max);
+    return dist(randomEngine);
+}
+
+glm::vec2 ParticleGeneratorBillboard::randomVec2(glm::vec2 min, glm::vec2 max) {
+    return { randomFloat(min.x, max.x), randomFloat(min.y, max.y) };
+}
+
+glm::vec3 ParticleGeneratorBillboard::randomVec3(glm::vec3 min, glm::vec3 max) {
+    return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z) };
+}
+
+glm::vec3 ParticleGeneratorBillboard::randomVec3InSphere(float radius) {
+    glm::vec3 randomVec = randomVec3({ -1, -1, -1 }, { 1, 1, 1 });
+    return glm::normalize(randomVec) * randomFloat(0, radius) + position;
+}
+
+glm::vec3 ParticleGeneratorBillboard::randomVec3InRectangle(glm::vec3 min, glm::vec3 max) {
+    return randomVec3(min, max) + position;
+}
+
+void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
+    this->particlesCount = particlesCount;
+    particles.resize(particlesCount);
+    movementData.resize(particlesCount);
+    reset();
+}
+
+const int ParticleGeneratorBillboard::getParticlesCount() const {
+    return particlesCount;
 }

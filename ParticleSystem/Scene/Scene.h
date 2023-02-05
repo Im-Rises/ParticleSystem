@@ -31,6 +31,8 @@ public:
     void updateProjectionMatrix(int display_w, int display_h);
 
     void togglePause();
+
+    //    void restartParticlesGenerator();
 };
 
 #endif // SCENE_H

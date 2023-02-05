@@ -5,17 +5,19 @@
 
 #include "Scene/Scene.h"
 
-constexpr char *PROJECT_NAME = "Particle Emission 3D";
+constexpr const std::string_view PROJECT_NAME = "Particle System Billboard 3D";
 
-constexpr char *PROJECT_VERSION = "0.5.0";
+constexpr const std::string_view PROJECT_VERSION = "1.0.0";
 
-constexpr char *PROJECT_GITHUB = "https://github.com/Im-Rises/ParticleSystem";
+constexpr const std::string_view PROJECT_GITHUB = "https://github.com/Im-Rises/ParticleSystem";
+
+constexpr const std::string_view PROJECT_AUTHOR = "Im-Rises (Quentin Morel)";
 
 struct GLFWwindow;
 
 class ParticleSystemLauncher {
 private:
-    GLFWwindow *window;
+    GLFWwindow* window;
     int display_w = 1280, display_h = 720;
 
     std::unique_ptr<Scene> scene;
@@ -42,9 +44,6 @@ private:
     void updateGame(float deltaTime);
 
     void updateScreen();
-
-//private:
-//    void toggleWireframeMode();
 };
 
 
