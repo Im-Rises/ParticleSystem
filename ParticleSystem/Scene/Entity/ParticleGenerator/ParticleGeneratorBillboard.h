@@ -11,6 +11,11 @@
 #include "../Entity.h"
 #include "../../../Texture/Texture.h"
 
+enum SpreadType {
+    SPREAD_TYPE_SPHERE,
+    SPREAD_TYPE_RECTANGLE,
+};
+
 class ParticleGeneratorBillboard : public Entity {
 private:
     int particlesCount;
@@ -60,9 +65,11 @@ public:
     glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
     glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
 
+    SpreadType spreadType = SPREAD_TYPE_SPHERE;
+    float spreadRadius = 2.0f;
     bool randomizePosition = true;
-    glm::vec3 minSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
-    glm::vec3 maxSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
+    glm::vec3 minRectangleSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
+    glm::vec3 maxRectangleSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
 
     bool randomizeLifeTime = true;
     float fixedLifeTime = 1.0f;
@@ -104,10 +111,12 @@ private:
     float randomFloat(float min, float max);
     glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max);
     glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max);
+    glm::vec3 randomVec3InSphere(float radius);
+    glm::vec3 randomVec3InRectangle(glm::vec3 min, glm::vec3 max);
 
 public:
     void setParticlesCount(int particlesCount);
-    const int getParticlesCount() const;
+    [[nodiscard]] const int getParticlesCount() const;
 };
 
 #endif // PARTICLE_GENERATOR_H

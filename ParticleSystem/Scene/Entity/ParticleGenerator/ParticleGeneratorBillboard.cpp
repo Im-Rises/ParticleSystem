@@ -113,7 +113,19 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
         movementData[index].velocity = fixedInitialVelocity;
 
     if (randomizePosition)
-        particles[index].position = randomVec3(minSpread, maxSpread) + position;
+    {
+        switch (spreadType)
+        {
+        case SpreadType::SPREAD_TYPE_SPHERE:
+            particles[index].position = randomVec3InSphere(spreadRadius);
+            break;
+        case SpreadType::SPREAD_TYPE_RECTANGLE:
+            particles[index].position = randomVec3InRectangle(minRectangleSpread, maxRectangleSpread);
+            break;
+        default:
+            break;
+        }
+    }
     else
         particles[index].position = position;
 
@@ -155,6 +167,16 @@ glm::vec2 ParticleGeneratorBillboard::randomVec2(glm::vec2 min, glm::vec2 max) {
 glm::vec3 ParticleGeneratorBillboard::randomVec3(glm::vec3 min, glm::vec3 max) {
     return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z) };
 }
+
+glm::vec3 ParticleGeneratorBillboard::randomVec3InSphere(float radius) {
+    glm::vec3 randomVec = randomVec3({ -1, -1, -1 }, { 1, 1, 1 });
+    return glm::normalize(randomVec) * randomFloat(0, radius) + position;
+}
+
+glm::vec3 ParticleGeneratorBillboard::randomVec3InRectangle(glm::vec3 min, glm::vec3 max) {
+    return randomVec3(min, max) + position;
+}
+
 void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
     this->particlesCount = particlesCount;
     particles.resize(particlesCount);
