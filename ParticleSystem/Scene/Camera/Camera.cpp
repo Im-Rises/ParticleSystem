@@ -6,7 +6,6 @@ Camera::Camera(int display_w, int display_h) {
 }
 
 Camera::~Camera() {
-
 }
 
 void Camera::update(float deltaTime) {
@@ -23,49 +22,50 @@ void Camera::updateProjectionMatrix(int display_w, int display_h) {
     /*
      * Update the projection matrix when the window is resized
      */
-    projectionMatrix = glm::perspective(glm::radians(fov / 2), (float) display_w / (float) display_h, nearPlane,
-                                        farPlane);
+    projectionMatrix = glm::perspective(glm::radians(fov / 2), (float)display_w / (float)display_h, nearPlane,
+        farPlane);
 }
 
 void Camera::moveForward() {
-//    movementBuffer.z -= 1.0F; // Move independently from camere rotation
+    //    movementBuffer.z -= 1.0F; // Move independently from camera rotation
     movementBuffer += cameraFrontBuffer; // Move in the direction the camera is facing
 }
 
 void Camera::moveBackward() {
-//    movementBuffer.z += 1.0F;
+    //    movementBuffer.z += 1.0F;
     movementBuffer -= cameraFrontBuffer;
 }
 
 void Camera::moveLeft() {
-//    movementBuffer.x -= 1.0F;
+    //    movementBuffer.x -= 1.0F;
     movementBuffer -= glm::normalize(glm::cross(cameraFrontBuffer, cameraUp));
 }
 
 void Camera::moveRight() {
-//    movementBuffer.x += 1.0F;
+    //    movementBuffer.x += 1.0F;
     movementBuffer += glm::normalize(glm::cross(cameraFrontBuffer, cameraUp));
 }
 
 void Camera::moveUp() {
-//    movementBuffer.y += 1.0F;
+    //    movementBuffer.y += 1.0F;
     movementBuffer += cameraUp;
     // Move up in the direction of the camera's up vector
-//    movementBuffer = glm::normalize(glm::cross(glm::cross(cameraFrontBuffer, cameraUp), cameraFrontBuffer));
+    //    movementBuffer = glm::normalize(glm::cross(glm::cross(cameraFrontBuffer, cameraUp), cameraFrontBuffer));
 }
 
 void Camera::moveDown() {
-//    movementBuffer.y -= 1.0F;
+    //    movementBuffer.y -= 1.0F;
     movementBuffer -= cameraUp;
     // Move down in the direction of the camera's up vector
-//    movementBuffer = glm::normalize(glm::cross(glm::cross(cameraFrontBuffer, cameraUp), cameraFrontBuffer));
+    //    movementBuffer = glm::normalize(glm::cross(glm::cross(cameraFrontBuffer, cameraUp), cameraFrontBuffer));
 }
 
 void Camera::processMouseMovement(float xMovement, float yMovement) {
     yaw += xMovement * rotationSpeed;
     pitch += yMovement * rotationSpeed;
 
-    if (constrainPitch) {
+    if (constrainPitch)
+    {
         if (pitch > 89.0f)
             pitch = 89.0f;
         if (pitch < -89.0f)

@@ -1,5 +1,5 @@
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
+#ifndef INPUT_MANAGER_H
+#define INPUT_MANAGER_H
 
 #include <GLFW/glfw3.h>
 
@@ -31,4 +31,4 @@ public:
     static bool isKeyMouseMovementPressed(GLFWwindow* window);
 };
 
-#endif // INPUTMANAGER_H
+#endif // INPUT_MANAGER_H

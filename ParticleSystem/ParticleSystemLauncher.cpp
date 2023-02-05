@@ -124,7 +124,7 @@ void ParticleSystemLauncher::start() {
     scene = std::make_unique<Scene>(display_w, display_h);
 
     // Variables for the main loop
-    float deltaTime = 0.0F;
+    float deltaTime;
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -287,21 +287,30 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         if (scene->particleGenerator.randomizePosition)
         {
             ImGui::Text("Spread type:");
-            ImGui::Selectable("Sphere", scene->particleGenerator.spreadType == SpreadType::SPREAD_TYPE_SPHERE);
-            if (ImGui::IsItemClicked())
+            ImGui::Selectable("- Sphere", scene->particleGenerator.spreadType == SpreadType::SPREAD_TYPE_SPHERE);
+            if (ImGui::IsItemActivated())
             {
                 scene->particleGenerator.spreadType = SpreadType::SPREAD_TYPE_SPHERE;
-                ImGui::Text("Radius:");
-                ImGui::DragFloat("##radius", &scene->particleGenerator.spreadRadius, 0.1f);
             }
-            ImGui::Selectable("Rectangle", scene->particleGenerator.spreadType == SpreadType::SPREAD_TYPE_RECTANGLE);
+            ImGui::Selectable("- Rectangle", scene->particleGenerator.spreadType == SpreadType::SPREAD_TYPE_RECTANGLE);
             if (ImGui::IsItemClicked())
             {
                 scene->particleGenerator.spreadType = SpreadType::SPREAD_TYPE_RECTANGLE;
+            }
+
+            ImGui::NewLine();
+            switch (scene->particleGenerator.spreadType)
+            {
+            case SpreadType::SPREAD_TYPE_SPHERE:
+                ImGui::Text("Radius:");
+                ImGui::DragFloat("##radius", &scene->particleGenerator.spreadRadius, 0.1f);
+                break;
+            case SpreadType::SPREAD_TYPE_RECTANGLE:
                 ImGui::Text("Particles min spread:");
                 ImGui::DragFloat3("##minSpread", (float*)&scene->particleGenerator.minRectangleSpread, 0.1f);
                 ImGui::Text("Particles max spread:");
                 ImGui::DragFloat3("##maxSpread", (float*)&scene->particleGenerator.maxRectangleSpread, 0.1f);
+                break;
             }
         }
 
