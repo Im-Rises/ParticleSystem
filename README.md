@@ -222,7 +222,7 @@ the project. Refer to the section below `Windows` or `Linux` or `MacOs`.
 Windows users can directly compile the project by typing the following command at the project root folder:
 
 ```bash
-cmake .
+cmake -B . -DCMAKE_BUILD_TYPE=Release
 ```
 
 > **Note**  
@@ -253,7 +253,7 @@ sudo apt-get install libglfw3-dev
 You are now able to compile the project. Go to the project root and type the following command:
 
 ```bash
-cmake .
+cmake -B . -DCMAKE_BUILD_TYPE=Release
 ```
 
 ### MacOs
@@ -276,7 +276,7 @@ brew install glfw
 You are now able to compile the project. Go to the project root and type the following command:
 
 ```bash
-cmake .
+cmake -B . -DCMAKE_BUILD_TYPE=Release
 ```
 
 ## Github-Actions
