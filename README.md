@@ -21,8 +21,6 @@ The UI is made using ImGui and allows you to modify some parameters of the parti
 - [x] Particle system
 - [x] ImGui UI
 - [x] Camera movement
-- [x] Particle emitter
-- [x] Particle emitter with gravity
 - [x] Pausing the simulation
 - [x] Different settings for the particle system
 - [x] Different settings for the camera
