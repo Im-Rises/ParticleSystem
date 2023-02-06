@@ -107,6 +107,9 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 ParticleSystemLauncher::~ParticleSystemLauncher() {
@@ -368,6 +371,21 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         {
             ImGui::Text("Particle color:");
             ImGui::ColorEdit3("##color", (float*)&scene->particleGenerator.fixedColor);
+        }
+
+        ImGui::NewLine();
+        ImGui::Checkbox("Randomize transparency", &scene->particleGenerator.randomizeColorAlpha);
+        if (scene->particleGenerator.randomizeColorAlpha)
+        {
+            ImGui::Text("Particle min transparency:");
+            ImGui::DragFloat("##minAlpha", &scene->particleGenerator.minColorAlpha, 0.1f);
+            ImGui::Text("Particle max transparency:");
+            ImGui::DragFloat("##maxAlpha", &scene->particleGenerator.maxColorAlpha, 0.1f);
+        }
+        else
+        {
+            ImGui::Text("Particle transparency:");
+            ImGui::DragFloat("##alpha", &scene->particleGenerator.fixedColorAlpha, 0.1f);
         }
 
         ImGui::End();

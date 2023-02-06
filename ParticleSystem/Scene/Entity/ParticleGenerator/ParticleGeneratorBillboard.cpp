@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ParticleGeneratorBillboard.h"
 
 ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entity("shaders/BillboardParticle.vert",
@@ -7,7 +8,6 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entit
     // Init particles
     particlesCount = maxParticles;
     particles.resize(particlesCount);
-    movementData.resize(particlesCount);
     position = glm::vec3(0.0f, 0.0f, 0.0f);
     reset();
     // Init opengl buffers
@@ -31,17 +31,34 @@ void ParticleGeneratorBillboard::create() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
+    //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    //    glEnableVertexAttribArray(0);
+    //
+    //    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO); // this attribute comes from a different vertex buffer
+    //    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    //    glEnableVertexAttribArray(1);
+    //
+    //    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    //    glEnableVertexAttribArray(2);
+    //
+    //    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    //    glEnableVertexAttribArray(3);
+    //
+    //    glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
+    //    glVertexAttribDivisor(2, 1);
+    //    glVertexAttribDivisor(3, 1);
+
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (void*)offsetof(Particle, position));
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Particle), (void*)offsetof(Particle, scale));
     glEnableVertexAttribArray(2);
 
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (void*)offsetof(Particle, color));
     glEnableVertexAttribArray(3);
 
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
@@ -64,12 +81,12 @@ void ParticleGeneratorBillboard::destroy() {
 void ParticleGeneratorBillboard::update(float deltaTime) {
     for (int i = 0; i < particlesCount; i++)
     {
-        movementData[i].lifeTime -= deltaTime;
+        particles[i].lifeTime -= deltaTime;
 
-        if (movementData[i].lifeTime > 0)
+        if (particles[i].lifeTime > 0)
         {
-            movementData[i].velocity += sumForces * deltaTime;
-            particles[i].position += movementData[i].velocity * deltaTime;
+            particles[i].velocity += sumForces * deltaTime;
+            particles[i].position += particles[i].velocity * deltaTime;
         }
         else
         {
@@ -79,6 +96,21 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
 }
 
 void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
+
+    /* Sort particles using camera distance to blend correctly*/
+    // Calculate camera distance
+    glm::mat4 inv_view_matrix = glm::inverse(cameraViewMatrix);
+    glm::vec3 cameraPos = glm::vec3(inv_view_matrix[3]);
+    for (int i = 0; i < particlesCount; i++)
+    {
+        particles[i].cameraDistance = glm::length(cameraPos - particles[i].position);
+    }
+
+    // Sort particles
+    std::sort(particles.begin(), particles.end(), [](const Particle& a, const Particle& b) {
+        return a.cameraDistance > b.cameraDistance;
+    });
+
     // Shader
     shader.use();
     shader.setMat4("u_view", cameraViewMatrix);
@@ -108,9 +140,9 @@ void ParticleGeneratorBillboard::reset() {
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     if (randomizeInitialVelocity)
-        movementData[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+        particles[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
     else
-        movementData[index].velocity = fixedInitialVelocity;
+        particles[index].velocity = fixedInitialVelocity;
 
     if (randomizePosition)
     {
@@ -130,9 +162,9 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
         particles[index].position = position;
 
     if (randomizeLifeTime)
-        movementData[index].lifeTime = randomFloat(minLifeTime, maxLifeTime);
+        particles[index].lifeTime = randomFloat(minLifeTime, maxLifeTime);
     else
-        movementData[index].lifeTime = fixedLifeTime;
+        particles[index].lifeTime = fixedLifeTime;
 
     if (randomizeScale)
     {
@@ -148,9 +180,30 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
         particles[index].scale = fixedScale;
 
     if (randomizeColor)
-        particles[index].color = randomVec3(minColor, maxColor);
+    {
+        if (randomizeColorAlpha)
+        {
+            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
+            float randomAlpha = randomFloat(minColorAlpha, maxColorAlpha);
+            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, randomAlpha };
+        }
+        else
+        {
+            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
+            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, fixedColorAlpha };
+        }
+    }
     else
-        particles[index].color = fixedColor;
+    {
+        if (randomizeColorAlpha)
+        {
+            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, randomFloat(minColorAlpha, maxColorAlpha) };
+        }
+        else
+        {
+            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, fixedColorAlpha };
+        }
+    }
 }
 
 float ParticleGeneratorBillboard::randomFloat(float min, float max) {
@@ -168,6 +221,10 @@ glm::vec3 ParticleGeneratorBillboard::randomVec3(glm::vec3 min, glm::vec3 max) {
     return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z) };
 }
 
+glm::vec4 ParticleGeneratorBillboard::randomVec4(glm::vec4 min, glm::vec4 max) {
+    return { randomFloat(min.x, max.x), randomFloat(min.y, max.y), randomFloat(min.z, max.z), randomFloat(min.w, max.w) };
+}
+
 glm::vec3 ParticleGeneratorBillboard::randomVec3InSphere(float radius) {
     glm::vec3 randomVec = randomVec3({ -1, -1, -1 }, { 1, 1, 1 });
     return glm::normalize(randomVec) * randomFloat(0, radius) + position;
@@ -180,10 +237,9 @@ glm::vec3 ParticleGeneratorBillboard::randomVec3InRectangle(glm::vec3 min, glm::
 void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
     this->particlesCount = particlesCount;
     particles.resize(particlesCount);
-    movementData.resize(particlesCount);
+    particles.resize(particlesCount);
     reset();
 }
-
 const int ParticleGeneratorBillboard::getParticlesCount() const {
     return particlesCount;
 }

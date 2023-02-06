@@ -38,19 +38,14 @@ private:
     struct Particle {
         glm::vec3 position;
         glm::vec2 scale;
-        glm::vec3 color;
-        Particle() : position(0.0f), scale(0.1f), color(1.0f) {}
+        glm::vec4 color;
+        glm::vec3 velocity;
+        float lifeTime;
+        glm::length_t cameraDistance;
+        Particle() : position(0.0f), scale(0.1f), color(1.0f), velocity(0.0f), lifeTime(0.0f), cameraDistance(0.0f) {}
     };
 
     std::vector<Particle> particles;
-
-    struct MovementData {
-        glm::vec3 velocity;
-        float lifeTime;
-        MovementData() : velocity(0.0f), lifeTime(0.0f) {}
-    };
-
-    std::vector<MovementData> movementData;
 
     unsigned int instanceVBO;
     unsigned int quadVAO, quadVBO, quadEBO;
@@ -83,22 +78,22 @@ public:
     glm::vec2 maxScale = glm::vec2(0.2f, 0.2f);
 
     bool randomizeColor = true;
+    bool randomizeColorAlpha = true;
     glm::vec3 fixedColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 minColor = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 maxColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    float fixedColorAlpha = 1.0f;
+    float minColorAlpha = 0.0f;
+    float maxColorAlpha = 1.0f;
 
 public:
     explicit ParticleGeneratorBillboard(int maxParticles = 10000);
-
     void create();
-
     ~ParticleGeneratorBillboard();
-
     void destroy();
 
 public:
     void update(float deltaTime) override;
-
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
 public:
@@ -111,6 +106,7 @@ private:
     float randomFloat(float min, float max);
     glm::vec2 randomVec2(glm::vec2 min, glm::vec2 max);
     glm::vec3 randomVec3(glm::vec3 min, glm::vec3 max);
+    glm::vec4 randomVec4(glm::vec4 min, glm::vec4 max);
     glm::vec3 randomVec3InSphere(float radius);
     glm::vec3 randomVec3InRectangle(glm::vec3 min, glm::vec3 max);
 
