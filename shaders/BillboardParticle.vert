@@ -3,10 +3,10 @@
 layout (location = 0) in vec3 a_vertice;
 layout (location = 1) in vec3 a_position;
 layout (location = 2) in vec2 a_scale;
-layout (location = 3) in vec3 a_color;
+layout (location = 3) in vec4 a_color;
 
 out vec2 v_UV;
-out vec3 v_color;
+out vec4 v_color;
 
 uniform mat4 u_view;
 uniform mat4 u_projection;
