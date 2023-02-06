@@ -1,5 +1,7 @@
-#include <iostream>
 #include "ParticleGeneratorBillboard.h"
+
+#include <iostream>
+#include <algorithm>
 
 ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entity("shaders/BillboardParticle.vert",
                                                                                "shaders/BillboardParticle.frag"),
