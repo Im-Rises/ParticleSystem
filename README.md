@@ -325,8 +325,3 @@ Quentin MOREL:
 - <https://github.com/Im-Rises>
 
 [![GitHub contributors](https://contrib.rocks/image?repo=Im-Rises/ParticleSystem)](https://github.com/Im-Rises/ParticleSystem/graphs/contributors)
-
-## TODO
-
-- Change the GL_DYNAMIC_DRAW etc...
-- Change the random color parameters change on button press not on each frame

@@ -8,10 +8,10 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entit
                                                                            texture("textures/ball.png"),
                                                                            randomEngine(std::random_device()()) {
     // Init particles
+    position = glm::vec3(0.0f, 0.0f, 0.0f);
     particlesCount = maxParticles;
     particles.resize(particlesCount);
-    position = glm::vec3(0.0f, 0.0f, 0.0f);
-    reset();
+    resetParticles();
     // Init opengl buffers
     create();
 }
@@ -19,7 +19,7 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entit
 void ParticleGeneratorBillboard::create() {
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenVertexArrays(1, &quadVAO);
@@ -32,7 +32,7 @@ void ParticleGeneratorBillboard::create() {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
-    
+
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
@@ -85,12 +85,11 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     /* Sort particles using camera distance to blend correctly*/
     // Calculate camera distance
     glm::mat4 inv_view_matrix = glm::inverse(cameraViewMatrix);
-    glm::vec3 cameraPos = glm::vec3(inv_view_matrix[3]);
+    auto cameraPos = glm::vec3(inv_view_matrix[3]);
     for (int i = 0; i < particlesCount; i++)
     {
         particles[i].cameraDistance = glm::length_t(glm::length(cameraPos - particles[i].position));
     }
-
     // Sort particles
     std::sort(particles.begin(), particles.end(), [](const Particle& a, const Particle& b) {
         return a.cameraDistance > b.cameraDistance;
@@ -106,6 +105,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     // Texture
     glBindTexture(GL_TEXTURE_2D, texture.getTexture());
 
+
     // Draw
     glBindVertexArray(quadVAO);
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)particles.size());
@@ -116,7 +116,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ParticleGeneratorBillboard::reset() {
+void ParticleGeneratorBillboard::resetParticles() {
     for (int i = 0; i < particlesCount; i++)
     {
         resetParticle(i);
@@ -124,11 +124,6 @@ void ParticleGeneratorBillboard::reset() {
 }
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    if (randomizeInitialVelocity)
-        particles[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
-    else
-        particles[index].velocity = fixedInitialVelocity;
-
     if (randomizePosition)
     {
         switch (spreadType)
@@ -145,6 +140,11 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     }
     else
         particles[index].position = position;
+
+    if (randomizeInitialVelocity)
+        particles[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+    else
+        particles[index].velocity = fixedInitialVelocity;
 
     if (randomizeLifeTime)
         particles[index].lifeTime = randomFloat(minLifeTime, maxLifeTime);
@@ -164,31 +164,31 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     else
         particles[index].scale = fixedScale;
 
-//    if (randomizeColor)
-//    {
-//        if (randomizeColorAlpha)
-//        {
-//            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
-//            float randomAlpha = randomFloat(minColorAlpha, maxColorAlpha);
-//            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, randomAlpha };
-//        }
-//        else
-//        {
-//            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
-//            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, fixedColorAlpha };
-//        }
-//    }
-//    else
-//    {
-//        if (randomizeColorAlpha)
-//        {
-//            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, randomFloat(minColorAlpha, maxColorAlpha) };
-//        }
-//        else
-//        {
-//            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, fixedColorAlpha };
-//        }
-//    }
+    if (randomizeColor)
+    {
+        if (randomizeColorAlpha)
+        {
+            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
+            float randomAlpha = randomFloat(minColorAlpha, maxColorAlpha);
+            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, randomAlpha };
+        }
+        else
+        {
+            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
+            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, fixedColorAlpha };
+        }
+    }
+    else
+    {
+        if (randomizeColorAlpha)
+        {
+            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, randomFloat(minColorAlpha, maxColorAlpha) };
+        }
+        else
+        {
+            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, fixedColorAlpha };
+        }
+    }
 }
 
 float ParticleGeneratorBillboard::randomFloat(float min, float max) {
@@ -219,11 +219,11 @@ glm::vec3 ParticleGeneratorBillboard::randomVec3InRectangle(glm::vec3 min, glm::
     return randomVec3(min, max) + position;
 }
 
-void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
-    this->particlesCount = particlesCount;
+void ParticleGeneratorBillboard::setParticlesCount(int maxParticles) {
+    particlesCount = maxParticles;
     particles.resize(particlesCount);
     particles.resize(particlesCount);
-    reset();
+    resetParticles();
 }
 
 int ParticleGeneratorBillboard::getParticlesCount() const {

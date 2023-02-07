@@ -55,16 +55,18 @@ private:
 public:
     glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
 
-    bool randomizeInitialVelocity = true;
-    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
-    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
+    bool dynamicChange = false;
 
     SpreadType spreadType = SPREAD_TYPE_SPHERE;
     float spreadRadius = 2.0f;
     bool randomizePosition = true;
     glm::vec3 minRectangleSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
     glm::vec3 maxRectangleSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
+
+    bool randomizeInitialVelocity = true;
+    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
+    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
 
     bool randomizeLifeTime = true;
     float fixedLifeTime = 1.0f;
@@ -97,7 +99,7 @@ public:
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
 public:
-    void reset();
+    void resetParticles();
 
 private:
     void resetParticle(unsigned int index);
@@ -111,7 +113,7 @@ private:
     glm::vec3 randomVec3InRectangle(glm::vec3 min, glm::vec3 max);
 
 public:
-    void setParticlesCount(int particlesCount);
+    void setParticlesCount(int maxParticles);
     [[nodiscard]] int getParticlesCount() const;
 };
 

@@ -242,10 +242,10 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::Begin("Particle settings");
 
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Reset particles");
-        ImGui::Button("Reset");
+        ImGui::Button("Restart system");
         if (ImGui::IsItemClicked())
         {
-            scene->particleGenerator.reset();
+            scene->particleGenerator.resetParticles();
         }
 
         ImGui::NewLine();
