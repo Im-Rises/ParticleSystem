@@ -19,7 +19,7 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entit
 void ParticleGeneratorBillboard::create() {
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STREAM_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenVertexArrays(1, &quadVAO);
@@ -88,7 +88,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glm::vec3 cameraPos = glm::vec3(inv_view_matrix[3]);
     for (int i = 0; i < particlesCount; i++)
     {
-        particles[i].cameraDistance = glm::length(cameraPos - particles[i].position);
+        particles[i].cameraDistance = glm::length_t(glm::length(cameraPos - particles[i].position));
     }
 
     // Sort particles
@@ -164,31 +164,31 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     else
         particles[index].scale = fixedScale;
 
-    if (randomizeColor)
-    {
-        if (randomizeColorAlpha)
-        {
-            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
-            float randomAlpha = randomFloat(minColorAlpha, maxColorAlpha);
-            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, randomAlpha };
-        }
-        else
-        {
-            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
-            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, fixedColorAlpha };
-        }
-    }
-    else
-    {
-        if (randomizeColorAlpha)
-        {
-            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, randomFloat(minColorAlpha, maxColorAlpha) };
-        }
-        else
-        {
-            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, fixedColorAlpha };
-        }
-    }
+//    if (randomizeColor)
+//    {
+//        if (randomizeColorAlpha)
+//        {
+//            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
+//            float randomAlpha = randomFloat(minColorAlpha, maxColorAlpha);
+//            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, randomAlpha };
+//        }
+//        else
+//        {
+//            glm::vec3 randomColor = { randomFloat(minColor.x, maxColor.x), randomFloat(minColor.y, maxColor.y), randomFloat(minColor.z, maxColor.z) };
+//            particles[index].color = { randomColor.x, randomColor.y, randomColor.z, fixedColorAlpha };
+//        }
+//    }
+//    else
+//    {
+//        if (randomizeColorAlpha)
+//        {
+//            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, randomFloat(minColorAlpha, maxColorAlpha) };
+//        }
+//        else
+//        {
+//            particles[index].color = { fixedColor.x, fixedColor.y, fixedColor.z, fixedColorAlpha };
+//        }
+//    }
 }
 
 float ParticleGeneratorBillboard::randomFloat(float min, float max) {
@@ -225,6 +225,7 @@ void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
     particles.resize(particlesCount);
     reset();
 }
-const int ParticleGeneratorBillboard::getParticlesCount() const {
+
+int ParticleGeneratorBillboard::getParticlesCount() const {
     return particlesCount;
 }

@@ -42,7 +42,7 @@ private:
         glm::vec3 velocity;
         float lifeTime;
         glm::length_t cameraDistance;
-        Particle() : position(0.0f), scale(0.1f), color(1.0f), velocity(0.0f), lifeTime(0.0f), cameraDistance(0.0f) {}
+        Particle() : position(0.0f), scale(0.1f), color(1.0f), velocity(0.0f), lifeTime(0.0f), cameraDistance(glm::length_t(0.0f)) {}
     };
 
     std::vector<Particle> particles;
@@ -112,7 +112,7 @@ private:
 
 public:
     void setParticlesCount(int particlesCount);
-    [[nodiscard]] const int getParticlesCount() const;
+    [[nodiscard]] int getParticlesCount() const;
 };
 
 #endif // PARTICLE_GENERATOR_H
