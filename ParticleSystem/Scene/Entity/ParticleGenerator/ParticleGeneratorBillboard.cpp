@@ -61,6 +61,7 @@ void ParticleGeneratorBillboard::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &quadVBO);
     glDeleteBuffers(1, &quadEBO);
+    glDeleteBuffers(1, &instanceVBO);
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
@@ -81,7 +82,6 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
 }
 
 void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
-
     /* Sort particles using camera distance to blend correctly*/
     // Calculate camera distance
     glm::mat4 inv_view_matrix = glm::inverse(cameraViewMatrix);
@@ -104,7 +104,6 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 
     // Texture
     glBindTexture(GL_TEXTURE_2D, texture.getTexture());
-
 
     // Draw
     glBindVertexArray(quadVAO);

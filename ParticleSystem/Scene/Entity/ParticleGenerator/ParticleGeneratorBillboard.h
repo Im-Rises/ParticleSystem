@@ -55,8 +55,6 @@ private:
 public:
     glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
 
-    bool dynamicChange = false;
-
     SpreadType spreadType = SPREAD_TYPE_SPHERE;
     float spreadRadius = 2.0f;
     bool randomizePosition = true;
