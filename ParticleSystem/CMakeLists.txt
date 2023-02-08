@@ -10,7 +10,8 @@ file(GLOB_RECURSE HEADERS "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/*.h")
 
 add_executable(${PROJECT_NAME} ${SRCS} ${HEADERS} ${SRCS_HEADERS_IMGUI} ${SRCS_HEADERS_GLAD})
 
-find_package(OpenGL REQUIRED)
+find_package(OpenGL 3.3 REQUIRED)
+
 target_link_libraries(${PROJECT_NAME} OpenGL::GL)
 
 if (WIN32)
@@ -23,3 +24,8 @@ else ()
 endif ()
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+
+#if (OPENGL_VERSION_MAJOR EQUAL 3 AND OPENGL_VERSION_MINOR LESS 3)
+#    message(FATAL_ERROR "OpenGL version 3.3 or higher required")
+#endif()

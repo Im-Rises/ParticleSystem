@@ -297,6 +297,26 @@ The project is set with a set of different scripts:
 - Microsoft C++ Code Analysis: This script is used to check the code for security issues.
 - Cpp Linter: This script is used to check the code for security issues.
 
+## Libraries
+
+glfw:  
+<https://www.glfw.org/docs/latest/>
+
+glm:  
+<https://glm.g-truc.net/0.9.9/index.html>
+
+glad:  
+<https://glad.dav1d.de/>
+
+stb (stb_image):  
+<https://github.com/nothings/stb/blob/master/stb_image.h>
+
+Dear imgui:  
+<https://github.com/ocornut/imgui>
+
+OpenGL:  
+<https://www.opengl.org/>
+
 ## Documentation
 
 learnopengl (OpenGL tutorial):  
@@ -313,9 +333,6 @@ levelup (Particle Generation):
 
 unrealistic.dev (Change CMake working directory):  
 <https://unrealistic.dev/posts/setting-debug-parameters-with-cmake-tools-for-visual-studio>
-
-stb (stb_image):  
-<https://github.com/nothings/stb/blob/master/stb_image.h>
 
 ## Contributors
 

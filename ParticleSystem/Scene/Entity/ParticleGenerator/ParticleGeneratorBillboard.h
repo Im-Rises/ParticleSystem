@@ -24,15 +24,10 @@ private:
 
     static constexpr std::array<float, 12> vertices = {
         // positions
-        0.5f, 0.5f, 0.0f,   // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f,  // top left
-    };
-
-    static constexpr std::array<unsigned int, 6> indices = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f,
     };
 
     struct Particle {
@@ -42,29 +37,29 @@ private:
         glm::vec3 velocity;
         float lifeTime;
         glm::length_t cameraDistance;
-        Particle() : position(0.0f), scale(0.1f), color(1.0f), velocity(0.0f), lifeTime(0.0f), cameraDistance(0.0f) {}
+        Particle() : position(0.0f), scale(0.1f), color(1.0f), velocity(0.0f), lifeTime(0.0f), cameraDistance(glm::length_t(0.0f)) {}
     };
 
     std::vector<Particle> particles;
 
     unsigned int instanceVBO;
-    unsigned int quadVAO, quadVBO, quadEBO;
+    unsigned int quadVAO, quadVBO;
 
     Texture texture;
 
 public:
     glm::vec3 sumForces = glm::vec3(0.0f, -9.81, 0.0f);
 
-    bool randomizeInitialVelocity = true;
-    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
-    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
-
     SpreadType spreadType = SPREAD_TYPE_SPHERE;
     float spreadRadius = 2.0f;
     bool randomizePosition = true;
     glm::vec3 minRectangleSpread = glm::vec3(-3.0f, -2.0f, -1.0f);
     glm::vec3 maxRectangleSpread = glm::vec3(+3.0f, +2.0f, +1.0f);
+
+    bool randomizeInitialVelocity = true;
+    glm::vec3 fixedInitialVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 minInitialVelocity = glm::vec3(-1.0f, +1.0f, -1.0f);
+    glm::vec3 maxInitialVelocity = glm::vec3(+1.0f, +5.0f, +1.0f);
 
     bool randomizeLifeTime = true;
     float fixedLifeTime = 1.0f;
@@ -87,7 +82,7 @@ public:
     float maxColorAlpha = 1.0f;
 
 public:
-    explicit ParticleGeneratorBillboard(int maxParticles = 10000);
+    explicit ParticleGeneratorBillboard(int maxParticles = 50000);
     void create();
     ~ParticleGeneratorBillboard();
     void destroy();
@@ -97,7 +92,7 @@ public:
     void render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) override;
 
 public:
-    void reset();
+    void resetParticles();
 
 private:
     void resetParticle(unsigned int index);
@@ -111,8 +106,8 @@ private:
     glm::vec3 randomVec3InRectangle(glm::vec3 min, glm::vec3 max);
 
 public:
-    void setParticlesCount(int particlesCount);
-    [[nodiscard]] const int getParticlesCount() const;
+    void setParticlesCount(int maxParticles);
+    [[nodiscard]] int getParticlesCount() const;
 };
 
 #endif // PARTICLE_GENERATOR_H

@@ -8,10 +8,10 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entit
                                                                            texture("textures/ball.png"),
                                                                            randomEngine(std::random_device()()) {
     // Init particles
+    position = glm::vec3(0.0f, 0.0f, 0.0f);
     particlesCount = maxParticles;
     particles.resize(particlesCount);
-    position = glm::vec3(0.0f, 0.0f, 0.0f);
-    reset();
+    resetParticles();
     // Init opengl buffers
     create();
 }
@@ -19,36 +19,15 @@ ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entit
 void ParticleGeneratorBillboard::create() {
     glGenBuffers(1, &instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * particles.size(), particles.data(), GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenVertexArrays(1, &quadVAO);
     glGenBuffers(1, &quadVBO);
     glBindVertexArray(quadVAO);
-    glGenBuffers(1, &quadEBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
-
-    //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    //    glEnableVertexAttribArray(0);
-    //
-    //    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO); // this attribute comes from a different vertex buffer
-    //    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    //    glEnableVertexAttribArray(1);
-    //
-    //    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    //    glEnableVertexAttribArray(2);
-    //
-    //    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
-    //    glEnableVertexAttribArray(3);
-    //
-    //    glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
-    //    glVertexAttribDivisor(2, 1);
-    //    glVertexAttribDivisor(3, 1);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -77,7 +56,7 @@ ParticleGeneratorBillboard::~ParticleGeneratorBillboard() {
 void ParticleGeneratorBillboard::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &quadVBO);
-    glDeleteBuffers(1, &quadEBO);
+    glDeleteBuffers(1, &instanceVBO);
 }
 
 void ParticleGeneratorBillboard::update(float deltaTime) {
@@ -98,16 +77,14 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
 }
 
 void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
-
     /* Sort particles using camera distance to blend correctly*/
-    // Calculate camera distance
+    //     Calculate camera distance
     glm::mat4 inv_view_matrix = glm::inverse(cameraViewMatrix);
-    glm::vec3 cameraPos = glm::vec3(inv_view_matrix[3]);
+    auto cameraPos = glm::vec3(inv_view_matrix[3]);
     for (int i = 0; i < particlesCount; i++)
     {
-        particles[i].cameraDistance = glm::length(cameraPos - particles[i].position);
+        particles[i].cameraDistance = glm::length_t(glm::length(cameraPos - particles[i].position));
     }
-
     // Sort particles
     std::sort(particles.begin(), particles.end(), [](const Particle& a, const Particle& b) {
         return a.cameraDistance > b.cameraDistance;
@@ -121,11 +98,11 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     shader.setVec3("u_cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
 
     // Texture
-    glBindTexture(GL_TEXTURE_2D, texture.getTexture());
+    texture.bind();
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)particles.size());
+    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, particlesCount);
     glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
@@ -133,7 +110,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ParticleGeneratorBillboard::reset() {
+void ParticleGeneratorBillboard::resetParticles() {
     for (int i = 0; i < particlesCount; i++)
     {
         resetParticle(i);
@@ -141,11 +118,6 @@ void ParticleGeneratorBillboard::reset() {
 }
 
 void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
-    if (randomizeInitialVelocity)
-        particles[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
-    else
-        particles[index].velocity = fixedInitialVelocity;
-
     if (randomizePosition)
     {
         switch (spreadType)
@@ -162,6 +134,11 @@ void ParticleGeneratorBillboard::resetParticle(unsigned int index) {
     }
     else
         particles[index].position = position;
+
+    if (randomizeInitialVelocity)
+        particles[index].velocity = randomVec3(minInitialVelocity, maxInitialVelocity);
+    else
+        particles[index].velocity = fixedInitialVelocity;
 
     if (randomizeLifeTime)
         particles[index].lifeTime = randomFloat(minLifeTime, maxLifeTime);
@@ -236,12 +213,12 @@ glm::vec3 ParticleGeneratorBillboard::randomVec3InRectangle(glm::vec3 min, glm::
     return randomVec3(min, max) + position;
 }
 
-void ParticleGeneratorBillboard::setParticlesCount(int particlesCount) {
-    this->particlesCount = particlesCount;
+void ParticleGeneratorBillboard::setParticlesCount(int maxParticles) {
+    particlesCount = maxParticles;
     particles.resize(particlesCount);
-    particles.resize(particlesCount);
-    reset();
+    resetParticles();
 }
-const int ParticleGeneratorBillboard::getParticlesCount() const {
+
+int ParticleGeneratorBillboard::getParticlesCount() const {
     return particlesCount;
 }
