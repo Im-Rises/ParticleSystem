@@ -24,15 +24,10 @@ private:
 
     static constexpr std::array<float, 12> vertices = {
         // positions
-        0.5f, 0.5f, 0.0f,   // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f,  // top left
-    };
-
-    static constexpr std::array<unsigned int, 6> indices = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f,
     };
 
     struct Particle {
@@ -48,7 +43,7 @@ private:
     std::vector<Particle> particles;
 
     unsigned int instanceVBO;
-    unsigned int quadVAO, quadVBO, quadEBO;
+    unsigned int quadVAO, quadVBO;
 
     Texture texture;
 
@@ -87,7 +82,7 @@ public:
     float maxColorAlpha = 1.0f;
 
 public:
-    explicit ParticleGeneratorBillboard(int maxParticles = 100000);
+    explicit ParticleGeneratorBillboard(int maxParticles = 50000);
     void create();
     ~ParticleGeneratorBillboard();
     void destroy();

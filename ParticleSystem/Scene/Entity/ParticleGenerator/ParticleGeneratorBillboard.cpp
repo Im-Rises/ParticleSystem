@@ -25,13 +25,9 @@ void ParticleGeneratorBillboard::create() {
     glGenVertexArrays(1, &quadVAO);
     glGenBuffers(1, &quadVBO);
     glBindVertexArray(quadVAO);
-    glGenBuffers(1, &quadEBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -60,7 +56,6 @@ ParticleGeneratorBillboard::~ParticleGeneratorBillboard() {
 void ParticleGeneratorBillboard::destroy() {
     glDeleteVertexArrays(1, &quadVAO);
     glDeleteBuffers(1, &quadVBO);
-    glDeleteBuffers(1, &quadEBO);
     glDeleteBuffers(1, &instanceVBO);
 }
 
@@ -107,7 +102,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawElementsInstanced(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_INT, (GLvoid*)0, (GLsizei)particles.size());
+    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, particlesCount);
     glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
