@@ -87,7 +87,7 @@ public:
     float maxColorAlpha = 1.0f;
 
 public:
-    explicit ParticleGeneratorBillboard(int maxParticles = 10000);
+    explicit ParticleGeneratorBillboard(int maxParticles = 100000);
     void create();
     ~ParticleGeneratorBillboard();
     void destroy();

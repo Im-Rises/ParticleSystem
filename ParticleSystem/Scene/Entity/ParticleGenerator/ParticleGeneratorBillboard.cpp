@@ -83,7 +83,7 @@ void ParticleGeneratorBillboard::update(float deltaTime) {
 
 void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 cameraProjectionMatrix) {
     /* Sort particles using camera distance to blend correctly*/
-    // Calculate camera distance
+    //     Calculate camera distance
     glm::mat4 inv_view_matrix = glm::inverse(cameraViewMatrix);
     auto cameraPos = glm::vec3(inv_view_matrix[3]);
     for (int i = 0; i < particlesCount; i++)
@@ -103,11 +103,11 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
     shader.setVec3("u_cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
 
     // Texture
-    glBindTexture(GL_TEXTURE_2D, texture.getTexture());
+    texture.bind();
 
     // Draw
     glBindVertexArray(quadVAO);
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei)particles.size());
+    glDrawElementsInstanced(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_INT, (GLvoid*)0, (GLsizei)particles.size());
     glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
@@ -220,7 +220,6 @@ glm::vec3 ParticleGeneratorBillboard::randomVec3InRectangle(glm::vec3 min, glm::
 
 void ParticleGeneratorBillboard::setParticlesCount(int maxParticles) {
     particlesCount = maxParticles;
-    particles.resize(particlesCount);
     particles.resize(particlesCount);
     resetParticles();
 }

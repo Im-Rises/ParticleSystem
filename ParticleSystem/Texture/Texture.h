@@ -14,12 +14,14 @@ public:
 
     ~Texture();
 
-    unsigned int getTexture() const;
+    void bind() const;
+
+    [[nodiscard]] unsigned int getTexture() const;
 
 public:
-    unsigned int getWidth() const;
+    [[nodiscard]] unsigned int getWidth() const;
 
-    unsigned int getHeight() const;
+    [[nodiscard]] unsigned int getHeight() const;
 };
 
 
