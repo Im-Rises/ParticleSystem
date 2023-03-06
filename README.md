@@ -224,8 +224,16 @@ the project. Refer to the section below `Windows` or `Linux` or `MacOs`.
 Windows users can directly compile the project by typing the following command at the project root folder:
 
 ```bash
-cmake -B . -DCMAKE_BUILD_TYPE=Release
+cmake -B . -DCMAKE_BUILD_TYPE=<Debug/Release>
 ```
+
+then
+
+```bash
+cmake --build . --config <Debug/Release>
+```
+
+You need to replace `<Debug/Release>` by the build type you want to use.
 
 > **Note**  
 > If you're using Visual Studio, you can install CMake directly from the IDE (Visual Studio Installer).
