@@ -193,6 +193,9 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::Text("%.3f ms/frame (%.1f FPS)", deltaTime, 1.0f / deltaTime);
         ImGui::Text("Window width: %d", display_w);
         ImGui::Text("Window height: %d", display_h);
+        ImGui::Text("GPU: %s", getOpenGLVendor().data());
+        ImGui::Text("OpenGL version: %s", getOpenGLVersion().data());
+        ImGui::Text("GLSL version: %s", getGLSLVersion().data());
         ImGui::End();
     }
 
