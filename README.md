@@ -13,6 +13,8 @@ This project is a particle system made in C++ using OpenGL and GLFW.
 
 The UI is made using ImGui and allows you to modify some parameters of the particle system and the camera view.
 
+## 🚀🚀[you can try the webgl build online by clicking here](https://im-rises.github.io/particle-system-webgl/) 🚀🚀
+
 > **Note**  
 > This project was made as a learning exercise to learn some OpenGL features.
 
