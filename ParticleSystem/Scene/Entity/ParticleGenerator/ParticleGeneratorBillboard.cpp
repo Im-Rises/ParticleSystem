@@ -92,8 +92,7 @@ void ParticleGeneratorBillboard::render(glm::mat4 cameraViewMatrix, glm::mat4 ca
 
     // Shader
     shader.use();
-    shader.setMat4("u_view", cameraViewMatrix);
-    shader.setMat4("u_projection", cameraProjectionMatrix);
+    shader.setMat4("u_mvp", cameraProjectionMatrix * cameraViewMatrix);
     shader.setVec3("u_cameraRight", cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]);
     shader.setVec3("u_cameraUp", cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]);
 

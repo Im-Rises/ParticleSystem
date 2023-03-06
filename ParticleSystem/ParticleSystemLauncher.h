@@ -44,6 +44,15 @@ private:
     void updateGame(float deltaTime);
 
     void updateScreen();
+    
+private:
+    std::string_view getOpenGLVendor();
+    std::string_view getOpenGLVersion();
+    std::string_view getGLSLVersion();
+    std::string getGLFWVersion();
+    std::string_view getGladVersion();
+    std::string getImGuiVersion();
+    std::string getGLMVersion();
 };
 
 
