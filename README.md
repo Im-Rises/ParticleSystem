@@ -200,9 +200,9 @@ The speed and some parameters can be modified directly in the ImGui windows.
 |---------------------|-------------------------------------|
 | Translate camera    | (WASD) or (↑ ← ↓ →)                 |
 | Pause/Resume        | P                                   |
-| Move up/down camera | SPACE/SHIFT                         |
+| Move up/down camera | (Space/Shift) or (Page up/down)     |
 | Rotate camera       | Right Mouse Button + Mouse movement |
-| Exit app            | ESC                                 |
+| Exit app            | Escape                              |
 
 > **Note**
 > You can the inputs by changing their attribution in the `InputManager.cpp` file,

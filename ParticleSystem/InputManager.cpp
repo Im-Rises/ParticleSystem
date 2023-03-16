@@ -25,11 +25,11 @@ bool InputManager::isRightKeyPressed(GLFWwindow* window) {
 }
 
 bool InputManager::isUpKeyPressed(GLFWwindow* window) {
-    return glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS; // GLFW_KEY_PAGE_UP
+    return glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS;
 }
 
 bool InputManager::isDownKeyPressed(GLFWwindow* window) {
-    return glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS; // GLFW_KEY_PAGE_DOWN
+    return glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS;
 }
 
 bool InputManager::isPauseKeyPressed(GLFWwindow* window) {
