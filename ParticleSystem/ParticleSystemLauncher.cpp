@@ -20,6 +20,8 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
+#include "Scene/Scene.h"
+
 static void glfw_error_callback(int error, const char* description) {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }

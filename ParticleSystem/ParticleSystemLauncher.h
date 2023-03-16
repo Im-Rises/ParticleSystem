@@ -2,12 +2,13 @@
 #define PARTICLE_EMISSION_H
 
 #include <memory>
+#include <string_view>
 
-#include "Scene/Scene.h"
+class Scene;
 
 constexpr const std::string_view PROJECT_NAME = "Particle System Billboard 3D";
 
-constexpr const std::string_view PROJECT_VERSION = "1.1.0";
+constexpr const std::string_view PROJECT_VERSION = "1.2.0";
 
 constexpr const std::string_view PROJECT_GITHUB = "https://github.com/Im-Rises/ParticleSystem";
 
@@ -44,7 +45,7 @@ private:
     void updateGame(float deltaTime);
 
     void updateScreen();
-    
+
 private:
     std::string_view getOpenGLVendor();
     std::string_view getOpenGLVersion();
