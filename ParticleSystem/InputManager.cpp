@@ -9,19 +9,19 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 }
 
 bool InputManager::isForwardKeyPressed(GLFWwindow* window) {
-    return glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+    return glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
 }
 
 bool InputManager::isBackwardKeyPressed(GLFWwindow* window) {
-    return glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
+    return glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS;
 }
 
 bool InputManager::isLeftKeyPressed(GLFWwindow* window) {
-    return glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
+    return glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
 }
 
 bool InputManager::isRightKeyPressed(GLFWwindow* window) {
-    return glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
+    return glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS;
 }
 
 bool InputManager::isUpKeyPressed(GLFWwindow* window) {
