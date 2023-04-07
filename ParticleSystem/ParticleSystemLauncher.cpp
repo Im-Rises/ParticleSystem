@@ -264,7 +264,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Particles count");
         ImGui::Text("Current count: %d", scene->particleGenerator.getParticlesCount());
-        static int newParticlesCount = 10000;
+        static int newParticlesCount = 25000;
         ImGui::Text("New count:");
         ImGui::SameLine();
         ImGui::DragInt("##particlesCount", &newParticlesCount, 1, 1, 100000);
