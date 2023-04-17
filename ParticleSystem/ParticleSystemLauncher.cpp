@@ -12,8 +12,9 @@
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif
-
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include <iostream>
+#include <GLFW/glfw3.h> // Will drag system OpenGL headers
 #include <cstdlib>
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
@@ -22,8 +23,13 @@
 
 #include "Scene/Scene.h"
 
+#ifdef __EMSCRIPTEN__
+#include "imgui/libs/emscripten/emscripten_mainloop_stub.h"
+#include <emscripten/html5.h>
+#endif
+
 static void glfw_error_callback(int error, const char* description) {
-    fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
 ParticleSystemLauncher::ParticleSystemLauncher() {
@@ -32,7 +38,7 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     if (!glfwInit())
         exit(1);
 
-        // Decide GL+GLSL versions
+// Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
     const char* glsl_version = "#version 300 es";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -52,6 +58,10 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // 3.0+ only
 #endif
 
+#ifdef __EMSCRIPTEN__
+    emscripten_get_canvas_element_size("#canvas", &display_w, &display_h);
+#endif
+
     // Create window with graphics context
     window = glfwCreateWindow(display_w, display_h, PROJECT_NAME.data(), nullptr, nullptr);
     if (window == nullptr)
@@ -62,6 +72,7 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     //    // Initialize GLFW callbacks
     //    glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, InputManager::key_callback);
+    //    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     //    glfwSetScrollCallback(window, InputManager::scroll_callback);
     //    glfwSetCursorPosCallback(window, InputManager::cursor_position_callback);
     //    glfwSetMouseButtonCallback(window, InputManager::mouse_button_callback);
@@ -73,9 +84,15 @@ ParticleSystemLauncher::ParticleSystemLauncher() {
     auto yPos = (mode->height - display_h) / 2;
     glfwSetWindowPos(window, xPos, yPos);
 
+#ifdef __EMSCRIPTEN__
+    // Initialize OpenGL loader
+    if (!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress))
+        exit(1);
+#else
     // Initialize OpenGL loader
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         exit(1);
+#endif
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -140,7 +157,16 @@ void ParticleSystemLauncher::start() {
     float deltaTime;
 
     // Main loop
+#ifdef __EMSCRIPTEN__
+    // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
+    // You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
+    io.IniFilename = NULL;
+    EMSCRIPTEN_MAINLOOP_BEGIN
+#else
     while (!glfwWindowShouldClose(window))
+#endif
     {
         deltaTime = ImGui::GetIO().DeltaTime;
 
@@ -152,6 +178,9 @@ void ParticleSystemLauncher::start() {
 
         updateScreen();
     }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_MAINLOOP_END;
+#endif
 }
 
 void ParticleSystemLauncher::handleInputs() {
@@ -191,6 +220,11 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     ImGui::NewFrame();
 
     {
+#ifdef __EMSCRIPTEN__
+        static bool isCollapsed = true;
+        ImGui::SetNextWindowPos(ImVec2(-display_w / 2, -display_h / 2), ImGuiCond_Once);
+        ImGui::SetNextWindowCollapsed(isCollapsed, ImGuiCond_Once);
+#endif
         ImGui::Begin("Window info");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", deltaTime, 1.0f / deltaTime);
         ImGui::Text("Window width: %d", display_w);
@@ -202,8 +236,14 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     }
 
     {
+#ifdef __EMSCRIPTEN__
+        static bool isCollapsed = true;
+        ImGui::SetNextWindowPos(ImVec2(-display_w / 2, (-display_h / 2) + 20), ImGuiCond_Once);
+        ImGui::SetNextWindowCollapsed(isCollapsed, ImGuiCond_Once);
+#endif
         ImGui::Begin("Camera settings");
 
+#ifndef __EMSCRIPTEN__
         static bool wireframe = false;
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "View settings");
         ImGui::Checkbox("Wireframe", &wireframe);
@@ -216,6 +256,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
         ImGui::NewLine();
+#endif
 
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Camera settings");
 
@@ -252,6 +293,11 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     }
 
     {
+#ifdef __EMSCRIPTEN__
+        static bool isCollapsed = true;
+        ImGui::SetNextWindowPos(ImVec2(-display_w / 2, (-display_h / 2) + 40), ImGuiCond_Once);
+        ImGui::SetNextWindowCollapsed(isCollapsed, ImGuiCond_Once);
+#endif
         ImGui::Begin("Particle settings");
 
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Reset particles");
@@ -264,10 +310,14 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Particles count");
         ImGui::Text("Current count: %d", scene->particleGenerator.getParticlesCount());
+#ifdef __EMSCRIPTEN__
+        static int newParticlesCount = 10000;
+#else
         static int newParticlesCount = 25000;
+#endif
         ImGui::Text("New count:");
         ImGui::SameLine();
-        ImGui::DragInt("##particlesCount", &newParticlesCount, 1, 1, 100000);
+        ImGui::DragInt("##particlesCount", &newParticlesCount, 1, 1, 1000);
         ImGui::Button("Validate##validateParticlesCount");
         if (ImGui::IsItemClicked())
         {
@@ -411,7 +461,11 @@ void ParticleSystemLauncher::updateGame(float deltaTime) {
 
 void ParticleSystemLauncher::updateScreen() {
     ImGui::Render();
+#ifdef __EMSCRIPTEN__
+    emscripten_get_canvas_element_size("#canvas", &display_w, &display_h);
+#else
     glfwGetFramebufferSize(window, &display_w, &display_h);
+#endif
     scene->updateProjectionMatrix(display_w, display_h);
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,

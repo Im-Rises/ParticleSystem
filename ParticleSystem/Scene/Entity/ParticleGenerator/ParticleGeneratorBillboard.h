@@ -2,7 +2,6 @@
 #define PARTICLE_GENERATOR_H
 
 #include <vector>
-#include <glad/include/glad/glad.h>
 #include <glm/glm.hpp>
 #include <array>
 #include <vector>
@@ -82,7 +81,12 @@ public:
     float maxColorAlpha = 1.0f;
 
 public:
+#ifdef __EMSCRIPTEN__
+    explicit ParticleGeneratorBillboard(int particlesCount = 10000);
+#else
     explicit ParticleGeneratorBillboard(int particlesCount = 25000);
+#endif
+
     void create();
     ~ParticleGeneratorBillboard();
     void destroy();

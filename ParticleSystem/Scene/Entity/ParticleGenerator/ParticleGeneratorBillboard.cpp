@@ -1,5 +1,6 @@
 #include "ParticleGeneratorBillboard.h"
 
+#include <glad/glad.h>
 #include <algorithm>
 
 ParticleGeneratorBillboard::ParticleGeneratorBillboard(int particlesCount) : Entity("shaders/BillboardParticle.vert",
