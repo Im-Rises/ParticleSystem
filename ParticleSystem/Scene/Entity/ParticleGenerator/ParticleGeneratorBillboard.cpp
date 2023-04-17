@@ -1,15 +1,15 @@
 #include "ParticleGeneratorBillboard.h"
 
-#include <iostream>
+#include <glad/glad.h>
 #include <algorithm>
 
-ParticleGeneratorBillboard::ParticleGeneratorBillboard(int maxParticles) : Entity("shaders/BillboardParticle.vert",
+ParticleGeneratorBillboard::ParticleGeneratorBillboard(int particlesCount) : Entity("shaders/BillboardParticle.vert",
                                                                                "shaders/BillboardParticle.frag"),
                                                                            texture("textures/ball.png"),
                                                                            randomEngine(std::random_device()()) {
     // Init particles
     position = glm::vec3(0.0f, 0.0f, 0.0f);
-    particlesCount = maxParticles;
+    this->particlesCount = particlesCount;
     particles.resize(particlesCount);
     resetParticles();
     // Init opengl buffers

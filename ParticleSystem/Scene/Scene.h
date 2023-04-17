@@ -2,7 +2,6 @@
 #define SCENE_H
 
 #include "Entity/ParticleGenerator/ParticleGeneratorBillboard.h"
-#include "Entity/Cube/Cube.h"
 #include "Entity/Billboard/Billboard.h"
 #include "Camera/Camera.h"
 
