@@ -155,6 +155,7 @@ void ParticleSystemLauncher::start() {
 
     // Variables for the main loop
     float deltaTime;
+    float accumulator = 0.0f;
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -174,7 +175,12 @@ void ParticleSystemLauncher::start() {
 
         handleUi(deltaTime);
 
-        updateGame(deltaTime);
+        // Fixed timestep
+        while (accumulator >= fixedDeltaTime) {
+            updateGame(fixedDeltaTime);
+            accumulator -= fixedDeltaTime;
+        }
+        accumulator += deltaTime;
 
         updateScreen();
     }
