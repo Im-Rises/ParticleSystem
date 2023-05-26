@@ -155,6 +155,7 @@ void ParticleSystemLauncher::start() {
 
     // Variables for the main loop
     float deltaTime;
+    float accumulator = 0.0f;
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -174,7 +175,12 @@ void ParticleSystemLauncher::start() {
 
         handleUi(deltaTime);
 
-        updateGame(deltaTime);
+        // Fixed timestep
+        while (accumulator >= fixedDeltaTime) {
+            updateGame(fixedDeltaTime);
+            accumulator -= fixedDeltaTime;
+        }
+        accumulator += deltaTime;
 
         updateScreen();
     }
@@ -300,6 +306,11 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
 #endif
         ImGui::Begin("Particle settings");
 
+        ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Scene settings");
+        ImGui::Text("Fixed update: %f", fixedDeltaTime);
+        ImGui::DragFloat("##fixedDeltaTime", &fixedDeltaTime, 0.001F, 0.001F, 0.1F);
+
+        ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Reset particles");
         ImGui::Button("Restart system");
         if (ImGui::IsItemClicked())

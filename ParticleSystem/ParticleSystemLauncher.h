@@ -20,14 +20,15 @@ class ParticleSystemLauncher {
 private:
     GLFWwindow* window;
     int display_w = 1280, display_h = 720;
+    float fixedDeltaTime = 1.0F / 50.0F;
 
     std::unique_ptr<Scene> scene;
 
     struct {
-        float x = 0.45f;
-        float y = 0.55f;
-        float z = 0.60f;
-        float w = 1.0f;
+        float x = 0.45F;
+        float y = 0.55F;
+        float z = 0.60F;
+        float w = 1.0F;
     } clear_color;
 
 public:
