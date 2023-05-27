@@ -175,9 +175,10 @@ void ParticleSystemLauncher::start() {
 
         handleUi(deltaTime);
 
-        // Fixed timestep
+        updateGame(deltaTime);
+
         while (accumulator >= fixedDeltaTime) {
-            updateGame(fixedDeltaTime);
+            fixedUpdateGame(fixedDeltaTime);
             accumulator -= fixedDeltaTime;
         }
         accumulator += deltaTime;
@@ -307,8 +308,7 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::Begin("Particle settings");
 
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Scene settings");
-        ImGui::Text("Fixed update: %f", fixedDeltaTime);
-        ImGui::DragFloat("##fixedDeltaTime", &fixedDeltaTime, 0.001F, 0.001F, 0.1F);
+        ImGui::Text("Fixed time step: %f", fixedDeltaTime);
 
         ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Reset particles");
@@ -321,11 +321,8 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
         ImGui::NewLine();
         ImGui::TextColored(ImVec4(1.0F, 0.0F, 1.0F, 1.0F), "Particles count");
         ImGui::Text("Current count: %d", scene->particleGenerator.getParticlesCount());
-#ifdef __EMSCRIPTEN__
+
         static int newParticlesCount = 10000;
-#else
-        static int newParticlesCount = 25000;
-#endif
         ImGui::Text("New count:");
         ImGui::SameLine();
         ImGui::DragInt("##particlesCount", &newParticlesCount, 1, 1, 1000);
@@ -468,6 +465,10 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
 
 void ParticleSystemLauncher::updateGame(float deltaTime) {
     scene->update(deltaTime);
+}
+
+void ParticleSystemLauncher::fixedUpdateGame(float deltaTime) {
+    scene->fixedUpdate(deltaTime);
 }
 
 void ParticleSystemLauncher::updateScreen() {

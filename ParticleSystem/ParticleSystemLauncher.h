@@ -44,6 +44,7 @@ private:
     void handleUi(float deltaTime);
 
     void updateGame(float deltaTime);
+    void fixedUpdateGame(float deltaTime);
 
     void updateScreen();
 
