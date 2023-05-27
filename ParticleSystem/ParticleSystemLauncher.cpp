@@ -463,12 +463,12 @@ void ParticleSystemLauncher::handleUi(float deltaTime) {
     }
 }
 
-void ParticleSystemLauncher::updateGame(float deltaTime) {
-    scene->update(deltaTime);
-}
-
 void ParticleSystemLauncher::fixedUpdateGame(float deltaTime) {
     scene->fixedUpdate(deltaTime);
+}
+
+void ParticleSystemLauncher::updateGame(float deltaTime) {
+    scene->update(deltaTime);
 }
 
 void ParticleSystemLauncher::updateScreen() {
