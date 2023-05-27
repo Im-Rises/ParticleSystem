@@ -84,7 +84,7 @@ public:
 #ifdef __EMSCRIPTEN__
     explicit ParticleGeneratorBillboard(int particlesCount = 10000);
 #else
-    explicit ParticleGeneratorBillboard(int particlesCount = 25000);
+    explicit ParticleGeneratorBillboard(int particlesCount = 10000);
 #endif
 
     void create();
