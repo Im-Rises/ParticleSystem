@@ -189,6 +189,8 @@ void ParticleSystemLauncher::start() {
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;
 #endif
+
+    scene.reset();
 }
 
 void ParticleSystemLauncher::handleInputs() {
